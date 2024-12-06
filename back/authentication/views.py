@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from rest_framework.response import Response
-
+from django.http import JsonResponse
 
 def hello(request):
-    return Response("Hello, world!")
+    data = {"message": "Hello, Auth"}
+    return JsonResponse(data)

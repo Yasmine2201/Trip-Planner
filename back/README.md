@@ -7,7 +7,7 @@ This project is a web application that helps users to plan their trips and conne
 ## Features
 
 ## Technologies
-### - Backend: Django :
+### Django
 
 Please add a folder **.venv** at the root of this folder [back](.), then place yourself in the created folder and install the dependencies listed in the [`requirements.txt`](requirements.txt) file using the following command:
 ```bash
