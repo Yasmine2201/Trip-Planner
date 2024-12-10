@@ -8,6 +8,32 @@ provided in the `README.md` files within the `front` and `back` directories.
 ## Prerequisites
 - Docker
 - Docker Compose
+- Supabase (CLI)
+
+## Running Supabase Locally
+To run Supabase locally, follow these steps:
+Lauch docker engine and run the following command:
+```shell
+cd supabase
+supabase start
+```
+
+## Updating Environment Variables
+Before running the project, you need to update the environment variables in the `.env` files in the `front` and `back` directories.
+If the `.env` files do not exist, you can create them by copying the `.env.example` files.
+
+Warning: The `.env` files should not be committed to the repository as they contain sensitive information.
+
+In back directory, you need to update the variables to connect to the local Supabase instance.
+
+Example :
+```
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=54322
+```
 
 ## Running the Project with Docker Compose
 To run the project using Docker Compose, follow these steps:
