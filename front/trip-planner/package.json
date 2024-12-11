@@ -11,8 +11,12 @@
     "serve": "nuxt start"
   },
   "dependencies": {
+    "@nuxt/ui": "^2.20.0",
     "nuxt": "^3.14.1592",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "overrides": {
+    "nitropack": "2.9.7"
   }
 }
