@@ -1,10 +1,5 @@
 <template>
-  <div>
-    {{ data }}
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
-
-<script lang="ts" setup>
-console.log("HEY")
-const { data } = await useFetch("http://localhost:8000/auth/");
-</script>
