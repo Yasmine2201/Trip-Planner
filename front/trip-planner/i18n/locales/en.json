@@ -2,6 +2,15 @@
   "app": {
     "name": "TripPlanner"
   },
+  "login": {
+    "email": "Email",
+    "error": {
+      "emailInvalid": "Please enter a valid email.",
+      "passwordRequired": "Please enter your password."
+    },
+    "password": "Password",
+    "title": "Login"
+  },
   "navigation": {
     "about": "About",
     "home": "Home",

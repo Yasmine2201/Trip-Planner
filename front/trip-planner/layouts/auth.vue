@@ -3,9 +3,26 @@
     <UContainer class="flex flex-col space-y-3 min-h-screen sm:px-24">
       <AnonymousHeader class="mt-2 mb-3" />
       <div class="flex-1 flex items-center justify-center">
-        <NuxtPage />
+        <UCard class="auth-layout">
+          <template #header>
+            <h1 class="text-4xl font-bold text-primary text-center">
+              <slot name="title"></slot>
+            </h1>
+          </template>
+          <slot />
+        </UCard>
       </div>
       <Footer class="mb-3" />
     </UContainer>
   </div>
 </template>
+
+<script setup lang="ts">
+</script>
+
+<style scoped>
+  .auth-layout {
+    min-width: max-content;
+    flex-basis: 70%;
+  }
+</style>
