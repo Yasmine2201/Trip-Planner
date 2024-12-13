@@ -9,6 +9,7 @@ const isDark = computed({
     colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
   }
 });
+
 </script>
 
 <template>
@@ -27,6 +28,7 @@ const isDark = computed({
     </div>
 
     <div class="flex items-center space-x-2 gap-4">
+      <LocaleSwitcher/>
       <UButton
           :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
           color="gray"

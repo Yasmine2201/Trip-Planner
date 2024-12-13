@@ -1,0 +1,11 @@
+{
+  "app": {
+    "name": "TripPlanner"
+  },
+  "navigation": {
+    "about": "About",
+    "home": "Home",
+    "login": "Login",
+    "register": "Register"
+  }
+}

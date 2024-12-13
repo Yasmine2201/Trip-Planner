@@ -1,26 +1,28 @@
 <script setup lang="ts">
-const links = [
+const { t } = useI18n();
+
+const links = computed(() => ([
   [
     {
-      label: 'Accueil',
+      label: t('navigation.home'),
       to: '/'
     },
     {
-      label: 'À propos',
+      label: t('navigation.about'),
       to: '/about'
     }
   ],
   [
     {
-      label: 'Se connecter',
+      label: t('navigation.login'),
       to: '/login'
     },
     {
-      label: 'Créer un compte',
+      label: t('navigation.register'),
       to: '/register'
     }
     ],
-];
+]));
 </script>
 
 <template>
