@@ -1,21 +1,16 @@
 <script setup lang="ts">
 
 import type {FormSubmitEvent} from "#ui/types";
-import { z } from 'zod';
+import type {LoginDto} from "~/schemas";
+import { loginSchema } from '~/schemas';
 
 const { t } = useI18n();
+const auth = useAuthStore();
 
 definePageMeta({
   title: 'Login',
   layout: false
 });
-
-const schema = z.object({
-  email: z.string().email(t('login.error.emailInvalid')),
-  password: z.string().nonempty(t('login.error.passwordRequired'))
-});
-
-type LoginDto = z.infer<typeof schema>;
 
 const state = reactive({
   email: '',
@@ -27,7 +22,7 @@ const submitting = ref(false);
 
 const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
   submitting.value = true;
-  console.log(data);
+  await auth.login(data.email, data.password);
   submitting.value = false;
 };
 
@@ -36,12 +31,12 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
 <template>
   <NuxtLayout name="auth">
     <template #title>
-      {{ t('login.title') }}
+      {{ t('auth.login-title') }}
     </template>
 
-    <UForm :schema :state class="space-y-3" @submit="onSubmit" ref="form">
+    <UForm :schema="loginSchema" :state class="space-y-3" @submit="onSubmit" ref="form">
       <UFormGroup
-        :label="t('login.email')"
+        :label="t('auth.email')"
         name="email"
         required
       >
@@ -49,10 +44,14 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
             v-model="state.email"
             placeholder="youremail@example.com"
         />
+
+        <template #error="{ error }">
+          <span>{{ $t(error) }}</span>
+        </template>
       </UFormGroup>
 
       <UFormGroup
-        :label="t('login.password')"
+        :label="t('auth.password')"
         name="password"
         required
       >
@@ -61,6 +60,10 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
             type="password"
             placeholder="********"
         />
+
+        <template #error="{ error }">
+          <span>{{ $t(error) }}</span>
+        </template>
       </UFormGroup>
 
       <div class="flex justify-center">
@@ -70,13 +73,13 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
             class="w-1/2 flex justify-center"
             :loading="submitting"
         >
-          Log in
+          {{  t('auth.login-button') }}
         </UButton>
       </div>
 
     </UForm>
     <NuxtLink to="/register" class="text-center block mt-4 text-blue-600">
-      Don't have an account? Register here.
+      {{ t('auth.no-account-yet') }}
     </NuxtLink>
   </NuxtLayout>
 </template>

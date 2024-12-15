@@ -4,10 +4,6 @@ const { t } = useI18n();
 const links = computed(() => ([
   [
     {
-      label: t('navigation.home'),
-      to: '/'
-    },
-    {
       label: t('navigation.about'),
       to: '/about'
     }

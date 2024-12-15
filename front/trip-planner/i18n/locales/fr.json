@@ -2,14 +2,17 @@
   "app": {
     "name": "TripPlanner"
   },
-  "login": {
+  "auth": {
     "email": "Adresse électronique",
-    "error": {
-      "emailInvalid": "Veuillez entrer un email valide",
-      "passwordRequired": "Veuillez entrez un mot de passe."
-    },
-    "password": "Mot de passe",
-    "title": "Connexion"
+    "login-button": "Se connecter",
+    "login-title": "Connexion",
+    "no-account-yet": "Pas encore de compte ? Créez-en un ici.",
+    "password": "Mot de passe"
+  },
+  "errors": {
+    "email-invalid": "Veuillez entrer un email valide.",
+    "email-required": "Un email est requis.",
+    "password-required": "Un mot de passe est requis."
   },
   "navigation": {
     "about": "À propos",
