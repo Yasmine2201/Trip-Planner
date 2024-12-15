@@ -4,10 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
 
-  modules: [
-    '@nuxt/ui',
-    '@nuxtjs/i18n',
-  ],
+  modules: ['@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt'],
 
   i18n: {
     locales: [
@@ -33,4 +30,10 @@ export default defineNuxtConfig({
 
     strategy: 'no_prefix'
   },
+
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.API_BASE_URL || 'http://127.0.0.1:8000/api',
+    },
+  }
 })
