@@ -6,10 +6,11 @@
 
 <script setup lang="ts">
   const { $router } = useNuxtApp();
+  const { t } = useI18n();
 
   const getTitle = computed(() => {
     const pageName = $router.currentRoute.value.meta.title;
-    return `${pageName} • TripPlanner`;
+    return `${t(pageName)} • TripPlanner`;
   });
 
   useHead({

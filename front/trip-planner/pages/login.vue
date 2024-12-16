@@ -1,14 +1,14 @@
 <script setup lang="ts">
 
 import type {FormSubmitEvent} from "#ui/types";
-import type {LoginDto} from "~/schemas";
+import type { LoginDto } from "~/schemas";
 import { loginSchema } from '~/schemas';
 
 const { t } = useI18n();
 const auth = useAuthStore();
 
 definePageMeta({
-  title: 'Login',
+  title: 'auth.login-title',
   layout: false
 });
 
@@ -46,7 +46,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
         />
 
         <template #error="{ error }">
-          <span>{{ $t(error) }}</span>
+          <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
 
@@ -62,7 +62,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
         />
 
         <template #error="{ error }">
-          <span>{{ $t(error) }}</span>
+          <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
 
