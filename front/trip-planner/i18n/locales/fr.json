@@ -3,16 +3,37 @@
     "name": "TripPlanner"
   },
   "auth": {
+    "alias": "Pseudo",
+    "alias-help": "Nom visible par les autres utilisateurs",
+    "already-have-account": "Vous avez déjà un compte ? Connectez-vous ici.",
+    "birthdate": "Date de naissance",
+    "confirm-password": "Répétez le mot de passe",
     "email": "Adresse électronique",
+    "first-name": "Prénom",
+    "last-name": "Nom",
     "login-button": "Se connecter",
     "login-title": "Connexion",
     "no-account-yet": "Pas encore de compte ? Créez-en un ici.",
-    "password": "Mot de passe"
+    "password": "Mot de passe",
+    "register-button": "Créer un compte",
+    "register-title": "Création d'un compte"
   },
   "errors": {
+    "alias-required": "Un pseudonyme est requis.",
+    "already-have-account": "Déjà un compte ? Connectez-vous ici.",
+    "birthdate-invalid": "Date de naissance invalide",
+    "confirm-password-required": "Veuillez répéter le mot de passe.",
+    "email-already-exists": "Cet email est déjà utilisé.",
     "email-invalid": "Veuillez entrer un email valide.",
     "email-required": "Un email est requis.",
-    "password-required": "Un mot de passe est requis."
+    "first-name-required": "Votre prénom est requis.",
+    "invalid-form": "Formulaire non valide.",
+    "last-name-required": "Votre nom de famille est requis.",
+    "oops": "Une erreur est survenue.",
+    "password-rejected": "Mot de passe invalide",
+    "password-required": "Un mot de passe est requis.",
+    "passwords-must-match": "Les mots de passe doivent être les mêmes.",
+    "unknown-error": "Merci de réessayer ultérieurement."
   },
   "navigation": {
     "about": "À propos",
