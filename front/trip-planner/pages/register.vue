@@ -10,7 +10,8 @@ const { $api } = useNuxtApp();
 
 definePageMeta({
   title: 'auth.register-title',
-  layout: false
+  layout: false,
+  middleware: 'anonymous'
 });
 
 const state = reactive({

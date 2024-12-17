@@ -1,4 +1,7 @@
 {
+  "about": {
+    "title": "À propos"
+  },
   "app": {
     "name": "TripPlanner"
   },
