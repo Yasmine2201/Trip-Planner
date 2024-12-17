@@ -9,7 +9,8 @@ const auth = useAuthStore();
 
 definePageMeta({
   title: 'auth.login-title',
-  layout: false
+  layout: false,
+  middleware: 'anonymous'
 });
 
 const state = reactive({
