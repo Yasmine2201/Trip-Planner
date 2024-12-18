@@ -43,5 +43,22 @@
     "home": "Home",
     "login": "Login",
     "register": "Register"
+  },
+  "trip":{
+    "welcome-message": "Hello traveler!",
+    "my-trips": "My trips",
+    "add-trip": "Add a trip",
+    "all-my-trips": "All my trips",
+    "current-trip": "Current trip"
+
+  },
+  "profile": {
+    "notifications": "Notifications",
+    "no-notifications": "No notifications",
+    "personal-info": "Personal Info",
+    "preferences": "Preferences",
+    "help-support": "Help and Support",
+    "logout": "Logout",
+    "delete-account": "Delete account"
   }
 }
