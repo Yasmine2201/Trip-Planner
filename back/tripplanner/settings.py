@@ -32,13 +32,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = default(os.getenv('ALLOWED_HOSTS').split(','), 'localhost')
+ALLOWED_HOSTS = default(os.getenv('ALLOWED_HOSTS'), 'localhost').split(',')
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -55,7 +54,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -138,5 +136,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS settings
-CORS_ALLOWED_ORIGINS = default(os.getenv('CORS_ALLOWED_ORIGINS').split(','), ['localhost:3000'])
+CORS_ALLOWED_ORIGINS = default(os.getenv('CORS_ALLOWED_ORIGINS'), 'localhost:3000').split(',')
 CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = default(os.getenv('CSRF_TRUSTED_ORIGINS'), 'http://localhost:3000,http://127.0.0.1:3000').split(',')

@@ -11,10 +11,10 @@ def set_supabase_cookies(response: Response, session: AuthSession):
     response.set_cookie(
         ACCESS_TOKEN_COOKIE_NAME,
         session.access_token,
-        expires=session.expires_at,
+        max_age=session.expires_in,
         httponly=True,
         secure=True,
-        samesite="Strict"
+        samesite="None"
     )
 
     response.set_cookie(
@@ -22,5 +22,24 @@ def set_supabase_cookies(response: Response, session: AuthSession):
         session.refresh_token,
         httponly=True,
         secure=True,
-        samesite="Strict"
+        samesite="None"
+    )
+
+
+def remove_supabase_cookies(response: Response):
+    response.set_cookie(
+        ACCESS_TOKEN_COOKIE_NAME,
+        max_age=0,
+        httponly=True,
+        secure=True,
+        expires="Thu, 01 Jan 1970 00:00:00 GMT",
+        samesite="None",
+    )
+    response.set_cookie(
+        REFRESH_TOKEN_COOKIE_NAME,
+        max_age=0,
+        httponly=True,
+        secure=True,
+        expires="Thu, 01 Jan 1970 00:00:00 GMT",
+        samesite="None",
     )

@@ -2,7 +2,7 @@
 export default defineNuxtPlugin(() => {
   const apiClient = $fetch.create({
     baseURL: useRuntimeConfig().public.apiBaseUrl,
-    credentials: 'include',
+    credentials: "include",
     headers: {
       'Content-Type': 'application/json',
     },

@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, UserSerializer
-from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_NAME
+from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_NAME, \
+    remove_supabase_cookies
 from utils.auth_client import AuthClient, AuthSession, AuthException, InvalidCredentialsException, BadTokenException, \
     SessionNotFound
 
@@ -38,24 +39,20 @@ class LoginView(APIView):
         except AuthException as e:
             return handle_auth_error(e, 400)
 
-    def get(self, request: Request):
-        print(request.COOKIES)
-        return Response(status=204)
-
 
 class LogoutView(APIView):
 
     @staticmethod
     def post(request: Request):
         try:
+            print(request.COOKIES)
             access_token: str = request.COOKIES.get(ACCESS_TOKEN_COOKIE_NAME)
             if not access_token:
                 return handle_auth_error(AuthException("validation_failed", "invalid"), 400)
 
             AuthClient().logout(access_token)
             response = Response(status=204)
-            response.delete_cookie(ACCESS_TOKEN_COOKIE_NAME)
-            response.delete_cookie(REFRESH_TOKEN_COOKIE_NAME)
+            remove_supabase_cookies(response)
             return response
 
         except BadTokenException as e:
