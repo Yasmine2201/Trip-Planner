@@ -17,6 +17,8 @@ export const useAuthStore = defineStore('auth', {
         body: JSON.stringify({ email, password }),
       });
 
+      console.log(data);
+
       this.user = data.user;
       this.isAuthenticated = true;
 
@@ -35,16 +37,5 @@ export const useAuthStore = defineStore('auth', {
         navigateTo('/login');
       }
     },
-
-    async refreshToken() {
-      const { $api } = useNuxtApp();
-
-      try {
-        await $api('/auth/refresh-token', {method: 'POST'});
-      } catch (error) {
-        this.logout();
-        throw error;
-      }
-    }
   }
 });

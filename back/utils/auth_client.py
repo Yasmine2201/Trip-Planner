@@ -194,63 +194,67 @@ class AuthUser:
 
 # EXCEPTIONS
 class AuthException(Exception):
-    def __init__(self, message: str = '', code: str = ''):
-        super().__init__(message, code)
+    def __init__(self, message: str = '', error_code: str = ''):
+        super().__init__(message, error_code)
         self.message = message
-        self.code = code
+        self.error_code = error_code
+
+    @staticmethod
+    def from_validation_error(errors):
+        return AuthException(errors, 'validation_failed')
 
 
 class InvalidCredentialsException(AuthException):
-    code = 'invalid_credentials'
+    error_code = 'invalid_credentials'
 
     def __init__(self, message: str = 'Invalid credentials'):
-        super().__init__(message, self.code)
+        super().__init__(message, self.error_code)
 
 
 class UserAlreadyExistsException(AuthException):
-    code = 'user_already_exists'
+    error_code = 'user_already_exists'
 
     def __init__(self, message: str = 'User already exists'):
-        super().__init__(message, self.code)
+        super().__init__(message, self.error_code)
 
 
 class WeakPasswordException(AuthException):
-    code = 'weak_password'
+    error_code = 'weak_password'
 
     def __init__(self, message: str = 'Weak password'):
-        super().__init__(message, self.code)
+        super().__init__(message, self.error_code)
 
 
 class InvalidRegisterRequestException(AuthException):
-    code = 'validation_failed'
+    error_code = 'validation_failed'
 
     def __init__(self, message: str = 'Invalid request'):
-        super().__init__(message, self.code)
+        super().__init__(message, self.error_code)
 
 
 class BadTokenException(AuthException):
-    code = 'bad_jwt'
+    error_code = 'bad_jwt'
 
     def __init__(self, message: str = 'Bad token'):
-        super().__init__(message, self.code)
+        super().__init__(message, self.error_code)
 
 
 class SessionNotFound(AuthException):
-    code = 'session_not_found'
+    error_code = 'session_not_found'
 
     def __init__(self, message: str = 'Session not found'):
-        super().__init__(message, self.code)
+        super().__init__(message, self.error_code)
 
 
 class InvalidRefreshToken(AuthException):
-    code = 'refresh_token_not_found'
+    error_code = 'refresh_token_not_found'
 
     def __init__(self, message: str = 'Invalid refresh token'):
-        super().__init__(message, self.code)
+        super().__init__(message, self.error_code)
 
 
 exceptions_code: dict = {
-    exception.code: exception for exception in [
+    exception.error_code: exception for exception in [
         InvalidCredentialsException,
         UserAlreadyExistsException,
         WeakPasswordException,

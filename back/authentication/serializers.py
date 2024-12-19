@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 
 class AuthErrorSerializer(serializers.Serializer):
-    msg = serializers.CharField()
+    message = serializers.CharField()
     error_code = serializers.CharField()
 
 
