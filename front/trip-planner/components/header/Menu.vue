@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const { t } = useI18n();
+const auth = useAuthStore();
+
+const isAuthenticated = computed(() => auth.isAuthenticated);
 
 const links = computed(() => ([
   [
@@ -8,7 +11,7 @@ const links = computed(() => ([
       to: '/about'
     }
   ],
-  [
+  isAuthenticated.value ? [] : [
     {
       label: t('navigation.login'),
       to: '/login'
@@ -17,10 +20,12 @@ const links = computed(() => ([
       label: t('navigation.register'),
       to: '/register'
     }
-    ],
+  ]
 ]));
 </script>
 
 <template>
-  <UHorizontalNavigation class="flex-grow" :links />
+  <div class="flex-grow mx-8 content-center">
+    <UHorizontalNavigation class="flex-grow" :links />
+  </div>
 </template>

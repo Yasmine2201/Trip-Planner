@@ -42,26 +42,19 @@
     "about": "À propos",
     "home": "Accueil",
     "login": "Se connecter",
-    "register": "Créer un compte",
     "logout": "Déconnexion",
+    "notifications": "Notifications",
     "profile": "Profil",
-    "notifications": "Notifications"
+    "register": "Créer un compte"
   },
-  "trip":{
-    "welcome-message": "Bonjour voyageur !",
-    "my-trips": "Mes voyages",
+  "notifications": {
+    "none": "Pas de notifications"
+  },
+  "trip": {
     "add-trip": "Ajouter un voyage",
     "all-my-trips": "Tous mes voyages",
-    "current-trip": "Voyage en cours"
-  },
-  "profile": {
-      "notifications": "Notifications",
-      "no-notifications": "Pas de notifications",
-      "personal-info": "Infos Personnelles",
-      "preferences": "Préférences",
-      "help-support": "Aide et support",
-      "logout": "Déconnexion",
-      "delete-account": "Supprimer le compte"
-    }
-
+    "current-trip": "Voyage en cours",
+    "my-trips": "Mes voyages",
+    "welcome-message": "Bonjour voyageur !"
+  }
 }

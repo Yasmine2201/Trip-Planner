@@ -42,23 +42,19 @@
     "about": "About",
     "home": "Home",
     "login": "Login",
+    "logout": "Log Out",
+    "notifications": "Notifications",
+    "profile": "Profile",
     "register": "Register"
   },
-  "trip":{
-    "welcome-message": "Hello traveler!",
-    "my-trips": "My trips",
+  "notifications": {
+    "none": "No notifications"
+  },
+  "trip": {
     "add-trip": "Add a trip",
     "all-my-trips": "All my trips",
-    "current-trip": "Current trip"
-
-  },
-  "profile": {
-    "notifications": "Notifications",
-    "no-notifications": "No notifications",
-    "personal-info": "Personal Info",
-    "preferences": "Preferences",
-    "help-support": "Help and Support",
-    "logout": "Logout",
-    "delete-account": "Delete account"
+    "current-trip": "Current trip",
+    "my-trips": "My trips",
+    "welcome-message": "Hello traveler!"
   }
 }

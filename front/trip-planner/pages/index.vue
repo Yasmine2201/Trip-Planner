@@ -1,7 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-  title: 'app.name',
-  layout: 'anon'
+  title: 'app.name'
 });
 </script>
 

@@ -2,6 +2,7 @@
 
 definePageMeta({
   title: 'navigation.home',
+  requiresAuth: true
 });
 
 </script>
