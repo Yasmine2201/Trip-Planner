@@ -14,8 +14,8 @@
     "email": "Email",
     "first-name": "First name",
     "last-name": "Last name",
-    "login-button": "Login",
-    "login-title": "Login",
+    "login-button": "Log in",
+    "login-title": "Log in",
     "no-account-yet": "Don't have an account ? Register here.",
     "password": "Password",
     "register-button": "Register",
@@ -41,8 +41,8 @@
   "navigation": {
     "about": "About",
     "home": "Home",
-    "login": "Login",
-    "logout": "Log Out",
+    "login": "Log in",
+    "logout": "Log out",
     "notifications": "Notifications",
     "profile": "Profile",
     "register": "Register"

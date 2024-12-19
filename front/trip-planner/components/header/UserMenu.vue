@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n();
+const authStore = useAuthStore();
 const $router = useRouter();
 
 const profileItems = computed(() => [
@@ -15,7 +16,8 @@ const profileItems = computed(() => [
     // },
     {
       label: t('navigation.logout'),
-      icon: 'i-uil-signout'
+      icon: 'i-uil-signout',
+      click: logout
     }
   ],
   // [
@@ -35,6 +37,10 @@ const profileItems = computed(() => [
   //   }
   // ],
 ]);
+
+const logout = async () => {
+  await authStore.logout();
+}
 </script>
 
 <template>
