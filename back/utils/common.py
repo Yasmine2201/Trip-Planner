@@ -1,5 +1,5 @@
 # COMMON FUNCTIONS #
-from rest_framework.response import Response
+from functools import wraps
 
 
 def default(value, default_value):
