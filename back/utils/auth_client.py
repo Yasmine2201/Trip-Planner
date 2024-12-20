@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import httpx
 import os
 
+from rest_framework.exceptions import ErrorDetail
+
 from utils import Singleton, make_jwt_header
 
 __ALL__ = ["AuthClient",
@@ -200,8 +202,16 @@ class AuthException(Exception):
         self.error_code = error_code
 
     @staticmethod
-    def from_validation_error(errors):
-        return AuthException(errors, 'validation_failed')
+    def from_validation_error(errors: dict[str, list[ErrorDetail]]) -> AuthException:
+        def serialize_error(error: list[ErrorDetail]) -> str:
+            return '[' + ', '.join('{' + f'"code": "{err.code}", "message": "{err}"' + '}' for err in error) + ']'
+
+        message = (
+            '{\n' +
+            ',\n'.join([f'"{key}": {serialize_error(error)}' for key, error in errors.items()]) +
+            '}'
+        )
+        return AuthException(message, 'validation_failed')
 
 
 class InvalidCredentialsException(AuthException):

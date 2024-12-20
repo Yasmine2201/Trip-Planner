@@ -2,11 +2,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, UserSerializer
-from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_NAME, \
-    remove_supabase_cookies
+from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, UserSerializer, \
+    RegisterInputSerializer
+from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies
+from core.models import User
 from utils.auth_client import AuthClient, AuthSession, AuthException, InvalidCredentialsException, BadTokenException, \
-    SessionNotFound
+    SessionNotFound, UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException
 
 
 def handle_auth_error(e: AuthException, status_code: int) -> Response:
@@ -36,9 +37,6 @@ class LoginView(APIView):
         except InvalidCredentialsException as e:
             return handle_auth_error(e, 401)
 
-        except AuthException as e:
-            return handle_auth_error(e, 400)
-
 
 class LogoutView(APIView):
 
@@ -59,3 +57,34 @@ class LogoutView(APIView):
 
         except SessionNotFound as e:
             return handle_auth_error(e, 409)
+
+
+class RegisterView(APIView):
+
+    @staticmethod
+    def post(request: Request):
+        try:
+            request_serializer = RegisterInputSerializer(data=request.data)
+            if not request_serializer.is_valid():
+                return handle_auth_error(AuthException.from_validation_error(request_serializer.errors), 400)
+
+            email: str = request_serializer.validated_data['email']
+            password: str = request_serializer.validated_data['password']
+
+            auth_response: AuthSession = AuthClient().register(email, password)
+
+            user: User = User(
+                userId=auth_response.user.id,
+                email=email,
+                alias=request_serializer.validated_data['alias'],
+                first_name=request_serializer.validated_data['first_name'],
+                last_name=request_serializer.validated_data['last_name'],
+                birthdate=request_serializer.validated_data.get('birthdate')
+            )
+            user.save()
+
+            response = Response(status=201)
+            return response
+
+        except (UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException) as e:
+            return handle_auth_error(e, 400)
