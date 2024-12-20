@@ -37,7 +37,8 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
     if (data.birthdate === '') {
       data.birthdate = null;
     } else {
-      data.birthdate = new Date(data.birthdate).toDateString("yyyy-MM-dd");
+      const date = new Date(data.birthdate)
+      data.birthdate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     }
 
     const sentData = JSON.stringify({
