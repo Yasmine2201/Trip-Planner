@@ -7,6 +7,7 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from core.models import User
 from utils.auth_client import AuthSession, AuthClient, InvalidRefreshToken
@@ -91,3 +92,12 @@ class TokenAuthentication(BaseAuthentication):
             return user, auth
         except User.DoesNotExist:
             raise AuthenticationFailed("User not found")
+
+
+class CustomAPIView(APIView):
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+        if hasattr(request, 'auth') and 'new_session' in request.auth:
+            set_supabase_cookies(response, request.auth['new_session'])
+        return response
