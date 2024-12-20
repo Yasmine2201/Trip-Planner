@@ -2,11 +2,11 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from back.authentication.serializers import LoginInputSerializer, AuthErrorSerializer, RegisterInputSerializer
-from back.authentication.services import AuthService
-from back.authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies
+from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, RegisterInputSerializer
+from authentication.services import AuthService
+from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies
 from core.serializers import UserSerializer
-from back.utils.auth_client import AuthException, InvalidCredentialsException, BadTokenException, \
+from utils.auth_client import AuthException, InvalidCredentialsException, BadTokenException, \
     SessionNotFound, UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException
 
 
