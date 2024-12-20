@@ -1,1 +1,4 @@
 /.idea/
+/front/node_modules/
+/front/.nuxt/
+/supabase/node_modules/

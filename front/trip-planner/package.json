@@ -10,9 +10,16 @@
     "postinstall": "nuxt prepare",
     "serve": "nuxt start"
   },
+  "devDependencies": {
+    "@nuxt/devtools": "latest"
+  },
   "dependencies": {
+    "@nuxt/ui": "^2.20.0",
+    "@nuxtjs/i18n": "^9.0.0-rc.2",
+    "@pinia/nuxt": "^0.9.0",
     "nuxt": "^3.14.1592",
+    "pinia-plugin-persistedstate": "^4.1.3",
     "vue": "latest",
-    "vue-router": "latest"
+    "zod": "^3.24.1"
   }
 }

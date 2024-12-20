@@ -1,0 +1,61 @@
+{
+  "about": {
+    "title": "About"
+  },
+  "app": {
+    "name": "TripPlanner"
+  },
+  "auth": {
+    "alias": "Alias",
+    "alias-help": "Name visible to other users.",
+    "already-have-account": "Already have an account ? Log in here.",
+    "birthdate": "Birthdate",
+    "confirm-password": "Confirm password",
+    "email": "Email",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "login-button": "Log in",
+    "login-title": "Log in",
+    "no-account-yet": "Don't have an account ? Register here.",
+    "password": "Password",
+    "register-button": "Register",
+    "register-title": "Register"
+  },
+  "errors": {
+    "alias-required": "Alias is required.",
+    "already-have-account": "Already have an account ? Login here.",
+    "birthdate-invalid": "Invalid birthdate.",
+    "confirm-password-required": "Please repeat your password.",
+    "email-already-exists": "This email is already used.",
+    "email-invalid": "Please enter a valid email.",
+    "email-required": "Email is required.",
+    "first-name-required": "First name is required.",
+    "invalid-credentials": "Invalid credentials",
+    "invalid-form": "Invalid form.",
+    "last-name-required": "Last name is required.",
+    "oops": "Something went wrong.",
+    "password-rejected": "Invalid password",
+    "password-required": "Password is required.",
+    "passwords-must-match": "Passwords must match.",
+    "unknown-error": "Please retry later."
+  },
+  "navigation": {
+    "about": "About",
+    "home": "Home",
+    "login": "Log in",
+    "logout": "Log out",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "register": "Register"
+  },
+  "notifications": {
+    "none": "No notifications"
+  },
+  "trip": {
+    "add-trip": "Add a trip",
+    "all-my-trips": "All my trips",
+    "current-trip": "Current trip",
+    "my-trips": "My trips",
+    "welcome-message": "Hello traveler!"
+  }
+}

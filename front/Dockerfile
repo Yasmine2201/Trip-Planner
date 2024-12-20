@@ -1,5 +1,5 @@
 # Utiliser une image de base officielle de Node.js
-FROM node:18-alpine
+FROM node:22-alpine
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY ../front/trip-planner/package*.json ./
 
 # Installer les dépendances
-RUN npm install
+RUN npm ci
 
 # Copier le reste de l'application
 COPY .. .
