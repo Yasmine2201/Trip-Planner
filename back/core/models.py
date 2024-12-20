@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Image(models.Model):
-    imageId = models.AutoField(primary_key=True)
+    image_id = models.AutoField(primary_key=True)
     url = models.URLField(max_length=200)
     name = models.CharField(max_length=200)
 
@@ -11,7 +11,7 @@ class Image(models.Model):
 
 
 class User(models.Model):
-    userId = models.CharField(max_length=100, primary_key=True)
+    user_id = models.CharField(max_length=100, primary_key=True)
     email = models.EmailField(unique=True)
     alias = models.CharField(max_length=150)
     first_name = models.CharField(max_length=30, blank=True)

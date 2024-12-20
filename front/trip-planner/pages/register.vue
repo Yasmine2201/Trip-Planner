@@ -38,7 +38,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
       lastName: data.lastName,
       alias: data.alias,
       birthdate: data.birthdate,
-      emial: data.email,
+      email: data.email,
       password: data.password
     });
 
