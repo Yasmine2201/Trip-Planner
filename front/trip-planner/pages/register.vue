@@ -2,6 +2,7 @@
 
 import type { FormSubmitEvent } from "#ui/types";
 import type { RegisterDto } from "~/schemas";
+import type { Error } from "~/types";
 import { registerSchema } from "~/schemas";
 import { FetchError } from "ofetch";
 
@@ -33,12 +34,18 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
   formError.value = '';
 
   try {
+    if (data.birthdate === '') {
+      data.birthdate = null;
+    } else {
+      data.birthdate = new Date(data.birthdate).toDateString("yyyy-MM-dd");
+    }
+
     const sentData = JSON.stringify({
-      firstName: data.firstName,
-      lastName: data.lastName,
+      first_name: data.firstName,
+      last_name: data.lastName,
       alias: data.alias,
       birthdate: data.birthdate,
-      emial: data.email,
+      email: data.email,
       password: data.password
     });
 
@@ -47,17 +54,25 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
       body: sentData
     })
 
-    $router.push({path: '/login'});
+    navigateTo('/login');
 
   } catch (error) {
     if (error instanceof FetchError) {
+      console.log(error.response._data)
       if (error.response.status === 400) {
-        if (error.statusText === 'EMAIL_ALREADY_EXISTS') {
-          formError.value = 'errors.already-have-account';
-        } else if (error.statusText === 'PASSWORD_REJECTED') {
-          formError.value = 'erros.password-rejected';
-        } else if (error.statusText === 'INVALID_FORM') {
-          formError.value = 'erros.invalid-form';
+        const err: Error = error.response._data;
+        switch (err.error_code) {
+          case 'validation_failed':
+            formError.value = 'errors.invalid-form'
+            break;
+          case 'user_already_exists':
+            formError.value = 'errors.email-already-exists'
+            break;
+          case 'weak_password':
+            formError.value = 'errors.password-rejected'
+            break;
+          default:
+            formError.value = 'errors.unknown-error'
         }
 
         state.password = '';

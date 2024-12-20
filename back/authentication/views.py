@@ -2,11 +2,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, UserSerializer
-from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_NAME, \
-    remove_supabase_cookies
-from utils.auth_client import AuthClient, AuthSession, AuthException, InvalidCredentialsException, BadTokenException, \
-    SessionNotFound
+from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, RegisterInputSerializer
+from authentication.services import AuthService
+from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies
+from core.serializers import UserSerializer
+from utils.auth_client import AuthException, InvalidCredentialsException, BadTokenException, \
+    SessionNotFound, UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException
 
 
 def handle_auth_error(e: AuthException, status_code: int) -> Response:
@@ -23,39 +24,54 @@ class LoginView(APIView):
             if not request_serializer.is_valid():
                 return handle_auth_error(AuthException.from_validation_error(request_serializer.errors), 400)
 
-            email: str = request_serializer.validated_data['email']
-            password: str = request_serializer.validated_data['password']
-
-            auth_response: AuthSession = AuthClient().login(email, password)
-            response_serializer = UserSerializer(auth_response)
+            session, user = AuthService.login(**request_serializer.validated_data)
+            response_serializer = UserSerializer(user)
 
             response = Response(response_serializer.data, status=200)
-            set_supabase_cookies(response, auth_response)
+            set_supabase_cookies(response, session)
             return response
 
         except InvalidCredentialsException as e:
             return handle_auth_error(e, 401)
-
-        except AuthException as e:
-            return handle_auth_error(e, 400)
 
 
 class LogoutView(APIView):
 
     @staticmethod
     def post(request: Request):
+        response = Response(status=500)
         try:
             access_token: str = request.COOKIES.get(ACCESS_TOKEN_COOKIE_NAME)
             if not access_token:
                 return handle_auth_error(AuthException("validation_failed", "invalid"), 400)
 
-            AuthClient().logout(access_token)
+            AuthService.logout(access_token)
             response = Response(status=204)
+
+        except BadTokenException as e:
+            response = handle_auth_error(e, 403)
+
+        except SessionNotFound as e:
+            response = handle_auth_error(e, 409)
+
+        finally:
             remove_supabase_cookies(response)
             return response
 
-        except BadTokenException as e:
-            return handle_auth_error(e, 403)
 
-        except SessionNotFound as e:
-            return handle_auth_error(e, 409)
+class RegisterView(APIView):
+
+    @staticmethod
+    def post(request: Request):
+        try:
+            request_serializer = RegisterInputSerializer(data=request.data)
+            if not request_serializer.is_valid():
+                return handle_auth_error(AuthException.from_validation_error(request_serializer.errors), 400)
+
+            AuthService.register(**request_serializer.validated_data)
+
+            response = Response(status=201)
+            return response
+
+        except (UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException) as e:
+            return handle_auth_error(e, 400)

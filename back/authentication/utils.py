@@ -11,7 +11,7 @@ def set_supabase_cookies(response: Response, session: AuthSession):
     response.set_cookie(
         ACCESS_TOKEN_COOKIE_NAME,
         session.access_token,
-        max_age=session.expires_in,
+        expires=session.expires_at,
         httponly=True,
         secure=True,
         samesite="None"

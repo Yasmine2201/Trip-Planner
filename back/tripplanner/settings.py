@@ -38,6 +38,8 @@ ALLOWED_HOSTS = default(os.getenv('ALLOWED_HOSTS'), 'localhost').split(',')
 # Application definition
 
 INSTALLED_APPS = [
+    'authentication',
+    'core',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -45,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'authentication',
 ]
 
 MIDDLEWARE = [
