@@ -47,8 +47,14 @@ class LogoutView(CustomAPIView):
         response = Response(status=500)
         try:
             access_token: str = request.COOKIES.get(ACCESS_TOKEN_COOKIE_NAME)
+
+            if hasattr(request, 'auth') and request.auth is not None and 'new_session' in request.auth:
+                access_token = request.auth['new_session'].access_token
+                request.auth = None
+
             if not access_token:
                 return handle_auth_error(AuthException("validation_failed", "invalid"), 400)
+
             AuthService.logout(access_token)
 
             if hasattr(request, 'auth') and hasattr(request.auth, 'auth_session'):
