@@ -17,4 +17,4 @@ class RegisterInputSerializer(serializers.Serializer):
     alias = serializers.CharField(required=True)
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
-    birthdate = serializers.DateField(required=False)
+    birthdate = serializers.DateField(required=False, allow_null=True)

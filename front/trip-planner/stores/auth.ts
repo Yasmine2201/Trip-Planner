@@ -1,4 +1,4 @@
-import type {User} from "~/types";
+import type { User } from "~/types";
 
 export const useAuthStore = defineStore('auth', {
   persist: true,
@@ -29,10 +29,8 @@ export const useAuthStore = defineStore('auth', {
 
     async logout() {
       const { $api } = useNuxtApp();
-
       try {
         await $api('/auth/logout', {method: 'POST'});
-
       } finally {
         this.user = null;
         this.isAuthenticated = false;
