@@ -1,12 +1,12 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from authentication.utils import TokenAuthentication, CustomAPIView
+from authentication.utils import TokenAuthentication, ProtectableAPIView
 from core.serializers import UserSerializer
 
 
 # Create your views here.
-class CurrentUserView(CustomAPIView):
+class CurrentUserView(ProtectableAPIView):
     authentication_classes = [TokenAuthentication]
 
     @staticmethod

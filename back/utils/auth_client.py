@@ -150,7 +150,6 @@ class AuthClient(metaclass=Singleton):
     @staticmethod
     def _parse_auth_response(response: dict) -> AuthSession:
         user: Optional[AuthUser] = None
-        session: Optional[AuthSession] = None
 
         if "user" in response:
             user = AuthUser(
