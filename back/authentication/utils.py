@@ -98,6 +98,6 @@ class CustomAPIView(APIView):
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
-        if hasattr(request, 'auth') and 'new_session' in request.auth:
+        if hasattr(request, 'auth') and request.auth is not None and 'new_session' in request.auth:
             set_supabase_cookies(response, request.auth['new_session'])
         return response
