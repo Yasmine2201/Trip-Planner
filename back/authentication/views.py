@@ -45,7 +45,6 @@ class LogoutView(APIView):
     @staticmethod
     def post(request: Request):
         try:
-            print(request.COOKIES)
             access_token: str = request.COOKIES.get(ACCESS_TOKEN_COOKIE_NAME)
             if not access_token:
                 return handle_auth_error(AuthException("validation_failed", "invalid"), 400)

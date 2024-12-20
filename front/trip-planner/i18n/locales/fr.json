@@ -30,6 +30,7 @@
     "email-invalid": "Veuillez entrer un email valide.",
     "email-required": "Un email est requis.",
     "first-name-required": "Votre prénom est requis.",
+    "invalid-credentials": "Identifiants invalides",
     "invalid-form": "Formulaire non valide.",
     "last-name-required": "Votre nom de famille est requis.",
     "oops": "Une erreur est survenue.",

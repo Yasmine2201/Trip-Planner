@@ -20,10 +20,15 @@ const state = reactive({
 
 const form = ref();
 const submitting = ref(false);
+const formError = ref('');
 
 const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
   submitting.value = true;
-  await auth.login(data.email, data.password);
+  const success = await auth.login(data.email, data.password);
+  if (!success) {
+    formError.value = 'errors.invalid-credentials';
+    state.password = '';
+  }
   submitting.value = false;
 };
 
@@ -66,6 +71,15 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
           <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
+
+      <UAlert
+          class="mb-4 w-full"
+          v-if="formError !== ''"
+          color="red"
+          variant="outline"
+          :title="t('errors.oops')"
+          :description="t(formError)"
+      />
 
       <div class="flex justify-center">
         <UButton

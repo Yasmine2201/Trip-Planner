@@ -9,20 +9,22 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   actions: {
-    async login(email: string, password: string): Promise<void> {
+    async login(email: string, password: string): Promise<boolean> {
       const { $api } = useNuxtApp();
 
-      const data = await $api('/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-      });
+      try {
+        const data = await $api('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password }),
+        });
+        this.user = data.user;
+        this.isAuthenticated = true;
+        navigateTo('/home');
+        return true;
 
-      console.log(data);
-
-      this.user = data.user;
-      this.isAuthenticated = true;
-
-      navigateTo('/home');
+      } catch (error) {
+        return false;
+      }
     },
 
     async logout() {
