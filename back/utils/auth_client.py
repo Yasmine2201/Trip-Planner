@@ -122,7 +122,6 @@ class AuthClient(metaclass=Singleton):
 
         :raises InvalidRefreshToken: If the refresh token is invalid
         """
-        print("Redresh")
         data = {
             "refresh_token": refresh_token
         }

@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, RegisterInputSerializer
 from authentication.services import AuthService
 from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies, \
-    TokenAuthentication
+    TokenAuthentication, CustomAPIView
 from core.serializers import UserSerializer
 from utils.auth_client import AuthException, InvalidCredentialsException, BadTokenException, \
     SessionNotFound, UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException
@@ -39,7 +39,7 @@ class LoginView(APIView):
             return handle_auth_error(e, 400)
 
 
-class LogoutView(APIView):
+class LogoutView(CustomAPIView):
     authentication_classes = [TokenAuthentication]
 
     @staticmethod
