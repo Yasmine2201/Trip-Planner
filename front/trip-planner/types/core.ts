@@ -10,7 +10,7 @@ export type User = {
   lastname: string;
   email: string;
   birthdate: string | null;
-  avatarUrl: Image | null;
+  avatarImage: Image | null;
 }
 
 export type Error = {

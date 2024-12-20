@@ -1,41 +1,21 @@
 <script setup lang="ts">
-const { t } = useI18n();
+const {t} = useI18n();
 const authStore = useAuthStore();
 const $router = useRouter();
 
 const profileItems = computed(() => [
-  [
-    {
-      label: t('navigation.profile'),
-      icon: 'i-uil-user',
-      click: () => { $router.push("/profile") }
-    },
-    // {
-    //   label: t('profile.preferences'),
-    //   icon: 'i-heroicons-cog',
-    // },
-    {
-      label: t('navigation.logout'),
-      icon: 'i-uil-signout',
-      click: logout
-    }
-  ],
-  // [
-  //   {
-  //     label: t('profile.help-support'),
-  //     icon: 'i-heroicons-question-mark-circle',
-  //     click: () => {
-  //       console.log('Help')
-  //     },
-  //   },
-  //   {
-  //     label: t('profile.delete-account'),
-  //     icon: 'i-heroicons-trash',
-  //     click: () => {
-  //       console.log('Delete')
-  //     }
-  //   }
-  // ],
+  [{
+    slot: 'name',
+    disabled: true
+  }], [{
+    label: t('navigation.profile'),
+    icon: 'i-uil-user',
+    click: () => $router.push("/profile")
+  },{
+    label: t('navigation.logout'),
+    icon: 'i-uil-signout',
+    click: logout
+    }],
 ]);
 
 const logout = async () => {
@@ -44,8 +24,19 @@ const logout = async () => {
 </script>
 
 <template>
-  <UDropdown :items="profileItems" :popper="{ placement: 'bottom-start' }">
-    <UAvatar icon="i-uil-user" size="md"/>
+  <UDropdown :items="profileItems" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }">
+    <UAvatar icon="i-uil-user" size="sm" :src="authStore.user?.avatarImage"/>
+
+    <template #name="{ item }">
+      <div class="text-left">
+        <p class="text-black dark:text-white font-bold truncate">{{ `${authStore.user?.firstname} ${authStore.user?.lastname?.toUpperCase()}` }}</p>
+        <p class="text-sm text-gray-900 dark:text-gray-100 truncate">{{ authStore.user?.email }}</p>
+      </div>
+    </template>
+    <template #item="{ item }">
+      <span class="truncate">{{ item.label }}</span>
+      <UIcon :name="item.icon" class="flex-shrink-0 h-4 w-4 text-gray-400 dark:text-gray-500 ms-auto"/>
+    </template>
   </UDropdown>
 </template>
 

@@ -4,7 +4,7 @@ export const useAuthStore = defineStore('auth', {
   persist: true,
 
   state: () => ({
-    user: null as User | null,
+    user: null as User,
     isAuthenticated: false,
   }),
 
@@ -17,7 +17,15 @@ export const useAuthStore = defineStore('auth', {
           method: 'POST',
           body: JSON.stringify({ email, password }),
         });
-        this.user = data.user;
+        this.user = {
+          id: data.user_id,
+          alias: data.alias,
+          firstname: data.first_name,
+          lastname: data.last_name,
+          email: data.email,
+          birthdate: data.birthdate,
+          avatarImage: data.profile_picture?.url,
+        }
         this.isAuthenticated = true;
         navigateTo('/home');
         return true;

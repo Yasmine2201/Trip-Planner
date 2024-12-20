@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
 
-  modules: ['@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt'],
+  modules: ['@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt'],
 
   i18n: {
     locales: [
@@ -29,6 +29,14 @@ export default defineNuxtConfig({
     },
 
     strategy: 'no_prefix'
+  },
+
+  pinia: {
+    storesDirs: ['./stores/**']
+  },
+
+  piniaPersistedstate: {
+    storage: 'localStorage',
   },
 
   runtimeConfig: {
