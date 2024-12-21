@@ -1,31 +1,25 @@
-from django.shortcuts import render
-from django.utils.timezone import now
 from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from trips.models import Trip
-from trips.serializers import TripSerializer
+from authentication.utils import ProtectableAPIView, TokenAuthentication
 
-
-# Create your views here.
-
-from rest_framework.viewsets import ModelViewSet
-from .models import Trip
+from .models import Trip, TripParticipation
 from .serializers import TripSerializer
 
-class TripViewSet(ModelViewSet):
-    queryset = Trip.objects.all()
-    serializer_class = TripSerializer
 
-    @action(detail=False, methods=['get'], url_path='last', url_name='get_last_trip')
-    def get_last_trip(self, request):
-        """Retrieve the last trip added to the database."""
-        last_trip = Trip.objects.all().order_by('-id').first()
+class TripView(ProtectableAPIView):
 
-        if not last_trip:
-            return Response({"error": "No trips found"}, status=status.HTTP_404_NOT_FOUND)
+    authentication_classes = [TokenAuthentication]
 
-        serializer = self.get_serializer(last_trip)
+    @staticmethod
+    def get(request):
+
+        user_id = request.user.user_id
+
+        trip_participations = TripParticipation.objects.filter(user_id=user_id)
+
+        trip_ids = [trip.trip_id.id for trip in trip_participations]
+        trips = Trip.objects.filter(id__in=trip_ids)
+        serializer = TripSerializer(trips, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
