@@ -1,12 +1,11 @@
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ViewSet
 
 from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, RegisterInputSerializer
 from authentication.services import AuthService
 from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies, \
-    TokenAuthentication, ProtectableAPIView
+    TokenAuthentication
 from core.serializers import UserSerializer
 from utils.auth_client import AuthException, InvalidCredentialsException, BadTokenException, \
     SessionNotFound, UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException
@@ -40,8 +39,7 @@ class LoginView(APIView):
             return handle_auth_error(e, 400)
 
 
-class LogoutView(ProtectableAPIView):
-    authentication_classes = [TokenAuthentication]
+class LogoutView(APIView):
 
     @staticmethod
     def post(request: Request):
@@ -54,12 +52,9 @@ class LogoutView(ProtectableAPIView):
                 request.auth = None
 
             if not access_token:
-                return handle_auth_error(AuthException("validation_failed", "invalid"), 400)
+                return handle_auth_error(AuthException("No credentials were provided", "no-credentials"), 401)
 
             AuthService.logout(access_token)
-
-            if hasattr(request, 'auth') and hasattr(request.auth, 'auth_session'):
-                request.auth = None
 
             response = Response(status=204)
 
@@ -90,5 +85,3 @@ class RegisterView(APIView):
 
         except (UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException) as e:
             return handle_auth_error(e, 400)
-
-ViewSet

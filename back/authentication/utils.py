@@ -106,12 +106,16 @@ def _replace_token_in_response(request: Request, response: Response) -> Response
 
 class ProtectableAPIView(APIView):
 
+    authentication_classes = [TokenAuthentication]
+
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
         return _replace_token_in_response(request, response)
 
 
 class ProtectableGenericAPIView(GenericAPIView):
+
+    authentication_classes = [TokenAuthentication]
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
