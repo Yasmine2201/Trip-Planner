@@ -1,9 +1,11 @@
 <script setup lang="ts">
-
+defineProps<{
+  logoLink: string,
+}>();
 </script>
 
 <template>
-  <NuxtLink to="/" class="flex items-center mr-3">
+  <NuxtLink :to="logoLink" class="flex items-center mr-3">
     <img
         src="/public/static/img/logo.png"
         alt="Logo TripPlanner"

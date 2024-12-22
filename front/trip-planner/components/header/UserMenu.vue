@@ -10,7 +10,7 @@ const profileItems = computed(() => [
   }], [{
     label: t('navigation.profile'),
     icon: 'i-uil-user',
-    click: () => $router.push("/profile")
+    click: () => $router.push("/home/profile/me")
   },{
     label: t('navigation.logout'),
     icon: 'i-uil-signout',
