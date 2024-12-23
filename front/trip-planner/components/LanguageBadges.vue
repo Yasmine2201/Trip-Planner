@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   languages?: string,
 }>();
 
@@ -17,21 +17,34 @@ const languagesDict = computed(() =>
     Object.fromEntries(languagesKeys.map(lang => [lang, t(`language.${lang}`)]))
 );
 
-const languagesText = computed(() =>
-    languages?.split(',').map(lang => languagesDict.value[lang])
+const languagesText = computed(() => {
+    return props.languages?.split(',').map(lang => languagesDict.value[lang])
+  }
 );
 
-const generateRandomColor = (): string => {
+const generateRandomColor = (isDark: boolean): string => {
+  const dark = isDark ? "dark:" : "";
   const colors = [
-    "bg-blue-500 text-white",
-    "bg-green-500 text-white",
-    "bg-yellow-500 text-black",
-    "bg-red-500 text-white",
-    "bg-indigo-500 text-white",
-    "bg-purple-500 text-white",
-    "bg-pink-500 text-white",
-    "bg-gray-500 text-white",
-    "bg-black text-white",
+    `${dark}bg-blue-500 ${dark}text-white`,
+    `${dark}bg-green-500 ${dark}text-white`,
+    `${dark}bg-yellow-500 ${dark}text-white`,
+    `${dark}bg-red-500 ${dark}text-white`,
+    `${dark}bg-indigo-500 ${dark}text-white`,
+    `${dark}bg-purple-500 ${dark}text-white`,
+    `${dark}bg-pink-500 ${dark}text-white`,
+    `${dark}bg-gray-500 ${dark}text-white`,
+    `${dark}bg-orange-500 ${dark}text-white`,
+    `${dark}bg-cyan-500 ${dark}text-white`,
+    `${dark}bg-rose-500 ${dark}text-white`,
+    `${dark}bg-emerald-500 ${dark}text-white`,
+    `${dark}bg-fuchsia-500 ${dark}text-white`,
+    `${dark}bg-amber-500 ${dark}text-white`,
+    `${dark}bg-lime-500 ${dark}text-white`,
+    `${dark}bg-teal-500 ${dark}text-white`,
+    `${dark}bg-sky-500 ${dark}text-white`,
+    `${dark}bg-violet-500 ${dark}text-white`,
+    `${dark}bg-cyan-500 ${dark}text-white`,
+    isDark ? `${dark}bg-white ${dark}text-black` : `${dark}bg-black ${dark}text-white`,
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 }
@@ -39,9 +52,9 @@ const generateRandomColor = (): string => {
 </script>
 
 <template>
-  <div class="flex gap-2" v-if="languages">
+  <div class="flex gap-1 flex-wrap" v-if="props.languages">
     <template v-for="language in languagesText">
-      <UBadge :ui="{ rounded: 'rounded-full' }" :color="generateRandomColor()" >{{ language }}</UBadge>
+      <UBadge :ui="{ rounded: 'rounded-full' }" class="text-xs" :class="generateRandomColor(false) + ' ' + generateRandomColor(true)" >{{ language }} </UBadge>
     </template>
   </div>
 </template>
