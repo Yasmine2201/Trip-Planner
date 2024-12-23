@@ -11,6 +11,8 @@ export type User = {
   email: string;
   birthdate: string | null;
   avatarImage: Image | null;
+  description: string | null;
+  languages: string | null;
 }
 
 export type Error = {

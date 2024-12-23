@@ -19,6 +19,7 @@ class User(models.Model):
     birthdate = models.DateField(blank=True, null=True)
     profile_picture = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
     description = models.TextField(blank=True, null=True)
+    languages = models.CharField(max_length=500, blank=True, null=True, help_text='Comma separated list of languages')
 
     def __str__(self):
         return self.email

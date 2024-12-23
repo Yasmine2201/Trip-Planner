@@ -5,7 +5,7 @@ const isAuthenticated = computed(() => auth.isAuthenticated);
 
 <template>
   <div class="flex justify-between items- w-full">
-    <HeaderLogo/>
+    <HeaderLogo :logo-link="isAuthenticated ? '/home' : '/'"/>
 
     <HeaderMenu/>
 

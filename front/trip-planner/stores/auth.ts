@@ -25,6 +25,8 @@ export const useAuthStore = defineStore('auth', {
           email: data.email,
           birthdate: data.birthdate,
           avatarImage: data.profile_picture?.url,
+          description: data.description,
+          languages: data.languages
         }
         this.isAuthenticated = true;
         navigateTo('/home');
