@@ -75,5 +75,6 @@ class TripService:
         """
         trip = Trip.objects.get(trip_id=trip_id)
         trip.delete()
+        return trip
 
 

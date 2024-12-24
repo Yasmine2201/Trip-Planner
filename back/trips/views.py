@@ -23,12 +23,12 @@ class TripView(ProtectableAPIView):
             if not trips.exists():
                 return Response({"error": "No trips available"}, status=404)
             serializer = TripSerializer(trips, many=True)
-            return Response(serializer.data)
+            return Response(serializer.data, status=200)
         else:
             try:
                 trip = TripService.get_user_trip_by_id(trip_id)
                 serializer = TripSerializer(trip)
-                return Response(serializer.data)
+                return Response(serializer.data, status=200)
             except Trip.DoesNotExist:
                 return Response({"error": "Trip not found"}, status=404)
     @staticmethod
@@ -59,7 +59,7 @@ class TripView(ProtectableAPIView):
         try:
             trip = TripService.update_user_trip(trip_id, trip_payload)
             serializer = TripSerializer(trip)
-            return Response(serializer.data)
+            return Response(serializer.data, status=200)
         except Trip.DoesNotExist:
             return Response({"error": "Trip not found"}, status=404)
 
@@ -69,8 +69,8 @@ class TripView(ProtectableAPIView):
         Delete a specific trip associated with a user.
         """
         try:
-            TripService.delete_user_trip(trip_id)
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            trip = TripService.delete_user_trip(trip_id)
+            return Response({f"Trip: {trip} has been deleted"}, status=200)
         except Trip.DoesNotExist:
             return Response({"error": "Trip not found"}, status=404)
 
