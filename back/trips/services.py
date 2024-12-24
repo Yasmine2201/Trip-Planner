@@ -57,5 +57,23 @@ class TripService:
 
             return trip
 
+    @staticmethod
+    def update_user_trip(trip_id: int, trip_payload: dict):
+        """
+        Update a trip associated with a user.
+        """
+        trip = Trip.objects.get(trip_id=trip_id)
+        for field, value in trip_payload.items():
+            setattr(trip, field, value)
+        trip.save()
+        return trip
+
+    @staticmethod
+    def delete_user_trip(trip_id: int):
+        """
+        Delete a trip associated with a user.
+        """
+        trip = Trip.objects.get(trip_id=trip_id)
+        trip.delete()
 
 
