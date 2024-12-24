@@ -47,6 +47,32 @@ class TripView(ProtectableAPIView):
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+    @staticmethod
+    def put(request, trip_id):
+        """
+        Update a specific trip associated with a user.
+        """
+        if not request.data:
+            return Response({"error": "Missing request body"}, status=status.HTTP_400_BAD_REQUEST)
+
+        trip_payload = request.data
+        try:
+            trip = TripService.update_user_trip(trip_id, trip_payload)
+            serializer = TripSerializer(trip)
+            return Response(serializer.data)
+        except Trip.DoesNotExist:
+            return Response({"error": "Trip not found"}, status=404)
+
+    @staticmethod
+    def delete(request, trip_id):
+        """
+        Delete a specific trip associated with a user.
+        """
+        try:
+            TripService.delete_user_trip(trip_id)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Trip.DoesNotExist:
+            return Response({"error": "Trip not found"}, status=404)
 
 class LastTripView(ProtectableAPIView):
 
