@@ -10,3 +10,17 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8000/api/me
+###
+PUT http://localhost:8000/api/me
+Content-Type: application/json
+
+{
+  "birthdate": "2001-01-22",
+  "description": "I'm a developer",
+  "languages": "en, fr, ar"
+}
+
+###
+GET http://localhost:8000/api/users
+###
+GET http://localhost:8000/api/users/b74f48b4-2bef-4b47-9e54-5dcf390c293f

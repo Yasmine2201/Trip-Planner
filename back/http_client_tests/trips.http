@@ -22,7 +22,7 @@ Content-Type: application/json
 ###
 GET http://localhost:8000/api/trips
 ###
-GET http://localhost:8000/api/trips/5
+GET http://localhost:8000/api/trips/8
 ###
 GET http://localhost:8000/api/trips/last
 ###
@@ -38,5 +38,5 @@ Content-Type: application/json
   "radius" : 0.0
 }
 ###
-DELETE http://localhost:8000/api/trips/5
+DELETE http://localhost:8000/api/trips/6
 ###

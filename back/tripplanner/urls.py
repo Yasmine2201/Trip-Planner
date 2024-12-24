@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from authentication.views import LoginView, LogoutView, RegisterView
 
-from core.views import CurrentUserView
+from core.views import CurrentUserView, OtherUsersView
 from trips.views import TripView, LastTripView
 
 urlpatterns = [
@@ -10,6 +10,9 @@ urlpatterns = [
     path('api/auth/logout', LogoutView.as_view(), name='Logout'),
     path('api/auth/register', RegisterView.as_view(), name='Register'),
     path('api/me', CurrentUserView.as_view(), name='CurrentUser'),
+
+    path('api/users', OtherUsersView.as_view(), name='OtherUsers'),
+    path('api/users/<str:user_id>', OtherUsersView.as_view(), name='OtherUsers'),
 
     path('api/trips', TripView.as_view(), name='trip-view'),
     path('api/trips/<int:trip_id>', TripView.as_view(), name='trip-view'),
