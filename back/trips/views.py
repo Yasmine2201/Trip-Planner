@@ -10,9 +10,8 @@ from .services import TripService
 
 class TripView(ProtectableAPIView):
 
-    authentication_classes = [TokenAuthentication]
-
-    def get(self, request, trip_id=None):
+    @staticmethod
+    def get(request, trip_id=None):
         """
         Fetch all trips or a specific trip associated with a user.
         If a trip_id is provided, it fetches that specific trip.
@@ -31,6 +30,7 @@ class TripView(ProtectableAPIView):
                 return Response(serializer.data, status=200)
             except Trip.DoesNotExist:
                 return Response({"error": "Trip not found"}, status=404)
+
     @staticmethod
     def post(request):
         """
@@ -74,9 +74,8 @@ class TripView(ProtectableAPIView):
         except Trip.DoesNotExist:
             return Response({"error": "Trip not found"}, status=404)
 
-class LastTripView(ProtectableAPIView):
 
-    authentication_classes = [TokenAuthentication]
+class LastTripView(ProtectableAPIView):
 
     @staticmethod
     def get(request):

@@ -4,7 +4,7 @@ from trips.models import TripParticipation, Trip
 
 class TripService:
     @staticmethod
-    def get_all_user_trips(user : User):
+    def get_all_user_trips(user: User):
         """
         Fetch all trips associated with a user.
         """
@@ -20,7 +20,7 @@ class TripService:
         return Trip.objects.get(trip_id=trip_id)
 
     @staticmethod
-    def get_last_user_trip(user:User):
+    def get_last_user_trip(user: User):
         """
         Fetch the last trip associated with a user.
         """
@@ -29,7 +29,7 @@ class TripService:
         return Trip.objects.filter(trip_id__in=user_trip_ids).latest('start_date')
 
     @staticmethod
-    def create_user_trip(trip_payload : dict, user: User):
+    def create_user_trip(trip_payload: dict, user: User):
         """
         Create a new trip and trip participation for a user (return the trip object).
         The required fields are: trip_name, start_date, end_date, latitude, longitude, radius.
@@ -38,7 +38,8 @@ class TripService:
         """
         required_fields = ['trip_name', 'start_date', 'end_date', 'latitude', 'longitude', 'radius']
         if not all(field in trip_payload for field in required_fields):
-            raise ValueError(f"Missing required fields to create a trip: {', '.join([field for field in required_fields if field not in trip_payload])}")
+            raise ValueError(
+                f"Missing required fields to create a trip: {', '.join([field for field in required_fields if field not in trip_payload])}")
         else:
             trip = Trip.objects.create(trip_name=trip_payload['trip_name'],
                                        start_date=trip_payload['start_date'],
@@ -76,5 +77,3 @@ class TripService:
         trip = Trip.objects.get(trip_id=trip_id)
         trip.delete()
         return trip
-
-
