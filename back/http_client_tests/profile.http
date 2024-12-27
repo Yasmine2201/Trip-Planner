@@ -15,12 +15,14 @@ PUT http://localhost:8000/api/me
 Content-Type: application/json
 
 {
+  "user_id": "6d7e4d80-5535-4ab9-86f0-f79bb01ea694",
+  "alias": "JojoDodo",
   "birthdate": "2001-01-22",
   "description": "I'm a developer",
-  "languages": "en, fr, ar"
+  "languages": "fr, en, ar"
 }
 
 ###
 GET http://localhost:8000/api/users
 ###
-GET http://localhost:8000/api/users/b74f48b4-2bef-4b47-9e54-5dcf390c293f
+GET http://localhost:8000/api/users/6d7e4d80-5535-4ab9-86f0-f79bb01ea694

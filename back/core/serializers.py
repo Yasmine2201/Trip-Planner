@@ -9,16 +9,30 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ['name', 'url']
 
 
-class UserSerializer(serializers.ModelSerializer):
+class PublicUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['user_id', 'email', 'alias', 'first_name', 'last_name', 'birthdate', 'profile_picture', 'description', 'languages']
+        fields = ['user_id', 'alias', 'profile_picture', 'description', 'languages']
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        if instance.profile_picture is not None:
-            representation['profile_picture'] = ImageSerializer(instance.profile_picture).data
-        else:
-            representation['profile_picture'] = None
+        if 'profile_picture' in self.Meta.fields:
+            if instance.profile_picture is not None:
+                representation['profile_picture'] = ImageSerializer(instance.profile_picture).data
+            else:
+                representation['profile_picture'] = None
         return representation
+
+
+class PrivateUserSerializer(PublicUserSerializer):
+
+    class Meta(PublicUserSerializer.Meta):
+        fields = ['user_id', 'email', 'alias', 'first_name', 'last_name', 'birthdate', 'profile_picture', 'description', 'languages']
+
+
+class UserInputSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['user_id', 'first_name', 'last_name', 'alias', 'birthdate', 'description', 'languages']
