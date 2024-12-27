@@ -9,6 +9,12 @@ class TripSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TripInputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Trip
+        fields = ['trip_name', 'start_date', 'end_date', 'latitude', 'longitude', 'radius']
+
+
 class TripParticipationSerializer(serializers.ModelSerializer):
     class Meta:
         model = TripParticipation
