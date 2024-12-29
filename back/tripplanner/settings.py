@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'trips',
-    'notifications'
+    'notifications',
+    'visits',
+    'budget'
 ]
 
 MIDDLEWARE = [

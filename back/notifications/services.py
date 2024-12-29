@@ -19,8 +19,8 @@ class NotificationService:
         """
 
         notification = Notification.objects.get(user=user.user_id, notification_id=notification_id)
-        if not notification.read:
-            notification.read = True
+        if not notification.is_read:
+            notification.is_read = True
             notification.save()
         return notification
 
