@@ -94,8 +94,11 @@
   "navigation": {
     "about": "About",
     "home": "Home",
+    "last-trip": "Last trip",
     "login": "Log in",
     "logout": "Log out",
+    "my-trips": "My trips",
+    "new-trip": "New trip",
     "notifications": "Notifications",
     "profile": "Profile",
     "register": "Register"
