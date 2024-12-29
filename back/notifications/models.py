@@ -1,11 +1,10 @@
 from django.db import models
 
-# Create your models here.
 
 class Notification(models.Model):
     notification_id = models.AutoField(primary_key=True)
     user = models.ForeignKey('core.User', on_delete=models.CASCADE, null=True, blank=True)
-    type = models.CharField(max_length=255) # 3 types : 'invitation', 'budget', 'visit'
+    type = models.CharField(max_length=255)  # 3 types : 'invitation', 'budget', 'visit'
     content = models.TextField()
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -17,6 +17,7 @@ class Trip(models.Model):
     def __str__(self):
         return f"Trip(id={self.trip_id}, name={self.trip_name}, start_date={self.start_date}, end_date={self.end_date}, latitude={self.latitude}, longitude={self.longitude})"
 
+
 class TripParticipation(models.Model):
 
     trip_participation_id = models.AutoField(primary_key=True)
@@ -26,4 +27,3 @@ class TripParticipation(models.Model):
 
     def __str__(self):
         return f"TripParticipation(id={self.trip_participation_id}, trip_id={self.trip_id}, user_id={self.user_id})"
-

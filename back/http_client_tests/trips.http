@@ -22,14 +22,15 @@ Content-Type: application/json
 ###
 GET http://localhost:8000/api/trips
 ###
-GET http://localhost:8000/api/trips/8
+GET http://localhost:8000/api/trips/4
 ###
 GET http://localhost:8000/api/trips/last
 ###
-PUT http://localhost:8000/api/trips/5
+PUT http://localhost:8000/api/trips/4
 Content-Type: application/json
 
 {
+  "trip_id": 4,
   "trip_name": "new Trip to the moon",
   "start_date": "2022-12-02",
   "end_date": "2022-12-31",
@@ -38,5 +39,5 @@ Content-Type: application/json
   "radius" : 0.0
 }
 ###
-DELETE http://localhost:8000/api/trips/6
+DELETE http://localhost:8000/api/trips/4
 ###
