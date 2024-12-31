@@ -91,6 +91,10 @@
     "vi": "Vietnamien",
     "zh": "Chinois"
   },
+  "misc": {
+    "loading": "Chargement...",
+    "no-items": "Pas de données."
+  },
   "navigation": {
     "about": "À propos",
     "home": "Accueil",
@@ -117,11 +121,10 @@
     "not-filled": "Pas renseigné·e",
     "title": "Mon profil"
   },
-  "trip": {
-    "add-trip": "Ajouter un voyage",
-    "all-my-trips": "Tous mes voyages",
-    "current-trip": "Voyage en cours",
-    "my-trips": "Mes voyages",
-    "welcome-message": "Bonjour voyageur !"
+  "trips": {
+    "end": "Date de fin",
+    "name": "Nom",
+    "start": "Date de début",
+    "triplist-title": "Mes voyages"
   }
 }
