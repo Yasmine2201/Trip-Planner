@@ -6,7 +6,8 @@ Content-Type: application/json
   "email": "john.doe@example.com",
   "password": "123456"
 }
-###
+
+### Budget tests
 POST http://localhost:8000/api/trips/38/budget
 Content-Type: application/json
 
@@ -22,3 +23,51 @@ Content-Type: application/json
 {
   "budget": 3000
 }
+
+### Expens Group tests
+POST http://localhost:8000/api/trips/37/budget/groups
+Content-Type: application/json
+
+{
+  "visit": 1,
+  "name": "Transport",
+  "description": "Transport expenses"
+}
+###
+GET http://localhost:8000/api/trips/37/budget/groups
+###
+GET http://localhost:8000/api/trips/37/budget/groups/1
+###
+DELETE http://localhost:8000/api/trips/37/budget/groups/1
+
+### Expense tests
+POST http://localhost:8000/api/trips/37/budget/expenses
+# expense_group is optional
+Content-Type: application/json
+
+{
+  "category": 1,
+  "name": "New expense",
+  "description": "NEW",
+  "planned_amount": 1000,
+  "actual_amount": 900,
+  "is_shared": false
+}
+###
+GET http://localhost:8000/api/trips/37/budget/expenses
+###
+GET http://localhost:8000/api/trips/37/budget/expenses/10
+###
+PUT http://localhost:8000/api/trips/37/budget/expenses/10
+Content-Type: application/json
+
+{
+  "category": 1,
+  "name": "New expense",
+  "description": "NEW",
+  "planned_amount": 1000,
+  "actual_amount": 900,
+  "is_shared": false,
+  "expense_group": 2
+}
+###

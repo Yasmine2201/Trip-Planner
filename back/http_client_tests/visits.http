@@ -1,0 +1,23 @@
+###
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "123456"
+}
+
+### Visits tests
+POST http://localhost:8000/api/trips/37/visits
+Content-Type: application/json
+
+{
+  "location": 1,
+  "trip": 37,
+  "name": "Paris",
+  "start_date": "2021-12-01",
+  "end_date": "2021-12-10"
+}
+###
+GET http://localhost:8000/api/trips/37/visits
+###

@@ -1,17 +1,17 @@
-from django.shortcuts import render
 from rest_framework.response import Response
 
 from authentication.utils import TokenAuthentication, ProtectableAPIView
-from budget.services import BudgetService
-from trips.serializers import TripParticipationSerializer
+from budget.models import Expense, ExpenseGroup
+from budget.serializers import ExpenseGroupInputSerializer, ExpenseGroupSerializer, ExpenseSerializer
+from budget.services import BudgetService, ExpenseGroupService, ExpenseService
+from trips.models import TripParticipation
 
 
-# Create your views here.
 class BudgetView(ProtectableAPIView):
     authentication_classes = [TokenAuthentication]
 
     @staticmethod
-    def handle_budget(request, trip_id):
+    def __handle_budget(request, trip_id):
         user_id = request.user.user_id
 
         try:
@@ -27,26 +27,169 @@ class BudgetView(ProtectableAPIView):
         """
         Declare a budget for a trip.
         """
-        return BudgetView.handle_budget(request, trip_id)
+        return BudgetView.__handle_budget(request, trip_id)
 
     @staticmethod
     def put(request, trip_id):
         """
         Update a budget for a trip.
         """
-        return BudgetView.handle_budget(request, trip_id)
+        return BudgetView.__handle_budget(request, trip_id)
 
     @staticmethod
     def get(request, trip_id):
+        """
+        Get a budget for a trip.
+        """
+
+        user_id = request.user.user_id
+
+        try:
+            budget = BudgetService.get_budget(user_id, trip_id)
+            return Response(budget, status=200)
+
+        except Exception as e:
+            return Response({"error": f"An error occurred while fetching the budget: {e}"}, status=400)
+
+############################################################################################################
+
+class ExpenseGroupView(ProtectableAPIView):
+    authentication_classes = [TokenAuthentication]
+
+    @staticmethod
+    def post(request,trip_id):
+        """
+        Declare an expense group for a trip.
+        """
+        user_id = request.user.user_id
+        expense_group_data = request.data
+        try :
+            expense_gr = ExpenseGroupService.declare_expense_group(user_id, trip_id, expense_group_data)
+            expense_gr_serializer = ExpenseGroupInputSerializer(expense_gr)
+            return Response(expense_gr_serializer.data, status=200)
+
+        except ValueError as e:
+            return Response({"error" : str(e)}, status=400)
+        except TripParticipation.DoesNotExist:
+            return Response({"error": f"TripParticipation not found"}, status=404)
+
+    @staticmethod
+    def __get_all(request, trip_id):
+
+        expense_grps = ExpenseGroupService.get_all_expense_groups(request.user.user_id, trip_id)
+        if expense_grps is None:
+            return Response({"error": f"Expense groups not found"}, status=404)
+        else :
+            serializer = ExpenseGroupSerializer(expense_grps, many=True)
+            return Response(serializer.data, status=200)
+
+
+    @staticmethod
+    def __get_by_id(request, trip_id, expense_group_id):
+        try :
+            expense_gr = ExpenseGroupService.get_expense_group_by_id(request.user.user_id, trip_id, expense_group_id)
+            serializer = ExpenseGroupSerializer(expense_gr)
+            return Response(serializer.data, status=200)
+        except ExpenseGroup.DoesNotExist:
+            return Response({"error": f"Expense group {expense_group_id} not found"}, status=404)
+        except Exception as e:
+            return Response({"error": f"An error occurred while fetching the expense group: {e}"}, status=400)
+
+    @staticmethod
+    def get(request, trip_id, expense_group_id = None):
             """
-            Get a budget for a trip.
+            Get a specific expense group for a trip or all expense groups for a trip if no expense group id is provided.
             """
 
-            user_id = request.user.user_id
+            if expense_group_id is None:
+                return ExpenseGroupView.__get_all(request, trip_id)
+            else:
+                return ExpenseGroupView.__get_by_id(request, trip_id, expense_group_id)
+    @staticmethod
+    def delete(request, trip_id, expense_group_id):
+        """
+        Delete an expense group for a trip.
+        """
+        user_id = request.user.user_id
+        try :
+            expense_gr = ExpenseGroupService.delete_expense_group(user_id, trip_id, expense_group_id)
+            serializer = ExpenseGroupSerializer(expense_gr)
+            return Response(serializer.data, status=200)
 
-            try:
-                budget = BudgetService.get_budget(user_id, trip_id)
-                return Response(budget, status=200)
+        except ExpenseGroup.DoesNotExist:
+            return Response({"error": f"Expense group {expense_group_id} not found"}, status=404)
+        except Exception as e:
+            return Response({"error": f"An error occurred while deleting the expense group: {e}"}, status=400)
 
-            except Exception as e:
-                return Response({"error": f"An error occurred while fetching the budget: {e}"}, status=400)
+############################################################################################################
+class ExpenseView(ProtectableAPIView):
+    authentication_classes = [TokenAuthentication]
+
+    @staticmethod
+    def post(request, trip_id):
+        """
+        Declare an expense for a trip.
+        """
+        user_id = request.user.user_id
+        expense_data = request.data
+        try :
+            expense = ExpenseService.declare_expense(user_id, trip_id, expense_data)
+            expense_serializer = ExpenseSerializer(expense)
+            return Response(expense_serializer.data, status=200)
+
+        except TripParticipation.DoesNotExist:
+            return Response({"error": f"TripParticipation deduced from the payload not found"}, status=404)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+
+    @staticmethod
+    def put(request, trip_id, expense_id):
+        """
+        Update an expense for a trip.
+        """
+        user_id = request.user.user_id
+        try :
+            expense = ExpenseService.update_expense(user_id, trip_id, expense_id, request.data)
+            serializer = ExpenseSerializer(expense)
+            return Response(serializer.data, status=200)
+
+        except Expense.DoesNotExist:
+            return Response({"error": f"Expense {expense_id} not found"}, status=404)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+
+    @staticmethod
+    def __get_all(request, trip_id):
+        try :
+            expenses = ExpenseService.get_all_expenses(request.user.user_id, trip_id)
+            serializer = ExpenseSerializer(expenses, many=True)
+            return Response(serializer.data, status=200)
+
+        except Expense.DoesNotExist:
+            return Response({"error": f"Expenses not found"}, status=404)
+
+    @staticmethod
+    def __get_by_id(request, trip_id, expense_id):
+        try :
+            expense = ExpenseService.get_expense_by_id(request.user.user_id, trip_id, expense_id)
+            serializer = ExpenseSerializer(expense)
+            return Response(serializer.data, status=200)
+
+        except Expense.DoesNotExist:
+            return Response({"error": f"Expense {expense_id} not found"}, status=404)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+
+
+    @staticmethod
+    def get(request, trip_id, expense_id = None):
+            """
+            Get a specific expense for a trip or all expenses for a trip if no expense id is provided.
+            """
+
+            if expense_id is None:
+                return ExpenseView.__get_all(request, trip_id)
+            else:
+                return ExpenseView.__get_by_id(request, trip_id, expense_id)
