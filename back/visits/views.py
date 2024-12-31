@@ -21,18 +21,17 @@ class VisitView(ProtectableAPIView):
             serializer = VisitSerializerInput(visit)
 
             return Response(serializer.data, status=200)
-        except Exception as e:
-            return Response({"error": f"An error occurred while processing the visit, Here are the details: '{e}'"}, status=400)
-
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
     @staticmethod
     def get(request, trip_id):
         """
         Get all visits for a trip.
         """
-        try:
-            visits = VisitService.get_all_visits(trip_id)
-            serializer = VisitSerializerInput(visits, many=True)
 
-            return Response(serializer.data, status=200)
-        except Exception as e:
-            return Response({"error": f"An error occurred while processing the visit, Here are the details: '{e}'"}, status=400)
+        visits = VisitService.get_all_visits(trip_id)
+        if visits is None:
+            return Response({"error": "No visits found"}, status=404)
+
+        serializer = VisitSerializerInput(visits, many=True)
+        return Response(serializer.data, status=200)

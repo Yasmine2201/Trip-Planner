@@ -19,8 +19,8 @@ class BudgetView(ProtectableAPIView):
             declared_budget = BudgetService.declare_budget(user_id, trip_id, declared_budget)
             return Response(declared_budget, status=200)
 
-        except Exception as e:
-            return Response({"error": f"An error occurred while processing the budget, Here are the details: '{e}'"}, status=400)
+        except TripParticipation.DoesNotExist:
+            return Response({"error": f"TripParticipation not found"}, status=404)
 
     @staticmethod
     def post(request, trip_id):
@@ -48,9 +48,8 @@ class BudgetView(ProtectableAPIView):
             budget = BudgetService.get_budget(user_id, trip_id)
             return Response(budget, status=200)
 
-        except Exception as e:
-            return Response({"error": f"An error occurred while fetching the budget: {e}"}, status=400)
-
+        except TripParticipation.DoesNotExist:
+            return Response({"error": f"TripParticipation not found"}, status=404)
 ############################################################################################################
 
 class ExpenseGroupView(ProtectableAPIView):
@@ -92,8 +91,8 @@ class ExpenseGroupView(ProtectableAPIView):
             return Response(serializer.data, status=200)
         except ExpenseGroup.DoesNotExist:
             return Response({"error": f"Expense group {expense_group_id} not found"}, status=404)
-        except Exception as e:
-            return Response({"error": f"An error occurred while fetching the expense group: {e}"}, status=400)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
 
     @staticmethod
     def get(request, trip_id, expense_group_id = None):
@@ -118,9 +117,8 @@ class ExpenseGroupView(ProtectableAPIView):
 
         except ExpenseGroup.DoesNotExist:
             return Response({"error": f"Expense group {expense_group_id} not found"}, status=404)
-        except Exception as e:
-            return Response({"error": f"An error occurred while deleting the expense group: {e}"}, status=400)
-
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
 ############################################################################################################
 class ExpenseView(ProtectableAPIView):
     authentication_classes = [TokenAuthentication]
@@ -139,8 +137,7 @@ class ExpenseView(ProtectableAPIView):
 
         except TripParticipation.DoesNotExist:
             return Response({"error": f"TripParticipation deduced from the payload not found"}, status=404)
-        except Exception as e:
-            return Response({"error": str(e)}, status=400)
+
 
     @staticmethod
     def put(request, trip_id, expense_id):
@@ -156,18 +153,17 @@ class ExpenseView(ProtectableAPIView):
         except Expense.DoesNotExist:
             return Response({"error": f"Expense {expense_id} not found"}, status=404)
 
-        except Exception as e:
+        except ValueError as e:
             return Response({"error": str(e)}, status=400)
 
     @staticmethod
     def __get_all(request, trip_id):
-        try :
-            expenses = ExpenseService.get_all_expenses(request.user.user_id, trip_id)
-            serializer = ExpenseSerializer(expenses, many=True)
-            return Response(serializer.data, status=200)
-
-        except Expense.DoesNotExist:
+        expenses = ExpenseService.get_all_expenses(request.user.user_id, trip_id)
+        if expenses is None:
             return Response({"error": f"Expenses not found"}, status=404)
+
+        serializer = ExpenseSerializer(expenses, many=True)
+        return Response(serializer.data, status=200)
 
     @staticmethod
     def __get_by_id(request, trip_id, expense_id):
@@ -179,7 +175,7 @@ class ExpenseView(ProtectableAPIView):
         except Expense.DoesNotExist:
             return Response({"error": f"Expense {expense_id} not found"}, status=404)
 
-        except Exception as e:
+        except ValueError as e:
             return Response({"error": str(e)}, status=400)
 
 
