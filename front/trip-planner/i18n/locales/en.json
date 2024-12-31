@@ -91,6 +91,10 @@
     "vi": "Vietnamese",
     "zh": "Chinese"
   },
+  "misc": {
+    "loading": "Loading...",
+    "no-items": "No items."
+  },
   "navigation": {
     "about": "About",
     "home": "Home",
@@ -117,11 +121,10 @@
     "not-filled": "Not provided",
     "title": "My profile"
   },
-  "trip": {
-    "add-trip": "Add a trip",
-    "all-my-trips": "All my trips",
-    "current-trip": "Current trip",
-    "my-trips": "My trips",
-    "welcome-message": "Hello traveler!"
+  "trips": {
+    "end": "End date",
+    "name": "Name",
+    "start": "Start date",
+    "triplist-title": "My trips"
   }
 }
