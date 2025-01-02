@@ -3,11 +3,23 @@ POST http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-  "email": "john.doe2@example.com",
+  "email": "john.doe@example.com",
   "password": "123456",
   "alias": "JojoDodo",
   "first_name": "John",
   "last_name": "Doe"
+}
+
+### Tentative de Ethan : New user car john doe buggé
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+"email": "jotaro.kujo@example.com",
+"password": "123456",
+"alias": "Jojo3",
+"first_name": "jotaro",
+"last_name": "kujo"
 }
 
 
@@ -17,6 +29,15 @@ Content-Type: application/json
 
 {
   "email": "john.doe@example.com",
+  "password": "123456"
+}
+
+### Tentative de Ethan : Login car john doe buggé
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "jotaro.kujo@example.com",
   "password": "123456"
 }
 

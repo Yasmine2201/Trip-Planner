@@ -3,8 +3,8 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from authentication.utils import ProtectableAPIView, TokenAuthentication
-from utils import NOT_FOUND_ERROR, ForbiddenActionError, INVALID_BODY_ERROR
+from back.authentication.utils import ProtectableAPIView, TokenAuthentication
+from back.utils import NOT_FOUND_ERROR, ForbiddenActionError, INVALID_BODY_ERROR
 
 from .models import Trip
 from .serializers import TripSerializer

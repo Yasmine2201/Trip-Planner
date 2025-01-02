@@ -37,7 +37,15 @@
     "password-rejected": "Mot de passe invalide",
     "password-required": "Un mot de passe est requis.",
     "passwords-must-match": "Les mots de passe doivent être les mêmes.",
-    "unknown-error": "Merci de réessayer ultérieurement."
+    "unknown-error": "Merci de réessayer ultérieurement.",
+
+    "trip-name-required": "Le nom du voyage est requis",
+    "invalid-location": "Les coordonnées sont invalides",
+    "invalid-coordinates": "Les coordonnées doivent être entre -90 et 90 pour la latitude et -180 et 180 pour la longitude",
+    "radius-required": "Le rayon est requis et doit être un nombre positif",
+    "invalid-start-date": "La date de début est invalide",
+    "invalid-end-date": "La date de fin est invalide",
+    "start-date-before-end-date": "La date de début doit être avant la date de fin"
   },
   "language": {
     "af": "Afrikaans",
@@ -98,7 +106,8 @@
     "logout": "Déconnexion",
     "notifications": "Notifications",
     "profile": "Profil",
-    "register": "Créer un compte"
+    "register": "Créer un compte",
+    "create_trip": "Créer un voyage"
   },
   "notifications": {
     "none": "Pas de notifications"
@@ -120,5 +129,16 @@
     "current-trip": "Voyage en cours",
     "my-trips": "Mes voyages",
     "welcome-message": "Bonjour voyageur !"
+  },
+  "create_trip": {
+    "trip_create_title": "Créer un voyage",
+    "trip_name": "Nom du voyage",
+    "trip_location": "Lieu",
+    "trip_latitude": "Latitude",
+    "trip_longitude": "Longitude",
+    "trip_radius": "Rayon (km)",
+    "trip_start_date": "Date de début",
+    "trip_end_date": "Date de fin",
+    "trip_create_button": "Créer un voyage"
   }
 }
