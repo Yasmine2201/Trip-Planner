@@ -1,10 +1,9 @@
 <script setup lang="ts">
 
+import LocationSelector from "~/components/LocationSelector.vue";
 import type { FormSubmitEvent } from "#ui/types";
 import type { CreateTripDto } from '~/schemas';
 import { createTripSchema } from '~/schemas';
-import { FetchError } from "ofetch";
-import type { Error } from "~/types";
 
 const { t } = useI18n();
 const { $api } = useNuxtApp();
@@ -16,21 +15,37 @@ definePageMeta({
 
 const state = reactive({
   tripName: '',
-  latitude: 48.8566,  // Latitude par défaut
-  longitude: 2.3522,  // Longitude par défaut
-  radius: 5,
+  latitude: -1,
+  longitude: -1,
+  radius: -1,
   start_date: '',
   end_date: '',
 });
 
+const locationSelector = ref(null);
 const form = ref();
 const formError = ref('');
 const submitting = ref(false);
 
+const updateLocation = () => {
+  state.latitude = locationSelector.value.selectedLat ? locationSelector.value.selectedLat : state.latitude;
+  state.longitude = locationSelector.value.selectedLng ? locationSelector.value.selectedLng : state.longitude;
+  state.radius = locationSelector.value.radius ? locationSelector.value.radius : state.radius;
+};
+
+onMounted(() => {
+  // On récupère la référence du composant LocationSelector
+  updateLocation();
+});
+
 const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
+  updateLocation();
+  // update les data avec le nouvel état
+  Object.assign(data, state);
   console.log("New trip data: ", data);
   submitting.value = true;
   formError.value = '';
+
 
   try {
     await $api('/trips', {
@@ -104,6 +119,16 @@ const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
           <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
+
+      <!--
+      <LocationSelector
+          v-model:selectedLat="state.latitude"
+          v-model:selectedLng="state.longitude"
+          v-model:radius="state.radius"
+          class="w-full h-96"
+      /> -->
+
+      <LocationSelector ref="locationSelector"/>
 
       <UAlert
           class="mb-4 w-full"

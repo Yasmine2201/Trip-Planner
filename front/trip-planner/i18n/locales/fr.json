@@ -130,13 +130,15 @@
     "my-trips": "Mes voyages",
     "welcome-message": "Bonjour voyageur !"
   },
+  "LocationSelect" : {
+    "place": "Lieu",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "radius": "Rayon (km)"
+  },
   "create_trip": {
     "trip_create_title": "Créer un voyage",
     "trip_name": "Nom du voyage",
-    "trip_location": "Lieu",
-    "trip_latitude": "Latitude",
-    "trip_longitude": "Longitude",
-    "trip_radius": "Rayon (km)",
     "trip_start_date": "Date de début",
     "trip_end_date": "Date de fin",
     "trip_create_button": "Créer un voyage"
