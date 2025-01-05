@@ -1,7 +1,7 @@
 from django.urls import path
 
 from authentication.views import LoginView, LogoutView, RegisterView
-from budget.views import BudgetView, ExpenseGroupView, ExpenseView
+from budget.views import BudgetView, ExpenseGroupView, ExpenseView, ExpenseShareView
 from notifications.views import NotificationView
 from core.views import CurrentUserView, OtherUsersView
 from trips.views import TripView, LastTripView
@@ -35,6 +35,12 @@ urlpatterns = [
     path('api/trips/<int:trip_id>/budget/expenses', ExpenseView.as_view(), name='expense-view'),
     path('api/trips/<int:trip_id>/budget/expenses/<int:expense_id>', ExpenseView.as_view(), name='expense-view'),
 
-    path('api/trips/<int:trip_id>/visits', VisitView.as_view(), name='visit-view')
+    path('api/trips/<int:trip_id>/visits', VisitView.as_view(), name='visit-view'),
+
+    path('api/trips/<int:trip_id>/budget/expenses/share',ExpenseShareView.as_view(), name='expense-share-view'),
+    path('api/trips/<int:trip_id>/budget/expenses/share/<int:share_id>',ExpenseShareView.as_view(), name='expense-share-view'),
+    path('api/trips/<int:trip_id>/budget/expenses/share/debts',ExpenseShareView.as_view(), name='expense-share-view'),
+    path('api/trips/<int:trip_id>/budget/expenses/share/refunds', ExpenseShareView.as_view(), name='expense-share-view')
+
 
 ]
