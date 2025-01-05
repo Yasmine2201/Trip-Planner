@@ -70,4 +70,36 @@ Content-Type: application/json
   "is_shared": false,
   "expense_group": 2
 }
+
+
+### Expense Share tests
+POST http://localhost:8000/api/trips/37/budget/expenses/share
+Content-Type: application/json
+
+{
+  "expense": 10,
+  "with_user" : "2026d3b8-da17-4ef4-8067-7c532fe2e4e8",
+  "due_amount": 100
+
+}
 ###
+GET http://localhost:8000/api/trips/37/budget/expenses/share/debts
+###
+GET http://localhost:8000/api/trips/37/budget/expenses/share/refunds
+###
+GET http://localhost:8000/api/trips/37/budget/expenses/share/4
+###
+PUT http://localhost:8000/api/trips/37/budget/expenses/share/5
+Content-Type: application/json
+
+{
+  "expense": 10,
+  "with_user" : "2026d3b8-da17-4ef4-8067-7c532fe2e4e8",
+  "due_amount": 200
+}
+
+###
+DELETE http://localhost:8000/api/trips/37/budget/expenses/share/5
+###
+
+
