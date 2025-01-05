@@ -73,7 +73,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
 <template>
   <NuxtLayout name="auth">
     <template #title>
-      {{ t('create_trip.trip_create_title') }}
+      {{ t('navigation.create_trip') }}
     </template>
 
     <UForm :schema="createTripSchema" :state="state" class="space-y-5" @submit="onSubmit" ref="form">
@@ -120,15 +120,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
         </template>
       </UFormGroup>
 
-      <!--
-      <LocationSelector
-          v-model:selectedLat="state.latitude"
-          v-model:selectedLng="state.longitude"
-          v-model:radius="state.radius"
-          class="w-full h-96"
-      /> -->
-
-      <LocationSelector ref="locationSelector"/>
+      <LocationSelector ref="locationSelector" class="w-full h-96"/>
 
       <UAlert
           class="mb-4 w-full"

@@ -37,7 +37,15 @@
     "password-rejected": "Invalid password",
     "password-required": "Password is required.",
     "passwords-must-match": "Passwords must match.",
-    "unknown-error": "Please retry later."
+    "unknown-error": "Please retry later.",
+
+    "trip-name-required": "Trip name is required",
+    "invalid-location": "Invalid coordinates",
+    "invalid-coordinates": "Coordinates must be between -90 and 90 for latitude and -180 and 180 for longitude",
+    "radius-required": "Radius is required and must be a positive number",
+    "invalid-start-date": "Invalid start date",
+    "invalid-end-date": "Invalid end date",
+    "start-date-before-end-date": "Start date must be before end date"
   },
   "language": {
     "af": "Afrikaans",
@@ -98,7 +106,8 @@
     "logout": "Log out",
     "notifications": "Notifications",
     "profile": "Profile",
-    "register": "Register"
+    "register": "Register",
+    "create_trip": "Create a trip"
   },
   "notifications": {
     "none": "No notifications"
@@ -120,5 +129,17 @@
     "current-trip": "Current trip",
     "my-trips": "My trips",
     "welcome-message": "Hello traveler!"
+  },
+  "LocationSelect": {
+    "place": "Place",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "radius": "Radius (km)"
+  },
+  "create_trip": {
+    "trip_name": "Trip name",
+    "trip_start_date": "Start date",
+    "trip_end_date": "End date",
+    "trip_create_button": "Create a trip"
   }
 }
