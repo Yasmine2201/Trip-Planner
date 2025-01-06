@@ -8,6 +8,11 @@ const profileItems = computed(() => [
     slot: 'name',
     disabled: true
   }], [{
+    label: t('navigation.home'),
+    icon: 'heroicons:home',
+    click: () => $router.push("/home")
+  },
+  {
     label: t('navigation.profile'),
     icon: 'i-uil-user',
     click: () => $router.push("/home/profile/me")

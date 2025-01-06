@@ -99,11 +99,18 @@
     "vi": "Vietnamese",
     "zh": "Chinese"
   },
+  "misc": {
+    "loading": "Loading...",
+    "no-items": "No items."
+  },
   "navigation": {
     "about": "About",
     "home": "Home",
+    "last-trip": "Last trip",
     "login": "Log in",
     "logout": "Log out",
+    "my-trips": "My trips",
+    "new-trip": "New trip",
     "notifications": "Notifications",
     "profile": "Profile",
     "register": "Register",
@@ -123,12 +130,11 @@
     "not-filled": "Not provided",
     "title": "My profile"
   },
-  "trip": {
-    "add-trip": "Add a trip",
-    "all-my-trips": "All my trips",
-    "current-trip": "Current trip",
-    "my-trips": "My trips",
-    "welcome-message": "Hello traveler!"
+  "trips": {
+    "end": "End date",
+    "name": "Name",
+    "start": "Start date",
+    "triplist-title": "My trips"
   },
   "LocationSelect": {
     "place": "Place",

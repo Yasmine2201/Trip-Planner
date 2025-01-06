@@ -18,7 +18,10 @@ const languagesDict = computed(() =>
 );
 
 const languagesText = computed(() => {
-    return props.languages?.split(',').map(lang => languagesDict.value[lang])
+    return props.languages
+        ?.split(',')
+        .map(lang => lang.trim())
+        .map(lang => languagesDict.value[lang])
   }
 );
 

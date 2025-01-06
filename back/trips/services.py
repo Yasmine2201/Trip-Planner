@@ -2,7 +2,7 @@ from rest_framework.exceptions import ValidationError
 
 from core.models import User
 from trips.models import TripParticipation, Trip
-from trips.serializers import TripSerializer, TripInputSerializer
+from trips.serializers import TripInputSerializer
 from utils import ForbiddenActionError
 
 

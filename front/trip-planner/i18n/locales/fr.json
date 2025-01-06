@@ -99,11 +99,18 @@
     "vi": "Vietnamien",
     "zh": "Chinois"
   },
+  "misc": {
+    "loading": "Chargement...",
+    "no-items": "Pas de données."
+  },
   "navigation": {
     "about": "À propos",
     "home": "Accueil",
+    "last-trip": "Dernier voyage",
     "login": "Se connecter",
     "logout": "Déconnexion",
+    "my-trips": "Mes voyages",
+    "new-trip": "Nouveau voyage",
     "notifications": "Notifications",
     "profile": "Profil",
     "register": "Créer un compte",
@@ -123,12 +130,11 @@
     "not-filled": "Pas renseigné·e",
     "title": "Mon profil"
   },
-  "trip": {
-    "add-trip": "Ajouter un voyage",
-    "all-my-trips": "Tous mes voyages",
-    "current-trip": "Voyage en cours",
-    "my-trips": "Mes voyages",
-    "welcome-message": "Bonjour voyageur !"
+  "trips": {
+    "end": "Date de fin",
+    "name": "Nom",
+    "start": "Date de début",
+    "triplist-title": "Mes voyages"
   },
   "LocationSelect" : {
     "place": "Lieu",
