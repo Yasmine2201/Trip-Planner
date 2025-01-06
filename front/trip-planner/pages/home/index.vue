@@ -48,7 +48,16 @@ const deleteTrip = async (tripId: number) => {
 </script>
 
 <template>
-  <h1 class="font-semibold text-primary-600 dark:text-primary-400">{{ t('trips.triplist-title') }}</h1>
+  <div class="flex space-x-5">
+    <h1 class="font-semibold text-primary-600 dark:text-primary-400">{{ t('trips.triplist-title') }}</h1>
+    <UButton
+        icon="i-entypo:add-to-list"
+        size="sm"
+        color="primary"
+        variant="solid"
+        :to="`/home/create_trip`"
+    />
+  </div>
 
   <UTable
       :columns
