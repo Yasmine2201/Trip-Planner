@@ -146,6 +146,19 @@
     "trip_name": "Nom du voyage",
     "trip_start_date": "Date de début",
     "trip_end_date": "Date de fin",
-    "trip_create_button": "Créer un voyage"
+    "trip_create_button": "Créer un voyage",
+    "trip_location": "Lieu",
+    "trip_map": "Carte"
+  },
+
+  "trip_home" : {
+    "trip_details": "Détails du voyage",
+    "visits": "Visites",
+    "budget": "Budget",
+    "trip_location_info": "Vous avez choisi d'aller ici"
+  },
+  "core": {
+    "edit": "Modifier",
+    "delete": "Supprimer"
   }
 }
