@@ -36,7 +36,7 @@ const { t } = useI18n();
 
 const selectedLat = ref(48.8566); // Par défaut : Paris
 const selectedLng = ref(2.3522);
-const radius = ref(10000); // Rayon par défaut (en mètres)
+const radius = ref(10); // Rayon par défaut (en km)
 
 let map: L.Map;
 let marker: L.Marker;
@@ -44,19 +44,19 @@ let circle: L.Circle;
 
 const updateRadius = () => {
   if (circle) {
-    circle.setRadius(radius.value*1000);
+    circle.setRadius(radius.value * 1000);
   }
 };
 
 onMounted(() => {
-  map = L.map("map").setView([selectedLat.value, selectedLng.value], radius.value/1000);
+  map = L.map("map").setView([selectedLat.value, selectedLng.value], radius.value);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
   marker = L.marker([selectedLat.value, selectedLng.value], { draggable: true }).addTo(map);
-  circle = L.circle([selectedLat.value, selectedLng.value], { radius: radius.value }).addTo(map);
+  circle = L.circle([selectedLat.value, selectedLng.value], { radius: radius.value * 1000 }).addTo(map);
 
   marker.on("dragend", (event) => {
     const position = marker.getLatLng();
