@@ -146,6 +146,19 @@
     "trip_name": "Trip name",
     "trip_start_date": "Start date",
     "trip_end_date": "End date",
-    "trip_create_button": "Create a trip"
+    "trip_create_button": "Create a trip",
+    "trip_location": "Location",
+    "trip_map": "Map"
+  },
+  "trip_home" : {
+    "trip_details": "Trip details",
+    "visits": "Visits",
+    "budget": "Budget",
+    "trip_location_info": "You chose to go here",
+  },
+  "core": {
+    "edit": "Edit",
+    "delete": "Delete"
+
   }
 }

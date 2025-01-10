@@ -88,7 +88,7 @@ const deleteTrip = async (tripId: number) => {
             color="gray"
             square
             variant="solid"
-            :to="`/home/trip/${row.trip_id}`"
+            :to="`/home/trips/${row.trip_id}`"
         />
         <UButton
             icon="i-heroicons-pencil-square"
