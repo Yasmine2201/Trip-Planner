@@ -47,5 +47,33 @@ export const useAuthStore = defineStore('auth', {
         navigateTo('/login');
       }
     },
+
+    async refreshUser() {
+      const { $api } = useNuxtApp();
+
+      if (!this.isAuthenticated) {
+        return;
+      }
+
+      try {
+        const data = await $api('/me');
+        this.user = {
+          id: data.user_id,
+          alias: data.alias,
+          firstname: data.first_name,
+          lastname: data.last_name,
+          email: data.email,
+          birthdate: data.birthdate,
+          avatarImage: data.profile_picture?.url,
+          description: data.description,
+          languages: data.languages
+        }
+        this.isAuthenticated = true;
+      } catch (error) {
+        this.user = null;
+        this.isAuthenticated = false;
+        navigateTo('/login');
+      }
+    }
   }
 });
