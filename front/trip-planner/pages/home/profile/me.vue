@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  title: "profile.title"
+  title: "profile.title",
+  layout: "navigation",
 });
 
 const { t } = useI18n();

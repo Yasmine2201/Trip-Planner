@@ -117,7 +117,13 @@
     "create_trip": "Create a trip"
   },
   "notifications": {
-    "none": "No notifications"
+    "none": "No notifications",
+    "type": {
+      "info": "Info",
+      "budget": "Budget",
+      "invitation": "Invitation",
+    },
+    "view-all": "View all"
   },
   "profile": {
     "age": "Age",

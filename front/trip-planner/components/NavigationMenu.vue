@@ -25,13 +25,13 @@ const links = computed(() => {
       {
         label: t('navigation.last-trip'),
         icon: "heroicons:clock",
-        to: "/home/last-trip",
-        active: route.path === '/home/last-trip'
+        to: "/home/last_trip",
+        active: route.path === '/home/last_trip'
       },
       {
         label: t('navigation.new-trip'),
         icon: "heroicons:plus",
-        to: '/home/new-trip',
+        to: '/home/create_trip',
 
       }
     ]
@@ -52,7 +52,7 @@ const links = computed(() => {
       },
       {
         label: t('trip_home.budget'),
-        icon: "i-uil-money-withdraw",
+        icon: "material-symbols:currency-exchange",
         to: `/home/trips/${selectedTripId.value}/budget`
       }
     ]);
