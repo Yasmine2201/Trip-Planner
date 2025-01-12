@@ -24,9 +24,9 @@ class NotificationView(ProtectableAPIView):
                 notification = NotificationService.get_user_notification(user, notification_id)
                 return Response(NotificationSerializer(notification).data, status=200)
             except Notification.DoesNotExist:
-                return Response({"error": "Notification not found"}, status=404)
+                return Response({"error": "Notifications not found"}, status=404)
         else:
-            notifications = NotificationService.get_all_user_notifications(user)
+            notifications = NotificationService.get_all_user_notifications(user).order_by('-created_at')
             if not notifications:
                 return Response({"error": "No notifications found"}, status=404)
             return Response(NotificationSerializer(notifications, many=True).data)
@@ -42,4 +42,4 @@ class NotificationView(ProtectableAPIView):
             return Response({f'notification {notification} has been deleted successfully'}, status=200)
 
         except Notification.DoesNotExist:
-            return Response({"error": "Notification not found"}, status=404)
+            return Response({"error": "Notifications not found"}, status=404)
