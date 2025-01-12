@@ -5,8 +5,8 @@ export type Notifications = {
     is_read : boolean,
     created_at : string,
 }
-export enum NotificationType {
-  info = 'i-heroicons-information-circle',
-  budget = 'material-symbols:currency-exchange',
-  invitation = 'material-symbols:contact-mail-sharp'
+export enum NotificationType {// pay attention : the keys are case sensitive
+  Info = 'i-heroicons-information-circle',
+  Budget = 'material-symbols:currency-exchange',
+  Invitation = 'material-symbols:contact-mail-sharp'
 }

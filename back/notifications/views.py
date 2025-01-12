@@ -32,6 +32,18 @@ class NotificationView(ProtectableAPIView):
             return Response(NotificationSerializer(notifications, many=True).data)
 
     @staticmethod
+    def put(request, notification_id):
+        """
+        Set a specific notification associated with a user as read.
+        """
+        user = request.user
+        try:
+            notification = NotificationService.set_read_user_notification(user, notification_id)
+            return Response(NotificationSerializer(notification).data, status=200)
+        except Notification.DoesNotExist:
+            return Response({"error": "Notifications not found"}, status=404)
+
+    @staticmethod
     def delete(request, notification_id):
         """
         Delete a specific notification associated with a user.
@@ -43,3 +55,15 @@ class NotificationView(ProtectableAPIView):
 
         except Notification.DoesNotExist:
             return Response({"error": "Notifications not found"}, status=404)
+
+    ### used for tests only
+    # @staticmethod
+    # def post (request):
+    #     """
+    #     Create a notification for a user.
+    #     """
+    #     user = request.user
+    #     print("View", user, type(user))
+    #     payload = request.data
+    #     notification = NotificationService.create_notification(user, payload)
+    #     return Response(NotificationSerializer(notification).data, status=201)

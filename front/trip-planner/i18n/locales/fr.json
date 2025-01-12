@@ -123,7 +123,11 @@
       "budget": "Budget",
       "invitation": "Invitation"
     },
-    "view-all": "Voir tout"
+    "view-all": "Voir tout",
+    "mark-as-read": "Marquer comme lu",
+    "read": "Lu",
+    "no-notifications": "Pas de notifications",
+    "deleted": "Notification supprimée"
   },
   "profile": {
     "age": "Age",
@@ -164,6 +168,7 @@
     "trip_location_info": "Vous avez choisi d'aller ici"
   },
   "core": {
+    "enter": "Entrer",
     "edit": "Modifier",
     "delete": "Supprimer"
   }

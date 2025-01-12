@@ -121,9 +121,13 @@
     "type": {
       "info": "Info",
       "budget": "Budget",
-      "invitation": "Invitation",
+      "invitation": "Invitation"
     },
-    "view-all": "View all"
+    "view-all": "View all",
+    "mark-as-read": "Mark as read",
+    "read": "Read",
+    "no-notifications": "No notifications",
+    "deleted": "Notification deleted"
   },
   "profile": {
     "age": "Age",
@@ -160,9 +164,10 @@
     "trip_details": "Trip details",
     "visits": "Visits",
     "budget": "Budget",
-    "trip_location_info": "You chose to go here",
+    "trip_location_info": "You chose to go here"
   },
   "core": {
+    "enter": "Enter",
     "edit": "Edit",
     "delete": "Delete"
 
