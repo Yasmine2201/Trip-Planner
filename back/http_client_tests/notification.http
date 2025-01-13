@@ -14,29 +14,3 @@ GET http://localhost:8000/api/notifications/2
 DELETE http://localhost:8000/api/notifications/2
 ###
 PUT http://localhost:8000/api/notifications/14
-
-#### POST Notifications are just for testing purposes
-#
-#POST http://localhost:8000/api/notifications
-#Content-Type: application/json
-#
-#{
-#  "type": "Invitation",
-#  "content": "Romeo has invited you to join his team"
-#}
-####
-#POST http://localhost:8000/api/notifications
-#Content-Type: application/json
-#
-#{
-#  "type": "Budget",
-#  "content": "You spent 50% of your budget"
-#}
-####
-#POST http://localhost:8000/api/notifications
-#Content-Type: application/json
-#
-#{
-#  "type": "Info",
-#  "content": "Don't forget to submit your report"
-#}

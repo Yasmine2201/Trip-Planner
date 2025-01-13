@@ -41,16 +41,3 @@ class NotificationService:
         notification = Notification.objects.get(user=user.user_id, notification_id=notification_id)
         notification.delete()
         return notification
-
-    # ## used for tests only
-    # @staticmethod
-    # def create_notification(user: User, payload : dict):
-    #     """
-    #     Create a notification for a user.
-    #     """
-    #     print("Service", user, type(user))
-    #     print("Service", user.user_id, type(user.user_id))
-    #     notification = Notification.objects.create(user=user, **payload)
-    #     notification.save()
-    #     return notification
-
