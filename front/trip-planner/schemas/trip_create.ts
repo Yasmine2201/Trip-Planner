@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const createTripSchema = z.object({
-    tripName: z.string().min(1, { message: 'errors.trip-name-required' }),
+    trip_name: z.string().min(1, { message: 'errors.trip-name-required' }),
     latitude: z.number().min(-90).max(90, { message: 'errors.invalid-coordinates' }),
     longitude: z.number().min(-180).max(180, { message: 'errors.invalid-coordinates' }),
     radius: z.number().positive({ message: 'errors.radius-required' }),

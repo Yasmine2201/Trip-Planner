@@ -55,7 +55,7 @@ const deleteTrip = async (tripId: number) => {
         size="sm"
         color="primary"
         variant="solid"
-        :to="`/home/create_trip`"
+        :to="`/home/trip/create`"
     />
   </div>
 

@@ -114,7 +114,8 @@
     "notifications": "Notifications",
     "profile": "Profil",
     "register": "Créer un compte",
-    "create_trip": "Créer un voyage"
+    "create_trip": "Créer un voyage",
+    "modify_trip": "Modifier un voyage"
   },
   "notifications": {
     "none": "Pas de notifications"
@@ -147,5 +148,8 @@
     "trip_start_date": "Date de début",
     "trip_end_date": "Date de fin",
     "trip_create_button": "Créer un voyage"
+  },
+  "modify_trip": {
+    "trip_modify_button": "Modifier le voyage"
   }
 }

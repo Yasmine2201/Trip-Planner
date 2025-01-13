@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import type {FormSubmitEvent} from "#ui/types";
+import type { FormSubmitEvent } from "#ui/types";
 import type { LoginDto } from "~/schemas";
 import { loginSchema } from '~/schemas';
 

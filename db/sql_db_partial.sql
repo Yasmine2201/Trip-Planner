@@ -36,7 +36,7 @@ CREATE TABLE Visit (
 
 CREATE TABLE Trip (
                       tripId: uuId PRIMARY KEY,
-                      tripName: string,
+                      trip_name: string,
                       startDate: date,
                       endDate: date,
                       center: geography,
