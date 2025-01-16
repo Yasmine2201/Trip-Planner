@@ -28,7 +28,7 @@ const getLocationDetails = async (trip : Trip) => {
 
     const address = response.data.value.address;
 
-    town.value = address.town;
+    town.value = address.city ?? address.town ?? "";
     country.value = address.country;
   } catch (error) {
     console.error('Error fetching location details:', error);

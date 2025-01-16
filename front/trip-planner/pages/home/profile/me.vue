@@ -2,6 +2,7 @@
 definePageMeta({
   title: "profile.title",
   layout: "navigation",
+  requiresAuth: true,
 });
 
 const { t } = useI18n();
@@ -29,9 +30,9 @@ const age = computed(() => {
   <div class="flex flex-row gap-4 mt-12">
     <div class="flex-col flex-1 basis-1/4">
       <UCard class="h-full">
-        <div class="flex justify-center">
+        <div>
           <img v-if="authStore.user.avatarImage" :src="authStore.user.avatarImage" alt="Profile picture" class="w-64 h-64 rounded-2xl" />
-          <img v-else src="/public/static/img/empty-avatar.webp" alt="Empty profile picture" class="w-64 h-64 rounded-2xl" />
+          <img v-else src="/public/static/img/empty-avatar.webp" alt="Empty profile picture" class="w-64 aspect-1 rounded-2xl" />
         </div>
 
         <div class="m-4">

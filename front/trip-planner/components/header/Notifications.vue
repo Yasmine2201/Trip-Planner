@@ -1,57 +1,52 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
-import {NotificationType} from "~/types/notifications";
-import {ref} from "vue";
+import {NotificationType, Notifications} from "~/types/notifications";
+import {NotificationsList} from "#components";
 
-const { t } = useI18n();
-const router = useRouter();
+const {t} = useI18n();
+const route = useRoute();
+const toast = useToast();
+const slideover = useSlideover();
 
-const { data: notificationsData } = await useApiFetch<Notification[]>(`/notifications`);
-const  notifications = ref<Notification | null>(notificationsData.value || null);
+const {data: notificationsData} = await useApiFetch<Notifications[]>(`/notifications`);
+const notifications = reactive<Notifications | null>(notificationsData.value || null);
 
-const maxDisplayCount = 3;
-const notificationItems = computed(() => [
-    notifications.value ? notifications.value.map(
-        (notification: Notification) => ({
-              class: notification.is_read ? 'text-gray-500 dark:text-gray-400' : 'text-primary-500 dark:text-primary-400 font-extrabold',
-              label: notification.content,
-              icon: NotificationType[notification.type as keyof typeof NotificationType],
-              iconClass: notification.is_read ? 'text-gray-500 dark:text-gray-400' : 'text-primary-500 dark:text-primary-400',
-              click: () => router.push({
-                path: '/home/notifications/' + notification.notification_id
-              })
-            })
-    ) : []
-]);
-const displayedNotifications =  computed(() => {
-  if (!notifications.value) {
-    return [];
+const getNotificationText = (content: string) => {
+  const notification = JSON.parse(content);
+  return t(notification.message, notification.data);
+}
+
+watch(route, async () => {
+  let oldNotifications = notifications.value;
+
+  const {data: notificationsData} = await useApiFetch<Notifications[]>(`/notifications`);
+  notifications.value = notificationsData.value;
+
+  for (let notification of notifications.value) {
+    if (!oldNotifications?.find((oldNotification) => oldNotification.notification_id === notification.notification_id) && !notification.is_read) {
+      console.log('new notification', notification);
+      toast.add({
+        title: getNotificationText(notification.content),
+        icon: NotificationType[notification.type as keyof typeof NotificationType],
+        color: 'primary',
+        duration: 2000
+      });
+    }
   }
-  const limitedNotifications = notificationItems.value.flat().slice(0, maxDisplayCount);
-  limitedNotifications.push({
-    label: t('notifications.view-all'),
-    class: 'text-primary-500 dark:text-primary-400 font-extrabold',
-    icon: 'i-heroicons-eye',
-    iconClass: 'text-primary-500 dark:text-primary-400',
-    click: () => router.push('/home/notifications')
-  });
-  return [limitedNotifications];
 });
 
-const notificationCount = computed(() =>
-  notifications.value ? notifications.value.filter((notification: Notification) => !notification.is_read).length : 0
-);
-
+const openNotificationSlideOver = () => {
+  slideover.open(NotificationsList, {
+    onClose: slideover.close
+  });
+};
 
 </script>
 
 <template>
-
-  <UDropdown :items = "displayedNotifications" :popper="{ placement: 'bottom-start' }">
-  <UButton icon="i-heroicons-bell" color="gray"/>
-    <UChip :text ="notificationCount" size="2xl" :show="notificationItems.length > 0">
+    <UChip :show="notifications?.length > 0" :text="notifications.value?.filter((notification: Notification) => !notification.is_read).length ?? 0" size="2xl">
+      <UButton color="gray" icon="i-heroicons-bell" @click="openNotificationSlideOver"/>
     </UChip>
-  </UDropdown>
 </template>
 <style>
 

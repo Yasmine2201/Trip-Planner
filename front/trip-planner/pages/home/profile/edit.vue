@@ -3,7 +3,8 @@ import {type EditProfilDto, editProfileSchema} from "~/schemas";
 import type { FormSubmitEvent } from "#ui/types";
 
 definePageMeta({
-  title: "profile.title"
+  title: "profile.title",
+  requiresAuth: true,
 });
 
 const { t } = useI18n();

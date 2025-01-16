@@ -27,8 +27,6 @@ class NotificationView(ProtectableAPIView):
                 return Response({"error": "Notifications not found"}, status=404)
         else:
             notifications = NotificationService.get_all_user_notifications(user).order_by('-created_at')
-            if not notifications:
-                return Response({"error": "No notifications found"}, status=404)
             return Response(NotificationSerializer(notifications, many=True).data)
 
     @staticmethod

@@ -2,6 +2,9 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+
+  <UNotifications />
+  <USlideovers />
 </template>
 
 <script setup lang="ts">

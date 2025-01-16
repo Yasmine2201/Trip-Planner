@@ -10,7 +10,8 @@ const { $api } = useNuxtApp();
 
 definePageMeta({
   title: 'navigation.create_trip',
-  layout: 'navigation'
+  layout: 'navigation',
+  requiresAuth: true,
 });
 
 const state = reactive({

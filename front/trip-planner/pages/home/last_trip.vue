@@ -6,7 +6,8 @@ const { t } = useI18n();
 const router = useRouter();
 definePageMeta({
   title: 'navigation.last-trip',
-  layout: 'navigation'
+  layout: 'navigation',
+  requiresAuth: true,
 });
 
 const lastTrip = ref<Trip | null>(null);
