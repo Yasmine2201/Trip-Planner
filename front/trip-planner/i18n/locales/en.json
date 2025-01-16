@@ -26,26 +26,27 @@
     "already-have-account": "Already have an account ? Login here.",
     "birthdate-invalid": "Invalid birthdate.",
     "confirm-password-required": "Please repeat your password.",
+    "description-too-long": "Description is limitied to 1000 caracters",
     "email-already-exists": "This email is already used.",
     "email-invalid": "Please enter a valid email.",
     "email-required": "Email is required.",
     "first-name-required": "First name is required.",
+    "invalid-birthdate": "Invalid birthdate",
+    "invalid-coordinates": "Coordinates must be between -90 and 90 for latitude and -180 and 180 for longitude",
     "invalid-credentials": "Invalid credentials",
+    "invalid-end-date": "Invalid end date",
     "invalid-form": "Invalid form.",
+    "invalid-location": "Invalid coordinates",
+    "invalid-start-date": "Invalid start date",
     "last-name-required": "Last name is required.",
     "oops": "Something went wrong.",
     "password-rejected": "Invalid password",
     "password-required": "Password is required.",
     "passwords-must-match": "Passwords must match.",
-    "unknown-error": "Please retry later.",
-
-    "trip-name-required": "Trip name is required",
-    "invalid-location": "Invalid coordinates",
-    "invalid-coordinates": "Coordinates must be between -90 and 90 for latitude and -180 and 180 for longitude",
     "radius-required": "Radius is required and must be a positive number",
-    "invalid-start-date": "Invalid start date",
-    "invalid-end-date": "Invalid end date",
-    "start-date-before-end-date": "Start date must be before end date"
+    "start-date-before-end-date": "Start date must be before end date",
+    "trip-name-required": "Trip name is required",
+    "unknown-error": "Please retry later."
   },
   "language": {
     "af": "Afrikaans",
@@ -101,10 +102,15 @@
   },
   "misc": {
     "loading": "Loading...",
-    "no-items": "No items."
+    "no-items": "No items.",
+    "no-results": "No results for {query}",
+    "save": "Save",
+    "search": "Search...",
+    "select-value": "Select values"
   },
   "navigation": {
     "about": "About",
+    "create_trip": "Create a trip",
     "home": "Home",
     "last-trip": "Last trip",
     "login": "Log in",
@@ -113,8 +119,7 @@
     "new-trip": "New trip",
     "notifications": "Notifications",
     "profile": "Profile",
-    "register": "Register",
-    "create_trip": "Create a trip"
+    "register": "Register"
   },
   "notifications": {
     "none": "No notifications",
@@ -136,7 +141,9 @@
     "description": "Description",
     "edit": "Edit",
     "email": "Email",
+    "first-name": "First name",
     "informations": "Profile informations",
+    "last-name": "Last name",
     "not-filled": "Not provided",
     "title": "My profile"
   },
@@ -170,6 +177,5 @@
     "enter": "Enter",
     "edit": "Edit",
     "delete": "Delete"
-
   }
 }
