@@ -1,10 +1,4 @@
 {
-  "LocationSelect": {
-    "latitude": "Latitude",
-    "longitude": "Longitude",
-    "place": "Place",
-    "radius": "Radius (km)"
-  },
   "about": {
     "title": "About"
   },
@@ -26,18 +20,6 @@
     "password": "Password",
     "register-button": "Register",
     "register-title": "Register"
-  },
-  "core": {
-    "delete": "Delete",
-    "edit": "Edit"
-  },
-  "create_trip": {
-    "trip_create_button": "Create a trip",
-    "trip_end_date": "End date",
-    "trip_location": "Location",
-    "trip_map": "Map",
-    "trip_name": "Trip name",
-    "trip_start_date": "Start date"
   },
   "errors": {
     "alias-required": "Alias is required.",
@@ -140,7 +122,17 @@
     "register": "Register"
   },
   "notifications": {
-    "none": "No notifications"
+    "none": "No notifications",
+    "type": {
+      "info": "Info",
+      "budget": "Budget",
+      "invitation": "Invitation"
+    },
+    "view-all": "View all",
+    "mark-as-read": "Mark as read",
+    "read": "Read",
+    "no-notifications": "No notifications",
+    "deleted": "Notification deleted"
   },
   "profile": {
     "age": "Age",
@@ -155,16 +147,35 @@
     "not-filled": "Not provided",
     "title": "My profile"
   },
-  "trip_home": {
-    "budget": "Budget",
-    "trip_details": "Trip details",
-    "trip_location_info": "You chose to go here",
-    "visits": "Visits"
-  },
   "trips": {
     "end": "End date",
     "name": "Name",
     "start": "Start date",
     "triplist-title": "My trips"
+  },
+  "LocationSelect": {
+    "place": "Place",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "radius": "Radius (km)"
+  },
+  "create_trip": {
+    "trip_name": "Trip name",
+    "trip_start_date": "Start date",
+    "trip_end_date": "End date",
+    "trip_create_button": "Create a trip",
+    "trip_location": "Location",
+    "trip_map": "Map"
+  },
+  "trip_home" : {
+    "trip_details": "Trip details",
+    "visits": "Visits",
+    "budget": "Budget",
+    "trip_location_info": "You chose to go here"
+  },
+  "core": {
+    "enter": "Enter",
+    "edit": "Edit",
+    "delete": "Delete"
   }
 }

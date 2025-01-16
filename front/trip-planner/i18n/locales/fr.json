@@ -1,10 +1,4 @@
 {
-  "LocationSelect": {
-    "latitude": "Latitude",
-    "longitude": "Longitude",
-    "place": "Lieu",
-    "radius": "Rayon (km)"
-  },
   "about": {
     "title": "À propos"
   },
@@ -26,18 +20,6 @@
     "password": "Mot de passe",
     "register-button": "Créer un compte",
     "register-title": "Création d'un compte"
-  },
-  "core": {
-    "delete": "Supprimer",
-    "edit": "Modifier"
-  },
-  "create_trip": {
-    "trip_create_button": "Créer un voyage",
-    "trip_end_date": "Date de fin",
-    "trip_location": "Lieu",
-    "trip_map": "Carte",
-    "trip_name": "Nom du voyage",
-    "trip_start_date": "Date de début"
   },
   "errors": {
     "alias-required": "Un pseudonyme est requis.",
@@ -140,7 +122,17 @@
     "register": "Créer un compte"
   },
   "notifications": {
-    "none": "Pas de notifications"
+    "none": "Pas de notifications",
+    "type": {
+      "info": "Info",
+      "budget": "Budget",
+      "invitation": "Invitation"
+    },
+    "view-all": "Voir tout",
+    "mark-as-read": "Marquer comme lu",
+    "read": "Lu",
+    "no-notifications": "Pas de notifications",
+    "deleted": "Notification supprimée"
   },
   "profile": {
     "age": "Age",
@@ -155,16 +147,36 @@
     "not-filled": "Pas renseigné·e",
     "title": "Mon profil"
   },
-  "trip_home": {
-    "budget": "Budget",
-    "trip_details": "Détails du voyage",
-    "trip_location_info": "Vous avez choisi d'aller ici",
-    "visits": "Visites"
-  },
   "trips": {
     "end": "Date de fin",
     "name": "Nom",
     "start": "Date de début",
     "triplist-title": "Mes voyages"
+  },
+  "LocationSelect" : {
+    "place": "Lieu",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "radius": "Rayon (km)"
+  },
+  "create_trip": {
+    "trip_name": "Nom du voyage",
+    "trip_start_date": "Date de début",
+    "trip_end_date": "Date de fin",
+    "trip_create_button": "Créer un voyage",
+    "trip_location": "Lieu",
+    "trip_map": "Carte"
+  },
+
+  "trip_home" : {
+    "trip_details": "Détails du voyage",
+    "visits": "Visites",
+    "budget": "Budget",
+    "trip_location_info": "Vous avez choisi d'aller ici"
+  },
+  "core": {
+    "enter": "Entrer",
+    "edit": "Modifier",
+    "delete": "Supprimer"
   }
 }

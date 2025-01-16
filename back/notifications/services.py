@@ -19,9 +19,17 @@ class NotificationService:
         """
 
         notification = Notification.objects.get(user=user.user_id, notification_id=notification_id)
-        if not notification.is_read:
-            notification.is_read = True
-            notification.save()
+        return notification
+
+    @staticmethod
+    def set_read_user_notification(user: User, notification_id: int):
+        """
+        Set a specific notification associated with a user as read.
+        """
+
+        notification = Notification.objects.get(user=user.user_id, notification_id=notification_id)
+        notification.is_read = True
+        notification.save()
         return notification
 
     @staticmethod
@@ -33,4 +41,3 @@ class NotificationService:
         notification = Notification.objects.get(user=user.user_id, notification_id=notification_id)
         notification.delete()
         return notification
-

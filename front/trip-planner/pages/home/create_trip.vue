@@ -10,7 +10,7 @@ const { $api } = useNuxtApp();
 
 definePageMeta({
   title: 'navigation.create_trip',
-  layout: false
+  layout: 'navigation'
 });
 
 const state = reactive({
@@ -71,11 +71,6 @@ const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
 </script>
 
 <template>
-  <NuxtLayout name="auth">
-    <template #title>
-      {{ t('navigation.create_trip') }}
-    </template>
-
     <UForm :schema="createTripSchema" :state="state" class="space-y-5" @submit="onSubmit" ref="form">
       <UFormGroup
           :label="t('create_trip.trip_name')"
@@ -142,5 +137,4 @@ const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
         </UButton>
       </div>
     </UForm>
-  </NuxtLayout>
 </template>
