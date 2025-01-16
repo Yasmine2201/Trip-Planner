@@ -97,7 +97,9 @@ const onSubmit = async ({ data }: FormSubmitEvent<EditProfilDto>) => {
         <UInput v-model="state.email" disabled />
       </UFormGroup>
 
-      <LanguageSelector v-model="state.languages" ref="languageSelector" />
+      <UFormGroup :label="t('profile.languages')" name="languages" class="flex-1 min-w-[420px] mb-6">
+        <LanguageSelector v-model="state.languages" ref="languageSelector" />
+      </UFormGroup>
 
       <UFormGroup :label="t('profile.description')" name="description" class="flex-1 min-w-[420px]">
         <UTextarea v-model="state.description" autoresize :maxrows="10" />
