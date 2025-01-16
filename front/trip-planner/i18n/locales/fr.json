@@ -121,7 +121,10 @@
   "misc": {
     "loading": "Chargement...",
     "no-items": "Pas de données.",
-    "save": "Enregistrer"
+    "no-results": "Pas de résultats pour {query}",
+    "save": "Enregistrer",
+    "search": "Rechercher...",
+    "select-value": "Sélectionnez des valeurs"
   },
   "navigation": {
     "about": "À propos",

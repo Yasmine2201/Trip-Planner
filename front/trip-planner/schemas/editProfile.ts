@@ -13,7 +13,7 @@ export const editProfileSchema = z.object({
       return birthDate <= today;
     }, 'errors.birthdate-invalid'),
   description: z.string().max(1000, { message: 'errors.description-too-long' }),
-  // languages: z.array(z.string()).optional(),
+  languages: z.array(z.string()).optional(),
 });
 
 export type EditProfilDto = z.input<typeof editProfileSchema>;

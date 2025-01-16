@@ -22,6 +22,7 @@ const languagesText = computed(() => {
         ?.split(',')
         .map(lang => lang.trim())
         .map(lang => languagesDict.value[lang])
+        .sort()
   }
 );
 

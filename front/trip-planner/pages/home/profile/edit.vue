@@ -19,7 +19,7 @@ const state = reactive({
   lastname: authStore.user.lastname,
   alias: authStore.user.alias,
   birthdate: authStore.user.birthdate,
-  languages: authStore.user.languages,
+  languages: authStore.user.languages?.split(',') ?? [],
   email: authStore.user.email,
   description: authStore.user.description
 })
@@ -34,7 +34,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<EditProfilDto>) => {
       last_name: data.lastname,
       alias: data.alias,
       birthdate: data.birthdate,
-      languages: data.languages,
+      languages: data.languages.length ? data.languages.join(',') : null,
       description: data.description,
       user_id: authStore.user.id
     }
@@ -96,7 +96,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<EditProfilDto>) => {
         <UInput v-model="state.email" disabled />
       </UFormGroup>
 
-<!--      <LanguageSelector v-model="state.languages" ref="languageSelector" />-->
+      <LanguageSelector v-model="state.languages" ref="languageSelector" />
 
       <UFormGroup :label="t('profile.description')" name="description" class="flex-1 min-w-[420px]">
         <UTextarea v-model="state.description" autoresize :maxrows="10" />

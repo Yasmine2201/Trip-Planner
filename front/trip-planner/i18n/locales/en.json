@@ -1,13 +1,170 @@
 {
+  "LocationSelect": {
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "place": "Place",
+    "radius": "Radius (km)"
+  },
+  "about": {
+    "title": "About"
+  },
+  "app": {
+    "name": "TripPlanner"
+  },
+  "auth": {
+    "alias": "Alias",
+    "alias-help": "Name visible to other users.",
+    "already-have-account": "Already have an account ? Log in here.",
+    "birthdate": "Birthdate",
+    "confirm-password": "Confirm password",
+    "email": "Email",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "login-button": "Log in",
+    "login-title": "Log in",
+    "no-account-yet": "Don't have an account ? Register here.",
+    "password": "Password",
+    "register-button": "Register",
+    "register-title": "Register"
+  },
+  "core": {
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "create_trip": {
+    "trip_create_button": "Create a trip",
+    "trip_end_date": "End date",
+    "trip_location": "Location",
+    "trip_map": "Map",
+    "trip_name": "Trip name",
+    "trip_start_date": "Start date"
+  },
   "errors": {
+    "alias-required": "Alias is required.",
+    "already-have-account": "Already have an account ? Login here.",
+    "birthdate-invalid": "Invalid birthdate.",
+    "confirm-password-required": "Please repeat your password.",
     "description-too-long": "Description is limitied to 1000 caracters",
-    "invalid-birthdate": "Invalid birthdate"
+    "email-already-exists": "This email is already used.",
+    "email-invalid": "Please enter a valid email.",
+    "email-required": "Email is required.",
+    "first-name-required": "First name is required.",
+    "invalid-birthdate": "Invalid birthdate",
+    "invalid-coordinates": "Coordinates must be between -90 and 90 for latitude and -180 and 180 for longitude",
+    "invalid-credentials": "Invalid credentials",
+    "invalid-end-date": "Invalid end date",
+    "invalid-form": "Invalid form.",
+    "invalid-location": "Invalid coordinates",
+    "invalid-start-date": "Invalid start date",
+    "last-name-required": "Last name is required.",
+    "oops": "Something went wrong.",
+    "password-rejected": "Invalid password",
+    "password-required": "Password is required.",
+    "passwords-must-match": "Passwords must match.",
+    "radius-required": "Radius is required and must be a positive number",
+    "start-date-before-end-date": "Start date must be before end date",
+    "trip-name-required": "Trip name is required",
+    "unknown-error": "Please retry later."
+  },
+  "language": {
+    "af": "Afrikaans",
+    "ar": "Arabic",
+    "bg": "Bulgarian",
+    "bn": "Bengali",
+    "cs": "Czech",
+    "da": "Danish",
+    "de": "German",
+    "el": "Greek",
+    "en": "English",
+    "es": "Spanish",
+    "et": "Estonian",
+    "fa": "Persian",
+    "fi": "Finnish",
+    "fr": "French",
+    "gu": "Gujarati",
+    "he": "Hebrew",
+    "hi": "Hindi",
+    "hr": "Croatian",
+    "hu": "Hungarian",
+    "id": "Indonesian",
+    "it": "Italian",
+    "ja": "Japanese",
+    "jv": "Javanese",
+    "ko": "Korean",
+    "lt": "Lithuanian",
+    "lv": "Latvian",
+    "ml": "Malayalam",
+    "mr": "Marathi",
+    "ms": "Malay",
+    "nl": "Dutch",
+    "no": "Norwegian",
+    "pa": "Punjabi",
+    "pl": "Polish",
+    "pt": "Portuguese",
+    "ro": "Romanian",
+    "ru": "Russian",
+    "sk": "Slovak",
+    "sl": "Slovene",
+    "sq": "Albanian",
+    "sr": "Serbian",
+    "sv": "Swedish",
+    "sw": "Swahili",
+    "ta": "Tamil",
+    "te": "Telugu",
+    "th": "Thai",
+    "tr": "Turkish",
+    "uk": "Ukrainian",
+    "ur": "Urdu",
+    "vi": "Vietnamese",
+    "zh": "Chinese"
   },
   "misc": {
-    "save": "Save"
+    "loading": "Loading...",
+    "no-items": "No items.",
+    "no-results": "No results for {query}",
+    "save": "Save",
+    "search": "Search...",
+    "select-value": "Select values"
+  },
+  "navigation": {
+    "about": "About",
+    "create_trip": "Create a trip",
+    "home": "Home",
+    "last-trip": "Last trip",
+    "login": "Log in",
+    "logout": "Log out",
+    "my-trips": "My trips",
+    "new-trip": "New trip",
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "register": "Register"
+  },
+  "notifications": {
+    "none": "No notifications"
   },
   "profile": {
+    "age": "Age",
+    "alias": "Alias",
+    "birthdate": "Birthdate",
+    "description": "Description",
+    "edit": "Edit",
+    "email": "Email",
     "first-name": "First name",
-    "last-name": "Last name"
+    "informations": "Profile informations",
+    "last-name": "Last name",
+    "not-filled": "Not provided",
+    "title": "My profile"
+  },
+  "trip_home": {
+    "budget": "Budget",
+    "trip_details": "Trip details",
+    "trip_location_info": "You chose to go here",
+    "visits": "Visits"
+  },
+  "trips": {
+    "end": "End date",
+    "name": "Name",
+    "start": "Start date",
+    "triplist-title": "My trips"
   }
 }
