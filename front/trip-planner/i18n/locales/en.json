@@ -181,5 +181,12 @@
     "name": "Name",
     "start": "Start date",
     "triplist-title": "My trips"
+  },
+  "budget": {
+    "title": "Budget",
+    "debts-and-credits": "Debts and credits",
+    "expenses": "Expenses",
+    "expenses-description": "Here you can see all the expenses of the trip",
+    "debts-and-credits-description": "Here you can see all the debts and credits of the trip"
   }
 }

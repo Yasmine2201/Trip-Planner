@@ -181,5 +181,12 @@
     "name": "Nom",
     "start": "Date de début",
     "triplist-title": "Mes voyages"
+  },
+  "budget": {
+    "title": "Budget",
+    "debts-and-credits": "Créances et dettes",
+    "expenses": "Dépenses",
+    "expenses-description": "Ici vous trouverez les dépenses du voyage",
+    "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
   }
 }
