@@ -1,4 +1,10 @@
 {
+  "LocationSelect": {
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "place": "Place",
+    "radius": "Radius (km)"
+  },
   "about": {
     "title": "About"
   },
@@ -21,31 +27,40 @@
     "register-button": "Register",
     "register-title": "Register"
   },
+  "create_trip": {
+    "trip_create_button": "Create a trip",
+    "trip_end_date": "End date",
+    "trip_location": "Location",
+    "trip_map": "Map",
+    "trip_name": "Trip name",
+    "trip_start_date": "Start date"
+  },
   "errors": {
     "alias-required": "Alias is required.",
     "already-have-account": "Already have an account ? Login here.",
     "birthdate-invalid": "Invalid birthdate.",
     "confirm-password-required": "Please repeat your password.",
+    "description-too-long": "Description is limitied to 1000 caracters",
     "email-already-exists": "This email is already used.",
     "email-invalid": "Please enter a valid email.",
     "email-required": "Email is required.",
     "first-name-required": "First name is required.",
+    "invalid-birthdate": "Invalid birthdate",
+    "invalid-coordinates": "Coordinates must be between -90 and 90 for latitude and -180 and 180 for longitude",
     "invalid-credentials": "Invalid credentials",
+    "invalid-end-date": "Invalid end date",
     "invalid-form": "Invalid form.",
+    "invalid-location": "Invalid coordinates",
+    "invalid-start-date": "Invalid start date",
     "last-name-required": "Last name is required.",
     "oops": "Something went wrong.",
     "password-rejected": "Invalid password",
     "password-required": "Password is required.",
     "passwords-must-match": "Passwords must match.",
-    "unknown-error": "Please retry later.",
-
-    "trip-name-required": "Trip name is required",
-    "invalid-location": "Invalid coordinates",
-    "invalid-coordinates": "Coordinates must be between -90 and 90 for latitude and -180 and 180 for longitude",
     "radius-required": "Radius is required and must be a positive number",
-    "invalid-start-date": "Invalid start date",
-    "invalid-end-date": "Invalid end date",
-    "start-date-before-end-date": "Start date must be before end date"
+    "start-date-before-end-date": "Start date must be before end date",
+    "trip-name-required": "Trip name is required",
+    "unknown-error": "Please retry later."
   },
   "language": {
     "af": "Afrikaans",
@@ -100,11 +115,18 @@
     "zh": "Chinese"
   },
   "misc": {
+    "delete": "Delete",
     "loading": "Loading...",
-    "no-items": "No items."
+    "no-items": "No items.",
+    "no-results": "No results for {query}",
+    "save": "Save",
+    "search": "Search...",
+    "see": "See",
+    "select-value": "Select values"
   },
   "navigation": {
     "about": "About",
+    "create_trip": "Create a trip",
     "home": "Home",
     "last-trip": "Last trip",
     "login": "Log in",
@@ -117,8 +139,23 @@
     "create_trip": "Create a trip",
     "modify_trip": "Modify a trip"
   },
+  "notification": {
+    "content": {
+      "added-to-trip": "You have been added to trip '{tripName}'",
+      "budget-changed": "Budget for trip '{tripName}' has been changed to {budget}"
+    },
   "notifications": {
-    "none": "No notifications"
+    "deleted": "Notification deleted",
+    "mark-as-read": "Mark as read",
+    "no-notifications": "No notifications",
+    "none": "No notifications",
+    "read": "Read",
+    "title": "Notifications",
+    "type": {
+      "add-to-trip": "Added to trip",
+      "budget": "Budget"
+    },
+    "view-all": "View all"
   },
   "profile": {
     "age": "Age",
@@ -127,9 +164,18 @@
     "description": "Description",
     "edit": "Edit",
     "email": "Email",
+    "first-name": "First name",
     "informations": "Profile informations",
+    "languages": "Languages",
+    "last-name": "Last name",
     "not-filled": "Not provided",
     "title": "My profile"
+  },
+  "trip_home": {
+    "budget": "Budget",
+    "trip_details": "Trip details",
+    "trip_location_info": "You chose to go here",
+    "visits": "Visits"
   },
   "trips": {
     "end": "End date",

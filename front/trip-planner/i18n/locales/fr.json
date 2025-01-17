@@ -1,4 +1,10 @@
 {
+  "LocationSelect": {
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "place": "Lieu",
+    "radius": "Rayon (km)"
+  },
   "about": {
     "title": "À propos"
   },
@@ -21,31 +27,40 @@
     "register-button": "Créer un compte",
     "register-title": "Création d'un compte"
   },
+  "create_trip": {
+    "trip_create_button": "Créer un voyage",
+    "trip_end_date": "Date de fin",
+    "trip_location": "Lieu",
+    "trip_map": "Carte",
+    "trip_name": "Nom du voyage",
+    "trip_start_date": "Date de début"
+  },
   "errors": {
     "alias-required": "Un pseudonyme est requis.",
     "already-have-account": "Déjà un compte ? Connectez-vous ici.",
     "birthdate-invalid": "Date de naissance invalide",
     "confirm-password-required": "Veuillez répéter le mot de passe.",
+    "description-too-long": "La description est limitée à 1000 caractères",
     "email-already-exists": "Cet email est déjà utilisé.",
     "email-invalid": "Veuillez entrer un email valide.",
     "email-required": "Un email est requis.",
     "first-name-required": "Votre prénom est requis.",
+    "invalid-birthdate": "Date invalide",
+    "invalid-coordinates": "Les coordonnées doivent être entre -90 et 90 pour la latitude et -180 et 180 pour la longitude",
     "invalid-credentials": "Identifiants invalides",
+    "invalid-end-date": "La date de fin est invalide",
     "invalid-form": "Formulaire non valide.",
+    "invalid-location": "Les coordonnées sont invalides",
+    "invalid-start-date": "La date de début est invalide",
     "last-name-required": "Votre nom de famille est requis.",
     "oops": "Une erreur est survenue.",
     "password-rejected": "Mot de passe invalide",
     "password-required": "Un mot de passe est requis.",
     "passwords-must-match": "Les mots de passe doivent être les mêmes.",
-    "unknown-error": "Merci de réessayer ultérieurement.",
-
-    "trip-name-required": "Le nom du voyage est requis",
-    "invalid-location": "Les coordonnées sont invalides",
-    "invalid-coordinates": "Les coordonnées doivent être entre -90 et 90 pour la latitude et -180 et 180 pour la longitude",
     "radius-required": "Le rayon est requis et doit être un nombre positif",
-    "invalid-start-date": "La date de début est invalide",
-    "invalid-end-date": "La date de fin est invalide",
-    "start-date-before-end-date": "La date de début doit être avant la date de fin"
+    "start-date-before-end-date": "La date de début doit être avant la date de fin",
+    "trip-name-required": "Le nom du voyage est requis",
+    "unknown-error": "Merci de réessayer ultérieurement."
   },
   "language": {
     "af": "Afrikaans",
@@ -100,11 +115,18 @@
     "zh": "Chinois"
   },
   "misc": {
+    "delete": "Supprimer",
     "loading": "Chargement...",
-    "no-items": "Pas de données."
+    "no-items": "Pas de données.",
+    "no-results": "Pas de résultats pour {query}",
+    "save": "Enregistrer",
+    "search": "Rechercher...",
+    "see": "Voir",
+    "select-value": "Sélectionnez des valeurs"
   },
   "navigation": {
     "about": "À propos",
+    "create_trip": "Créer un voyage",
     "home": "Accueil",
     "last-trip": "Dernier voyage",
     "login": "Se connecter",
@@ -114,11 +136,25 @@
     "notifications": "Notifications",
     "profile": "Profil",
     "register": "Créer un compte",
-    "create_trip": "Créer un voyage",
     "modify_trip": "Modifier un voyage"
   },
+  "notification": {
+    "content": {
+      "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
+      "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget}"
+  },
   "notifications": {
-    "none": "Pas de notifications"
+    "deleted": "Notification supprimée",
+    "mark-as-read": "Marquer comme lu",
+    "no-notifications": "Pas de notifications",
+    "none": "Pas de notifications",
+    "read": "Lu",
+    "title": "Notifications",
+    "type": {
+      "add-to-trip": "Ajouté au voyage",
+      "budget": "Budget"
+    },
+    "view-all": "Voir tout"
   },
   "profile": {
     "age": "Age",
@@ -127,9 +163,18 @@
     "description": "Description",
     "edit": "Modifier",
     "email": "Email",
+    "first-name": "Prénom",
     "informations": "Informations du profil",
+    "languages": "Langages",
+    "last-name": "Nom",
     "not-filled": "Pas renseigné·e",
     "title": "Mon profil"
+  },
+  "trip_home": {
+    "budget": "Budget",
+    "trip_details": "Détails du voyage",
+    "trip_location_info": "Vous avez choisi d'aller ici",
+    "visits": "Visites"
   },
   "trips": {
     "end": "Date de fin",
