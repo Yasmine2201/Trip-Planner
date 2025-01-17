@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {NotificationType, Notifications} from "~/types/notifications";
-import {notifications} from "#ui/ui.config";
+import {Notifications} from "~/types/notifications";
+import getNotificationProps from "~/utils/getNotificationProps";
 
 const {t} = useI18n();
 const router = useRouter();
@@ -52,18 +52,7 @@ const getActions = () => {
   ]
 }
 
-const typeProps = {
-  [NotificationType.AddToTrip]: {
-    label: t('notifications.type.add-to-trip'),
-    icon: 'material-symbols:trip-outline',
-    link: () => `/home/trips/${content.data.tripId}`
-  },
-  [NotificationType.Budget]: {
-    label: t('notifications.type.budget'),
-    icon: 'material-symbols:currency-exchange',
-    link: () => `/home/trips/${content.data.tripId}/budget`
-  },
-}
+const typeProps = getNotificationProps(content, t);
 
 const handleReadNotification = async () => {
   try {

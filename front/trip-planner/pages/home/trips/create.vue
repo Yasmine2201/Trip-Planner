@@ -3,16 +3,12 @@ import TripForm from "~/components/TripForm.vue";
 
 definePageMeta({
   title: 'navigation.create_trip',
-  layout: false,
+  layout: "navigation",
+  requiresAuth: true,
 });
 const { t } = useI18n();
 </script>
 
 <template>
-  <NuxtLayout name="auth">
-    <template #title>
-      {{ t('navigation.create_trip') }}
-    </template>
-    <TripForm mode="create" />
-  </NuxtLayout>
+  <TripForm mode="create" />
 </template>

@@ -116,6 +116,7 @@
   },
   "misc": {
     "delete": "Delete",
+    "edit": "Edit",
     "loading": "Loading...",
     "no-items": "No items.",
     "no-results": "No results for {query}",
@@ -124,6 +125,10 @@
     "see": "See",
     "select-value": "Select values"
   },
+  "modify_trip": {
+    "title": "Trip edition",
+    "trip_modify_button": "Modify the trip"
+  },
   "navigation": {
     "about": "About",
     "create_trip": "Create a trip",
@@ -131,20 +136,18 @@
     "last-trip": "Last trip",
     "login": "Log in",
     "logout": "Log out",
+    "modify_trip": "Modify a trip",
     "my-trips": "My trips",
     "new-trip": "New trip",
     "notifications": "Notifications",
     "profile": "Profile",
-    "register": "Register",
-    "create_trip": "Create a trip",
-    "modify_trip": "Modify a trip"
+    "register": "Register"
   },
-  "notification": {
+  "notifications": {
     "content": {
       "added-to-trip": "You have been added to trip '{tripName}'",
       "budget-changed": "Budget for trip '{tripName}' has been changed to {budget}"
     },
-  "notifications": {
     "deleted": "Notification deleted",
     "mark-as-read": "Mark as read",
     "no-notifications": "No notifications",
@@ -182,20 +185,5 @@
     "name": "Name",
     "start": "Start date",
     "triplist-title": "My trips"
-  },
-  "LocationSelect": {
-    "place": "Place",
-    "latitude": "Latitude",
-    "longitude": "Longitude",
-    "radius": "Radius (km)"
-  },
-  "create_trip": {
-    "trip_name": "Trip name",
-    "trip_start_date": "Start date",
-    "trip_end_date": "End date",
-    "trip_create_button": "Create a trip"
-  },
-  "modify_trip": {
-    "trip_modify_button": "Modify the trip"
   }
 }

@@ -3,15 +3,15 @@ import TripForm from "~/components/TripForm.vue";
 import type {Trip} from "~/types";
 
 const { t } = useI18n();
-const { $api } = useNuxtApp();
 
 definePageMeta({
   title: 'navigation.modify_trip',
-  layout: false,
+  layout: 'navigation',
+  requiresAuth: true,
 });
 
 const route = useRoute()
-const tripId = route.params.trip_id;
+const tripId = route.params.tripId;
 console.log("tripId:", tripId);
 
 // Charge les données du voyage depuis l'API
@@ -22,10 +22,6 @@ console.log("tripData:", tripData, tripData.trip_name);
 </script>
 
 <template>
-  <NuxtLayout name="auth">
-    <template #title>
-      {{ t('navigation.modify_trip') }}
-    </template>
-    <TripForm mode="modify" :tripData="tripData" />
-  </NuxtLayout>
+  <PageTitle :name="t('modify_trip.title')" />
+  <TripForm mode="modify" :tripData="tripData" />
 </template>
