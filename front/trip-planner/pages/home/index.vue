@@ -48,17 +48,18 @@ const deleteTrip = async (tripId: number) => {
 </script>
 
 <template>
-  <div class="flex space-x-5">
-    <h1 class="font-semibold text-primary-600 dark:text-primary-400">{{ t('trips.triplist-title') }}</h1>
-    <UButton
-        icon="i-entypo:add-to-list"
-        size="sm"
-        color="primary"
-        variant="solid"
-        :to="`/home/create_trip`"
-    />
-  </div>
-
+  <PageTitle :name="t('navigation.my-trips')">
+    <template #actions>
+      <UButton
+          icon="i-entypo:add-to-list"
+          size="sm"
+          color="primary"
+          variant="solid"
+          :label="t('navigation.create_trip')"
+          to="/home/trips/create"
+      />
+    </template>
+  </PageTitle>
   <UTable
       :columns
       :sort
@@ -69,7 +70,7 @@ const deleteTrip = async (tripId: number) => {
       :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'misc.no-items' }"
   >
     <template #trip_name-data="{ row }">
-      <NuxtLink :to="`/home/trip/${row.trip_id}`">{{ row.trip_name }}</NuxtLink>
+      <NuxtLink :to="`/home/trips/${row.trip_id}`">{{ row.trip_name }}</NuxtLink>
     </template>
 
     <template #start_date-data="{ row }">
@@ -96,7 +97,7 @@ const deleteTrip = async (tripId: number) => {
             color="primary"
             square
             variant="solid"
-            :to="`/home/trip/${row.trip_id}/edit`"
+            :to="`/home/trips/${row.trip_id}/edit`"
         />
         <UButton
             icon="i-heroicons-trash"
@@ -110,7 +111,6 @@ const deleteTrip = async (tripId: number) => {
     </template>
   </UTable>
 </template>
-
 
 <style scoped>
 

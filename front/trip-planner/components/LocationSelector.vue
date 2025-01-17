@@ -21,6 +21,7 @@
             @input="updateRadius"
             min="1"
             class="radius-input"
+            :disabled="!props.modifiable"
         />
       </div>
     </div>
@@ -34,17 +35,25 @@ import L from "leaflet";
 
 const { t } = useI18n();
 
-const selectedLat = ref(48.8566); // Par défaut : Paris
-const selectedLng = ref(2.3522);
-const radius = ref(10); // Rayon par défaut (en km)
+const props = defineProps({
+  modifiable : { type: Boolean, default: true },
+  locationData: { type: Object, default: () => ({}) }
+});
+
+const selectedLat = ref(props.locationData.latitude || 48.8566);
+const selectedLng = ref(props.locationData.longitude || 2.3522);
+const radius = ref(props.locationData.radius || 10);
 
 let map: L.Map;
 let marker: L.Marker;
 let circle: L.Circle;
 
+// Utilisation de computed pour avoir radius en m à partir de km
+const radiusMetres = computed(() => radius.value * 1000);
+
 const updateRadius = () => {
-  if (circle) {
-    circle.setRadius(radius.value * 1000);
+  if (circle && props.modifiable) {
+    circle.setRadius(radiusMetres.value);
   }
 };
 
@@ -55,23 +64,25 @@ onMounted(() => {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
-  marker = L.marker([selectedLat.value, selectedLng.value], { draggable: true }).addTo(map);
-  circle = L.circle([selectedLat.value, selectedLng.value], { radius: radius.value * 1000 }).addTo(map);
+  marker = L.marker([selectedLat.value, selectedLng.value], { draggable: props.modifiable }).addTo(map);
+  circle = L.circle([selectedLat.value, selectedLng.value], { radius: radiusMetres.value }).addTo(map);
 
-  marker.on("dragend", (event) => {
-    const position = marker.getLatLng();
-    selectedLat.value = position.lat;
-    selectedLng.value = position.lng;
-    circle.setLatLng(position);
-  });
+  if (props.modifiable) {
+    marker.on("dragend", (event) => {
+      const position = marker.getLatLng();
+      selectedLat.value = position.lat;
+      selectedLng.value = position.lng;
+      circle.setLatLng(position);
+    });
 
-  map.on("click", (event: L.LeafletMouseEvent) => {
-    const { lat, lng } = event.latlng;
-    selectedLat.value = lat;
-    selectedLng.value = lng;
-    marker.setLatLng([lat, lng]);
-    circle.setLatLng([lat, lng]);
-  });
+    map.on("click", (event: L.LeafletMouseEvent) => {
+      const {lat, lng} = event.latlng;
+      selectedLat.value = lat;
+      selectedLng.value = lng;
+      marker.setLatLng([lat, lng]);
+      circle.setLatLng([lat, lng]);
+    });
+  }
 
   // Assurez-vous que la carte est bien redimensionnée
   setTimeout(() => {

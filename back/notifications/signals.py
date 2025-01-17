@@ -24,7 +24,7 @@ def create_trip_participation_notification(sender, instance, created, **kwargs):
     print(kwargs)
     if created:
         content = NotificationContent(
-            message="notification.content.added-to-trip",
+            message="notifications.content.added-to-trip",
             data={
                 "tripName": instance.trip.trip_name,
                 "tripId": instance.trip.trip_id
@@ -46,7 +46,7 @@ def create_trip_participation_notification(sender, instance, created, **kwargs):
 def notify_budget_initialization(sender, instance, created, **kwargs):
     if not created and instance.declared_budget != 0:
         content = NotificationContent(
-            message="notification.content.budget-changed",
+            message="notifications.content.budget-changed",
             data={
                 "tripName": instance.trip.trip_name,
                 "budget": instance.declared_budget,

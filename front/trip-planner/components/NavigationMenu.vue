@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import type {Trip} from "~/types";
+
 const { t } = useI18n();
 const authStore = useAuthStore();
 
 const route = useRoute();
+const router = useRouter();
 const selectedTripId = computed(() => route.params.tripId);
 const path = computed(() => route.path);
 
@@ -25,14 +28,13 @@ const links = computed(() => {
       {
         label: t('navigation.last-trip'),
         icon: "heroicons:clock",
-        to: "/home/last_trip",
-        active: route.path === '/home/last_trip'
+        click: navigateToLastTrip,
+        active: route.path === '/home/trips/last'
       },
       {
         label: t('navigation.new-trip'),
         icon: "heroicons:plus",
-        to: '/home/create_trip',
-
+        to: '/home/trips/create',
       }
     ]
 
@@ -72,6 +74,17 @@ const links = computed(() => {
 
 const logout = async () => {
   await authStore.logout();
+};
+
+const navigateToLastTrip = async () => {
+  const tripResponse = await useApiFetch<Trip>(`/trips/last`);
+  const lastTripId = tripResponse.data.value?.trip_id;
+
+  if (!lastTripId) {
+    return;
+  }
+
+  router.push(`/home/trips/${lastTripId}`);
 };
 
 </script>

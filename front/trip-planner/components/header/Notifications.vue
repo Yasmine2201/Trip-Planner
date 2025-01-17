@@ -1,15 +1,16 @@
 <script lang="ts" setup>
 
-import {NotificationType, Notifications} from "~/types/notifications";
+import {Notifications} from "~/types/notifications";
 import {NotificationsList} from "#components";
+
 
 const {t} = useI18n();
 const route = useRoute();
 const toast = useToast();
 const slideover = useSlideover();
+const notificationsStore = useNotificationsStore();
 
-const {data: notificationsData} = await useApiFetch<Notifications[]>(`/notifications`);
-const notifications = reactive<Notifications | null>(notificationsData.value || null);
+const notifications = reactive<Notifications[]>(await notificationsStore.fetchNotifications());
 
 const getNotificationText = (content: string) => {
   const notification = JSON.parse(content);
@@ -17,17 +18,17 @@ const getNotificationText = (content: string) => {
 }
 
 watch(route, async () => {
-  let oldNotifications = notifications.value;
+  let oldNotifications = notificationsStore.notifications;
 
-  const {data: notificationsData} = await useApiFetch<Notifications[]>(`/notifications`);
-  notifications.value = notificationsData.value;
+  notifications.value = await notificationsStore.fetchNotifications();
 
   for (let notification of notifications.value) {
     if (!oldNotifications?.find((oldNotification) => oldNotification.notification_id === notification.notification_id) && !notification.is_read) {
-      console.log('new notification', notification);
+      const notificationProps = getNotificationProps(JSON.parse(notification.content), t);
+
       toast.add({
         title: getNotificationText(notification.content),
-        icon: NotificationType[notification.type as keyof typeof NotificationType],
+        icon: notificationProps[notification.type].icon,
         color: 'primary',
         duration: 2000
       });
@@ -41,10 +42,14 @@ const openNotificationSlideOver = () => {
   });
 };
 
+const notificationsCount = computed(() => {
+  return notifications?.filter((notification: Notification) => !notification.is_read).length ?? 0;
+});
+
 </script>
 
 <template>
-    <UChip :show="notifications?.length > 0" :text="notifications.value?.filter((notification: Notification) => !notification.is_read).length ?? 0" size="2xl">
+    <UChip :show="notificationsCount > 0" :text="notificationsCount" size="2xl">
       <UButton color="gray" icon="i-heroicons-bell" @click="openNotificationSlideOver"/>
     </UChip>
 </template>

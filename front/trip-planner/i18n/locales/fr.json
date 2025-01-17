@@ -116,6 +116,7 @@
   },
   "misc": {
     "delete": "Supprimer",
+    "edit": "Modifier",
     "loading": "Chargement...",
     "no-items": "Pas de données.",
     "no-results": "Pas de résultats pour {query}",
@@ -124,6 +125,10 @@
     "see": "Voir",
     "select-value": "Sélectionnez des valeurs"
   },
+  "modify_trip": {
+    "title": "Modification du voyage",
+    "trip_modify_button": "Modifier le voyage"
+  },
   "navigation": {
     "about": "À propos",
     "create_trip": "Créer un voyage",
@@ -131,19 +136,18 @@
     "last-trip": "Dernier voyage",
     "login": "Se connecter",
     "logout": "Déconnexion",
+    "modify_trip": "Modifier un voyage",
     "my-trips": "Mes voyages",
     "new-trip": "Nouveau voyage",
     "notifications": "Notifications",
     "profile": "Profil",
     "register": "Créer un compte"
   },
-  "notification": {
+  "notifications": {
     "content": {
       "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
       "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget}"
-    }
-  },
-  "notifications": {
+    },
     "deleted": "Notification supprimée",
     "mark-as-read": "Marquer comme lu",
     "no-notifications": "Pas de notifications",
