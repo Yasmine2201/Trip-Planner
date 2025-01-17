@@ -10,7 +10,7 @@ const toast = useToast();
 const slideover = useSlideover();
 const notificationsStore = useNotificationsStore();
 
-const notifications = reactive<Notifications[]>(await notificationsStore.fetchNotifications());
+const notifications = ref<Notifications[]>(await notificationsStore.fetchNotifications());
 
 const getNotificationText = (content: string) => {
   const notification = JSON.parse(content);
@@ -18,6 +18,7 @@ const getNotificationText = (content: string) => {
 }
 
 watch(route, async () => {
+  console.debug("updating notifications");
   let oldNotifications = notificationsStore.notifications;
 
   notifications.value = await notificationsStore.fetchNotifications();
@@ -43,7 +44,8 @@ const openNotificationSlideOver = () => {
 };
 
 const notificationsCount = computed(() => {
-  return notifications?.filter((notification: Notification) => !notification.is_read).length ?? 0;
+  console.debug("updating notifications count");
+  return notifications?.value.filter((notification: Notification) => !notification.is_read).length ?? 0;
 });
 
 </script>

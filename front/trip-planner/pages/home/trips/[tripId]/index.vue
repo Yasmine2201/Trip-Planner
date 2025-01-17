@@ -10,6 +10,8 @@ definePageMeta({
 });
 const {t} = useI18n();
 const route = useRoute();
+const router = useRouter();
+const toast = useToast();
 
 const tripId = ref(route.params.tripId);
 const trip = ref<Trip | null>(null)
@@ -47,7 +49,30 @@ onMounted(async () => {
 });
 
 const deleteTrip = async (tripId: number) => {
-  // TODO: Implement delete trip functionality
+  try {
+    await useApiFetch(`/trips/${tripId}`, {
+      method: 'DELETE'
+    });
+    router.push('/home');
+    toast.add({
+      title: t('misc.delete'),
+      description: t('misc.success'),
+      icon: 'i-heroicons-check-badge',
+      color: "green",
+      timeout: 2000,
+      pauseOnHover: false
+    });
+  } catch (error) {
+    console.error('Error deleting trip:', error);
+    toast.add({
+      title: t('misc.delete'),
+      description: t('misc.error'),
+      icon: 'i-heroicons-x-circle',
+      color: "red",
+      timeout: 2000,
+      pauseOnHover: false
+    });
+  }
 }
 
 </script>

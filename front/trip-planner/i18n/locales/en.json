@@ -27,6 +27,13 @@
     "register-button": "Register",
     "register-title": "Register"
   },
+  "budget": {
+    "debts-and-credits": "Debts and credits",
+    "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
+    "expenses": "Expenses",
+    "expenses-description": "Here you can see all the expenses of the trip",
+    "title": "Budget"
+  },
   "create_trip": {
     "trip_create_button": "Create a trip",
     "trip_end_date": "End date",
@@ -117,13 +124,15 @@
   "misc": {
     "delete": "Delete",
     "edit": "Edit",
+    "error": "Operation failed",
     "loading": "Loading...",
     "no-items": "No items.",
     "no-results": "No results for {query}",
     "save": "Save",
     "search": "Search...",
     "see": "See",
-    "select-value": "Select values"
+    "select-value": "Select values",
+    "success": "Operation succeeded"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -185,12 +194,5 @@
     "name": "Name",
     "start": "Start date",
     "triplist-title": "My trips"
-  },
-  "budget": {
-    "title": "Budget",
-    "debts-and-credits": "Debts and credits",
-    "expenses": "Expenses",
-    "expenses-description": "Here you can see all the expenses of the trip",
-    "debts-and-credits-description": "Here you can see all the debts and credits of the trip"
   }
 }

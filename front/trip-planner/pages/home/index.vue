@@ -9,6 +9,7 @@ definePageMeta({
 });
 
 const { t } = useI18n();
+const toast = useToast();
 
 const sort = ref({
   column: 'start_date',
@@ -42,8 +43,29 @@ const { data: rows, status } = await useApiFetch<Trip[]>('/trips');
 const computedRows = computed(() => rows.value ?? []);
 
 const deleteTrip = async (tripId: number) => {
-  // TODO: Implement delete trip functionality
-  console.log('Deleting trip with id:', tripId);
+  try {
+    await useApiFetch(`/trips/${tripId}`, {
+      method: 'DELETE'
+    });
+    rows.value = rows.value.filter((trip) => trip.trip_id !== tripId);
+    toast.add({
+      title: t('misc.delete'),
+      description: t('misc.success'),
+      icon: 'i-heroicons-check-badge',
+      color: "green",
+      timeout: 2000,
+      pauseOnHover: false
+    });
+  } catch (error) {
+    toast.add({
+      title: t('misc.delete'),
+      description: t('misc.error'),
+      icon: 'i-heroicons-x-circle',
+      color: "red",
+      timeout: 2000,
+      pauseOnHover: false
+    });
+  }
 }
 </script>
 
@@ -67,7 +89,7 @@ const deleteTrip = async (tripId: number) => {
       :loading="status === 'pending'"
       :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: t('misc.loading') }"
       :progress="{ color: 'primary', animation: 'carousel' }"
-      :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: 'misc.no-items' }"
+      :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: t('misc.no-items') }"
   >
     <template #trip_name-data="{ row }">
       <NuxtLink :to="`/home/trips/${row.trip_id}`">{{ row.trip_name }}</NuxtLink>

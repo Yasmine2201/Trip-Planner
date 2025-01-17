@@ -27,6 +27,13 @@
     "register-button": "Créer un compte",
     "register-title": "Création d'un compte"
   },
+  "budget": {
+    "debts-and-credits": "Créances et dettes",
+    "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
+    "expenses": "Dépenses",
+    "expenses-description": "Ici vous trouverez les dépenses du voyage",
+    "title": "Budget"
+  },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
     "trip_end_date": "Date de fin",
@@ -117,13 +124,15 @@
   "misc": {
     "delete": "Supprimer",
     "edit": "Modifier",
+    "error": "Échec de l'opération",
     "loading": "Chargement...",
     "no-items": "Pas de données.",
     "no-results": "Pas de résultats pour {query}",
     "save": "Enregistrer",
     "search": "Rechercher...",
     "see": "Voir",
-    "select-value": "Sélectionnez des valeurs"
+    "select-value": "Sélectionnez des valeurs",
+    "success": "Succès de l'opération"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -185,12 +194,5 @@
     "name": "Nom",
     "start": "Date de début",
     "triplist-title": "Mes voyages"
-  },
-  "budget": {
-    "title": "Budget",
-    "debts-and-credits": "Créances et dettes",
-    "expenses": "Dépenses",
-    "expenses-description": "Ici vous trouverez les dépenses du voyage",
-    "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
   }
 }
