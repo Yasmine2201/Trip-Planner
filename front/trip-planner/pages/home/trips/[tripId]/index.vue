@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue';
 import {useI18n} from 'vue-i18n';
 import type {Trip} from '~/types';
 
@@ -14,7 +13,7 @@ const router = useRouter();
 const toast = useToast();
 
 const tripId = ref(route.params.tripId);
-const trip = ref<Trip | null>(null)
+const trip = ref<Trip | null>(null);
 
 const town = ref('');
 const country = ref('');
@@ -38,14 +37,14 @@ const getLocationDetails = async (trip: Trip) => {
 
 onMounted(async () => {
 
-  const tripResponse = await useApiFetch<Trip>(`/trips/${tripId.value}`);
-  trip.value = tripResponse.data.value;
+  const { data, status, error } = await useApiFetch<Trip>(`/trips/${tripId.value}`);
 
-  if (trip.value) {
-    await getLocationDetails(trip.value);
-  } else {
-    console.error('Trip not found');
+  if (status.value === 'error' && error.value.statusCode === 404) {
+    router.push('/notfound');
   }
+
+  trip.value = data.value;
+  await getLocationDetails(trip.value as Trip)
 });
 
 const deleteTrip = async (tripId: number) => {
@@ -59,8 +58,7 @@ const deleteTrip = async (tripId: number) => {
       description: t('misc.success'),
       icon: 'i-heroicons-check-badge',
       color: "green",
-      timeout: 2000,
-      pauseOnHover: false
+      timeout: 2000
     });
   } catch (error) {
     console.error('Error deleting trip:', error);
@@ -69,8 +67,7 @@ const deleteTrip = async (tripId: number) => {
       description: t('misc.error'),
       icon: 'i-heroicons-x-circle',
       color: "red",
-      timeout: 2000,
-      pauseOnHover: false
+      timeout: 2000
     });
   }
 }

@@ -10,14 +10,17 @@ definePageMeta({
   requiresAuth: true,
 });
 
-const route = useRoute()
+const route = useRoute();
+const router = useRouter();
 const tripId = route.params.tripId;
 console.log("tripId:", tripId);
 
 // Charge les données du voyage depuis l'API
-const { data: row, status } = await useApiFetch<Trip>(`/trips/${tripId}`);
+const { data: row, status, error } = await useApiFetch<Trip>(`/trips/${tripId}`);
+if (status.value === 'error' && error.value.statusCode === 404) {
+  router.push('/notfound');
+}
 const tripData = Object.assign({}, row.value ?? {});
-console.log("tripData:", tripData, tripData.trip_name);
 
 </script>
 
