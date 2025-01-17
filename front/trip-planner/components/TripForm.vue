@@ -46,7 +46,8 @@ onMounted(() => {
   updateLocation();
 });
 
-const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
+// Type ModifyTripDto inapplicable here
+const onSubmit = async ({ data }: any) => {
   updateLocation();
   Object.assign(data, state);
   console.log("data submitted:", data);
@@ -56,6 +57,9 @@ const onSubmit = async ({ data }: FormSubmitEvent<CreateTripDto>) => {
 
   const endpoint = props.mode === "create" ? '/trips' : `/trips/${props.tripData.trip_id}`;
   const method = props.mode === "create" ? 'POST' : 'PUT';
+  if (props.mode === "modify") {
+    data.trip_id = props.tripData.trip_id;
+  }
 
   try {
     await $api(endpoint, {

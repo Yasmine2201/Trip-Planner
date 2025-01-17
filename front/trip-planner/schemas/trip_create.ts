@@ -23,3 +23,10 @@ export const createTripSchema = z.object({
 });
 
 export type CreateTripDto = z.input<typeof createTripSchema>;
+
+const modifyTripSchema: z.ZodType<CreateTripDto> = createTripSchema.sourceType().extend({
+    trip_id: z.string().uuid({ message: 'errors.invalid-trip-id' }),
+});
+
+export type ModifyTripDto = z.input<typeof modifyTripSchema>;
+
