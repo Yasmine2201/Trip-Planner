@@ -32,5 +32,3 @@ class VisitService:
         """
 
         return Visit.objects.filter(trip=trip_id)
-
-

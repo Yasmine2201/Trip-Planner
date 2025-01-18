@@ -16,13 +16,14 @@ class VisitView(ProtectableAPIView):
         """
         user_id = request.user.user_id
         visit_data = request.data
-        try :
+        try:
             visit = VisitService.create_visit(user_id, trip_id, visit_data)
             serializer = VisitSerializerInput(visit)
 
             return Response(serializer.data, status=200)
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
+
     @staticmethod
     def get(request, trip_id):
         """

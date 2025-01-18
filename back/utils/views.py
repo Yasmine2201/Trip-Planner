@@ -17,6 +17,7 @@ class CategoryView(APIView):
         category = CategoryService.create_category(name)
         serializer = CategorySerializer(category)
         return Response(serializer.data, status=200)
+
     @staticmethod
     def get(request):
         """

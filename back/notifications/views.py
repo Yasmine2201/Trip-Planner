@@ -7,7 +7,6 @@ from notifications.services import NotificationService
 
 
 # Create your views here.
-
 class NotificationView(ProtectableAPIView):
     authentication_classes = [TokenAuthentication]
 

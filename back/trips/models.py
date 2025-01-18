@@ -4,7 +4,6 @@ from core.models import User, Image
 
 
 class Trip(models.Model):
-
     trip_id = models.AutoField(primary_key=True)
     trip_name = models.CharField(max_length=100)
     start_date = models.DateField()
@@ -19,13 +18,14 @@ class Trip(models.Model):
 
 
 class TripParticipation(models.Model):
-
     trip_participation_id = models.AutoField(primary_key=True)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     is_owner = models.BooleanField()
     declared_budget = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
     class Meta:
         unique_together = ('trip', 'user')
+
     def __str__(self):
         return f"TripParticipation(id={self.trip_participation_id}, trip_id={self.trip_id}, user_id={self.user_id})"

@@ -2,30 +2,29 @@ from budget.models import ExpenseGroup, Expense, ExpenseShare
 from budget.serializers import ExpenseInputSerializer, ExpenseGroupInputSerializer, RefundInputSerializer, \
     DebtInputSerializer
 from trips.models import TripParticipation
-from visits.models import Visit
 
 
 class BudgetService:
 
     @staticmethod
-    def declare_budget(user_id : str, trip_id : str, declared_budget : float):
+    def declare_budget(user_id: str, trip_id: str, declared_budget: float):
         trip_participation = TripParticipation.objects.get(user=user_id, trip=trip_id)
 
         trip_participation.declared_budget = declared_budget
         trip_participation.save()
         return trip_participation.declared_budget
 
-
     @staticmethod
-    def get_budget(user_id : str, trip_id : str):
+    def get_budget(user_id: str, trip_id: str):
         trip_participation = TripParticipation.objects.get(user=user_id, trip=trip_id)
         return trip_participation.declared_budget
+
 
 ############################################################################################################
 
 class ExpenseGroupService:
     @staticmethod
-    def declare_expense_group(user_id : str, trip_id  : str, expense_group_data : dict):
+    def declare_expense_group(user_id: str, trip_id: str, expense_group_data: dict):
         """
         Create a new expense group for a user in a trip and visit.
         """
@@ -47,7 +46,7 @@ class ExpenseGroupService:
         return expense_group
 
     @staticmethod
-    def get_all_expense_groups(user_id : str, trip_id : str):
+    def get_all_expense_groups(user_id: str, trip_id: str):
         """
         Get all expense groups for a user in a trip.
 
@@ -55,24 +54,25 @@ class ExpenseGroupService:
         return ExpenseGroup.objects.filter(trip_participation__user=user_id, trip_participation__trip=trip_id)
 
     @staticmethod
-    def get_expense_group_by_id(user_id : str, trip_id : str, expense_group_id : str):
+    def get_expense_group_by_id(user_id: str, trip_id: str, expense_group_id: str):
         """
         Get a specific expense group for a user in a trip.
         """
         expense_gr = ExpenseGroup.objects.get(expense_group_id=expense_group_id)
         if expense_gr.trip_participation.user.user_id != user_id or expense_gr.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(f"Mismatch between the url arguments and the attributes of the expense group {expense_group_id}")
+            raise ValueError(
+                f"Mismatch between the url arguments and the attributes of the expense group {expense_group_id}")
         return expense_gr
 
     @staticmethod
-    def delete_expense_group(user_id : str, trip_id : str, expense_group_id : str):
+    def delete_expense_group(user_id: str, trip_id: str, expense_group_id: str):
         """
         Delete an expense group for a user in a trip.
         """
         expense_group = ExpenseGroup.objects.get(expense_group_id=expense_group_id)
         if expense_group.trip_participation.user.user_id != user_id or expense_group.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(f"Mismatch between the url arguments and the attributes of the expense group {expense_group_id}")
-
+            raise ValueError(
+                f"Mismatch between the url arguments and the attributes of the expense group {expense_group_id}")
 
         expenses = Expense.objects.filter(expense_group=expense_group)
         for expense in expenses:
@@ -82,11 +82,12 @@ class ExpenseGroupService:
         expense_group.delete()
         return expense_group
 
+
 ############################################################################################################
 
 class ExpenseService:
     @staticmethod
-    def declare_expense(user_id : str, trip_id : str, expense_data : dict):
+    def declare_expense(user_id: str, trip_id: str, expense_data: dict):
         """
         Create a new expense for a user.
         """
@@ -100,7 +101,6 @@ class ExpenseService:
         # Retrieve the trip participation associated with the user and trip
         trip_participation = TripParticipation.objects.get(user=user_id, is_owner=True, trip=trip_id)
 
-
         expense = Expense.objects.create(trip_participation=trip_participation, **expense_data_object)
         expense.save()
 
@@ -110,7 +110,7 @@ class ExpenseService:
         return expense
 
     @staticmethod
-    def update_expense(user_id : str, trip_id : str, expense_id : str, expense_data : dict):
+    def update_expense(user_id: str, trip_id: str, expense_id: str, expense_data: dict):
         """
         Update an expense for a user.
         """
@@ -126,14 +126,14 @@ class ExpenseService:
         return expense_serializer.update(expense, expense_serializer.validated_data)
 
     @staticmethod
-    def get_all_expenses(user_id : str, trip_id : str):
+    def get_all_expenses(user_id: str, trip_id: str):
         """
         Get all expenses for a user in a trip.
         """
         return Expense.objects.filter(trip_participation__user=user_id, trip_participation__trip=trip_id)
 
     @staticmethod
-    def get_expense_by_id(user_id : str, trip_id : str, expense_id : str):
+    def get_expense_by_id(user_id: str, trip_id: str, expense_id: str):
         """
         Get a specific expense for a user in a trip.
         """
@@ -142,11 +142,12 @@ class ExpenseService:
             raise ValueError(f"Expense {expense_id} does not belong to user {user_id} in trip {trip_id}")
         return expense
 
+
 ############################################################################################################
 class ExpenseShareService:
 
     @staticmethod
-    def get_potentials_creditors_debtors(user_id : str, trip_id : str):
+    def get_potentials_creditors_debtors(user_id: str, trip_id: str):
         """
         Get the potential creditors and debtors for a user in a trip.
         """
@@ -213,21 +214,23 @@ class ExpenseShareService:
         return ExpenseShareService.update_expense_share(user_id, trip_id, refund_id, refund_data, RefundInputSerializer)
 
     @staticmethod
-    def get_all_debts(user_id : str, trip_id : str):
+    def get_all_debts(user_id: str, trip_id: str):
         """
         Get all debts for a user in a trip.
         """
-        return ExpenseShare.objects.filter(expense__trip_participation__user=user_id, expense__trip_participation__trip=trip_id, refund_amount=None)
+        return ExpenseShare.objects.filter(expense__trip_participation__user=user_id,
+                                           expense__trip_participation__trip=trip_id, refund_amount=None)
+
     @staticmethod
-    def get_all_refunds(user_id : str, trip_id : str):
+    def get_all_refunds(user_id: str, trip_id: str):
         """
         Get all refunds for a user in a trip.
         """
-        return ExpenseShare.objects.filter(expense__trip_participation__user=user_id, expense__trip_participation__trip=trip_id, due_amount=None)
-
+        return ExpenseShare.objects.filter(expense__trip_participation__user=user_id,
+                                           expense__trip_participation__trip=trip_id, due_amount=None)
 
     @staticmethod
-    def get_expense_share_by_id(user_id : str, trip_id : str, expense_share_id : str):
+    def get_expense_share_by_id(user_id: str, trip_id: str, expense_share_id: str):
         """
         Get a specific debt or refund for a user in a trip.
         """
@@ -239,7 +242,7 @@ class ExpenseShareService:
         return expense_share
 
     @staticmethod
-    def delete_expense_share(user_id : str, trip_id : str, expense_share_id : str):
+    def delete_expense_share(user_id: str, trip_id: str, expense_share_id: str):
         """
         Delete a debt or refund for a user in a trip.
         """
@@ -250,8 +253,3 @@ class ExpenseShareService:
                 f" in the refund payload")
         expense_share.delete()
         return expense_share
-
-
-
-
-

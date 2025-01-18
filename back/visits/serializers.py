@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from visits.models import Visit, Location
+from visits.models import Visit
 
 
 class VisitSerializerInput(serializers.ModelSerializer):
@@ -11,4 +11,3 @@ class VisitSerializerInput(serializers.ModelSerializer):
         extra_kwargs = {
             'visit_id': {'required': False},
         }
-

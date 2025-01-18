@@ -12,6 +12,7 @@ class Location(models.Model):
     longitude = models.FloatField()
     description = models.TextField()
 
+
 class Visit(models.Model):
     visit_id = models.AutoField(primary_key=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
@@ -20,6 +21,7 @@ class Visit(models.Model):
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
+
 class LocationPicture(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     picture = models.ForeignKey(Image, on_delete=models.CASCADE)
@@ -27,9 +29,11 @@ class LocationPicture(models.Model):
     class Meta:
         unique_together = ('location', 'picture')
 
+
 class VisitParticipation(models.Model):
     visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=255)
+
     class Meta:
         unique_together = ('visit', 'user')
