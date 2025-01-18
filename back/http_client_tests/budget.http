@@ -8,14 +8,14 @@ Content-Type: application/json
 }
 
 ### Budget tests
-POST http://localhost:8000/api/trips/38/budget
+POST http://localhost:8000/api/trips/40/budget
 Content-Type: application/json
 
 {
-  "budget": 1000
+  "budget": 5000
 }
 ###
-GET http://localhost:8000/api/trips/38/budget
+GET http://localhost:8000/api/trips/40/budget
 ###
 PUT http://localhost:8000/api/trips/38/budget
 Content-Type: application/json
@@ -41,20 +41,69 @@ GET http://localhost:8000/api/trips/37/budget/groups/1
 DELETE http://localhost:8000/api/trips/37/budget/groups/1
 
 ### Expense tests
-POST http://localhost:8000/api/trips/37/budget/expenses
+POST http://localhost:8000/api/trips/40/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 
 {
-  "category": 1,
-  "name": "New expense",
-  "description": "NEW",
-  "planned_amount": 1000,
-  "actual_amount": 900,
+  "category": "Activity",
+  "name": "jump",
+  "description": "jumping is good",
+  "planned_amount": 10,
+  "actual_amount": 9,
   "is_shared": false
 }
 ###
-GET http://localhost:8000/api/trips/37/budget/expenses
+POST http://localhost:8000/api/trips/40/budget/expenses
+# expense_group is optional
+Content-Type: application/json
+
+{
+  "category": "Food",
+  "name": "kebab",
+  "description": "kebab is good",
+  "planned_amount": 10,
+  "actual_amount": 9,
+  "is_shared": false
+}
+###
+POST http://localhost:8000/api/trips/40/budget/expenses
+# expense_group is optional
+Content-Type: application/json
+
+{
+  "category": "Accommodation",
+  "name": "hotel",
+  "description": "hotel is good",
+  "actual_amount": 500,
+  "is_shared": false
+}
+###
+POST http://localhost:8000/api/trips/40/budget/expenses
+# expense_group is optional
+Content-Type: application/json
+
+{
+  "category": "Transport",
+  "name": "bus",
+  "description": "bus is good",
+  "actual_amount": 80,
+  "is_shared": false
+}
+###
+POST http://localhost:8000/api/trips/40/budget/expenses
+# expense_group is optional
+Content-Type: application/json
+
+{
+  "category": "Others",
+  "name": "others",
+  "description": "others is good",
+  "actual_amount": 80,
+  "is_shared": false
+}
+###
+GET http://localhost:8000/api/trips/40/budget/expenses
 ###
 GET http://localhost:8000/api/trips/37/budget/expenses/10
 ###

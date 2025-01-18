@@ -20,14 +20,15 @@ class ExpenseInputSerializer(serializers.ModelSerializer):
         model = Expense
         fields = ['category', 'name', 'description', 'planned_amount', 'actual_amount', 'is_shared', 'expense_group']
         extra_kwargs = {
-            'expense_group': {'required': False}
+            'expense_group': {'required': False},
+            'planned_amount': {'required': False},
         }
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
-        fields = '__all__'
+        fields = ['expense_id', 'category', 'name', 'description', 'planned_amount', 'actual_amount', 'is_shared', 'expense_group']
 
 
 class DebtInputSerializer(serializers.ModelSerializer):
