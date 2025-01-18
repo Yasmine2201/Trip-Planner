@@ -22,7 +22,7 @@ class TripService:
         Fetch a specific trip associated with a user.
         """
         trip: Trip = Trip.objects.get(trip_id=trip_id)
-        if not TripService._is_trip_from_user(trip, from_user):
+        if not TripService.check_participation(trip, from_user):
             raise ForbiddenActionError("Trip does not belong to user")
         return trip
 
@@ -62,7 +62,7 @@ class TripService:
         trip_serializer = TripInputSerializer(trip, data=trip_data)
         trip_serializer.is_valid(raise_exception=True)
 
-        if not TripService._is_trip_from_user(trip, from_user, is_owner=True):
+        if not TripService.check_participation(trip, from_user, is_owner=True):
             raise ForbiddenActionError("User is not the owner of the trip.")
 
         updated_trip = trip_serializer.update(trip, trip_serializer.validated_data)
@@ -75,16 +75,16 @@ class TripService:
         """
         trip = Trip.objects.get(trip_id=trip_id)
 
-        if not TripService._is_trip_from_user(trip, from_user, is_owner=True):
+        if not TripService.check_participation(trip, from_user, is_owner=True):
             raise ForbiddenActionError("User is not the owner of the trip.")
 
         trip.delete()
         return trip
 
     @staticmethod
-    def _is_trip_from_user(trip: Trip, user: User, is_owner: bool = False) -> bool:
+    def check_participation(trip: Trip, user: User, is_owner: bool = False) -> bool:
         """
-        Check if a trip belongs to a user.
+        Check if user participates in a trip.
 
         :param trip: Trip object
         :param user: User object
@@ -93,5 +93,12 @@ class TripService:
         :return: True if the trip belongs to the user, False otherwise
         """
         if is_owner:
-            return TripParticipation.objects.filter(trip=trip, user=user, is_owner=True).exists()
+            return TripParticipation.objects.filter(trip_id=trip, user=user, is_owner=True).exists()
         return TripParticipation.objects.filter(trip=trip, user=user).exists()
+
+    @staticmethod
+    def get_trip_participations(trip_id: int):
+        """
+        Get all users participating in a trip.
+        """
+        return TripParticipation.objects.filter(trip_id=trip_id)

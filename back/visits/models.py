@@ -31,9 +31,14 @@ class LocationPicture(models.Model):
 
 
 class VisitParticipation(models.Model):
+    class VisitParticipationStatus(models.TextChoices):
+        ACCEPTED = 'accepted'
+        PENDING = 'pending'
+        DECLINED = 'declined'
+
     visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=255)
+    status = models.CharField(choices=VisitParticipationStatus, default=VisitParticipationStatus.PENDING)
 
     class Meta:
         unique_together = ('visit', 'user')

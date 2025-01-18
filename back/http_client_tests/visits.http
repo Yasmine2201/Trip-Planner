@@ -8,18 +8,18 @@ Content-Type: application/json
 }
 
 ### Visits tests
-POST http://localhost:8000/api/trips/37/visits
+POST http://localhost:8000/api/trips/38/visits
 Content-Type: application/json
 
 {
-  "location": 1,
-  "trip": 37,
+  "location": 2,
+  "trip": 38,
   "name": "Paris",
   "start_date": "2021-12-01",
   "end_date": "2021-12-10"
 }
 ###
-GET http://localhost:8000/api/trips/37/visits
+GET http://localhost:8000/api/trips/38/visits
 ###
 
 ###
