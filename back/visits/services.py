@@ -1,5 +1,5 @@
 from trips.models import TripParticipation
-from visits.models import Visit
+from visits.models import Visit, Location
 from visits.serializers import VisitSerializerInput
 
 
@@ -32,3 +32,15 @@ class VisitService:
         """
 
         return Visit.objects.filter(trip=trip_id)
+
+
+class LocationService:
+    # @staticmethod
+    # def create_location(location_data: dict):
+    #     location = Location.objects.create(**location_data)
+    #     location.save()
+    #     return location
+
+    @staticmethod
+    def get_all_locations():
+        return Location.objects.all()

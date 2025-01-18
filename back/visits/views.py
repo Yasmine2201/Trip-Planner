@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 
 from authentication.utils import ProtectableAPIView, TokenAuthentication
-from visits.serializers import VisitSerializerInput
-from visits.services import VisitService
+from visits.serializers import VisitSerializerInput, LocationSerializer
+from visits.services import VisitService, LocationService
 
 
 # Create your views here.
@@ -35,4 +35,16 @@ class VisitView(ProtectableAPIView):
             return Response({"error": "No visits found"}, status=404)
 
         serializer = VisitSerializerInput(visits, many=True)
+        return Response(serializer.data, status=200)
+
+
+class LocationView(ProtectableAPIView):
+
+    @staticmethod
+    def get(request):
+        """
+        Get all locations.
+        """
+        locations = LocationService.get_all_locations()
+        serializer = LocationSerializer(locations, many=True)
         return Response(serializer.data, status=200)

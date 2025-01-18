@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from authentication.utils import ProtectableAPIView, TokenAuthentication
+from authentication.utils import ProtectableAPIView
 from trips.models import Trip
 from trips.serializers import TripSerializer
 from trips.services import TripService
@@ -11,8 +11,6 @@ from utils import NOT_FOUND_ERROR, ForbiddenActionError, INVALID_BODY_ERROR
 
 
 class TripView(ProtectableAPIView):
-
-    authentication_classes = [TokenAuthentication]
 
     @staticmethod
     def get(request: Request, trip_id: int = None):

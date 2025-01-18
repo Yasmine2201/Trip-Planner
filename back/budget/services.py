@@ -1,4 +1,4 @@
-from budget.models import ExpenseGroup, Expense, ExpenseShare
+from budget.models import ExpenseGroup, Expense, ExpenseShare, ExpenseCategory
 from budget.serializers import ExpenseInputSerializer, ExpenseGroupInputSerializer, RefundInputSerializer, \
     DebtInputSerializer
 from trips.models import TripParticipation
@@ -253,3 +253,34 @@ class ExpenseShareService:
                 f" in the refund payload")
         expense_share.delete()
         return expense_share
+
+
+############################################################################################################
+class CategoryService:
+    # @staticmethod
+    # def create_category(name: str):
+    #     category = ExpenseCategory.objects.create(name=name)
+    #     category.save()
+    #     return category
+
+    @staticmethod
+    def get_category(category_id: str):
+        category = ExpenseCategory.objects.get(category_id=category_id)
+        return category
+
+    @staticmethod
+    def get_all_categories():
+        return ExpenseCategory.objects.all()
+
+    # @staticmethod
+    # def update_category(category_id: str, name: str):
+    #     category = ExpenseCategory.objects.get(category_id=category_id)
+    #     category.name = name
+    #     category.save()
+    #     return category
+    #
+    # @staticmethod
+    # def delete_category(category_id: str):
+    #     category = ExpenseCategory.objects.get(category_id=category_id)
+    #     category.delete()
+    #     return category

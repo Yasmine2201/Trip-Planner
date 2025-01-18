@@ -1,12 +1,11 @@
 from django.urls import path
 
 from authentication.views import LoginView, LogoutView, RegisterView
-from budget.views import BudgetView, ExpenseGroupView, ExpenseView, ExpenseShareView
+from budget.views import BudgetView, ExpenseGroupView, ExpenseView, ExpenseShareView, CategoryView
 from notifications.views import NotificationView
 from core.views import CurrentUserView, OtherUsersView
 from trips.views import TripView, LastTripView
-from utils.views import CategoryView, LocationView
-from visits.views import VisitView
+from visits.views import VisitView, LocationView
 
 urlpatterns = [
     path('api/auth/login', LoginView.as_view(), name='Login'),

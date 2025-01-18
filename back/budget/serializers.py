@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from budget.models import Expense, ExpenseGroup, ExpenseShare
+from budget.models import Expense, ExpenseGroup, ExpenseShare, ExpenseCategory
 
 
 class ExpenseGroupInputSerializer(serializers.ModelSerializer):
@@ -51,4 +51,10 @@ class RefundInputSerializer(serializers.ModelSerializer):
 class ExpenseShareSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExpenseShare
+        fields = '__all__'
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExpenseCategory
         fields = '__all__'

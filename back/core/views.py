@@ -35,6 +35,7 @@ class CurrentUserView(ProtectableAPIView):
 
 
 class OtherUsersView(ProtectableAPIView):
+
     @staticmethod
     def get(request: Request, user_id: str = None):
         """

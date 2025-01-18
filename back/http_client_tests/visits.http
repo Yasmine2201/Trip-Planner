@@ -21,3 +21,6 @@ Content-Type: application/json
 ###
 GET http://localhost:8000/api/trips/37/visits
 ###
+
+###
+GET http://localhost:8000/api/locations

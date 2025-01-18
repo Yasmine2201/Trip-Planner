@@ -1,15 +1,14 @@
 from rest_framework.response import Response
 
-from authentication.utils import TokenAuthentication, ProtectableAPIView
+from authentication.utils import ProtectableAPIView
 from budget.models import Expense, ExpenseGroup, ExpenseShare
 from budget.serializers import ExpenseGroupInputSerializer, ExpenseGroupSerializer, ExpenseSerializer, \
-    DebtInputSerializer, RefundInputSerializer, ExpenseShareSerializer
-from budget.services import BudgetService, ExpenseGroupService, ExpenseService, ExpenseShareService
+    DebtInputSerializer, RefundInputSerializer, ExpenseShareSerializer, CategorySerializer
+from budget.services import BudgetService, ExpenseGroupService, ExpenseService, ExpenseShareService, CategoryService
 from trips.models import TripParticipation
 
 
 class BudgetView(ProtectableAPIView):
-    authentication_classes = [TokenAuthentication]
 
     @staticmethod
     def __handle_budget(request, trip_id):
@@ -56,7 +55,6 @@ class BudgetView(ProtectableAPIView):
 ############################################################################################################
 
 class ExpenseGroupView(ProtectableAPIView):
-    authentication_classes = [TokenAuthentication]
 
     @staticmethod
     def post(request, trip_id):
@@ -126,7 +124,6 @@ class ExpenseGroupView(ProtectableAPIView):
 
 ############################################################################################################
 class ExpenseView(ProtectableAPIView):
-    authentication_classes = [TokenAuthentication]
 
     @staticmethod
     def post(request, trip_id):
@@ -199,7 +196,6 @@ class ExpenseView(ProtectableAPIView):
 
 ############################################################################################################
 class ExpenseShareView(ProtectableAPIView):
-    authentication_classes = [TokenAuthentication]
 
     @staticmethod
     def post(request, trip_id):
@@ -292,3 +288,16 @@ class ExpenseShareView(ProtectableAPIView):
 
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
+
+
+############################################################################################################
+class CategoryView(ProtectableAPIView):
+
+    @staticmethod
+    def get(request):
+        """
+        Get all categories.
+        """
+        categories = CategoryService.get_all_categories()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data, status=200)

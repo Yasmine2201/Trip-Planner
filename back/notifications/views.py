@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 
-from authentication.utils import ProtectableAPIView, TokenAuthentication
+from authentication.utils import ProtectableAPIView
 from notifications.models import Notification
 from notifications.serializers import NotificationSerializer
 from notifications.services import NotificationService
@@ -8,7 +8,6 @@ from notifications.services import NotificationService
 
 # Create your views here.
 class NotificationView(ProtectableAPIView):
-    authentication_classes = [TokenAuthentication]
 
     @staticmethod
     def get(request, notification_id=None):
