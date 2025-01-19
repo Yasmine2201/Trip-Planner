@@ -106,7 +106,7 @@ const deleteTrip = async (tripId: number) => {
     <template #actions-data="{ row }">
       <div class="flex space-x-2">
         <UButton
-            icon="memory:arrow-up-right"
+            icon="i-heroicons-eye"
             size="xs"
             color="gray"
             square
