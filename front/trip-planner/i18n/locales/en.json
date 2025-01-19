@@ -135,6 +135,7 @@
   },
   "misc": {
     "delete": "Delete",
+    "deletion": "Deletion",
     "edit": "Edit",
     "error": "Operation failed",
     "loading": "Loading...",
@@ -144,7 +145,8 @@
     "search": "Search...",
     "see": "See",
     "select-value": "Select values",
-    "success": "Operation succeeded"
+    "success": "Operation succeeded",
+    "not-defined": "Not defined"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -207,6 +209,38 @@
     "start": "Start date",
     "triplist-title": "My trips"
   },
+  "budget": {
+    "title": "Budget",
+    "debts-and-credits": "Debts and credits",
+    "expenses": "Expenses",
+    "expenses-description": "Here you can see all the expenses of the trip",
+    "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
+    "remaining-budget": "Remaining budget",
+    "initial-budget": "Initial budget",
+    "edit-budget": "Edit budget",
+    "add-expense": "Add expense",
+    "manage-expenses": "Manage my expenses",
+    "food": "Food",
+    "accommodation": "Accomodation",
+    "transport": "Transport",
+    "activity": "Activities",
+    "others": "Others"
+  },
+  "expense": {
+    "expense-id": "ID",
+    "name": "Name",
+    "description": "Description",
+    "planned-amount": "Planned Amount",
+    "actual-amount": "Actual Amount",
+    "is-shared": "Shared?",
+    "category": "Category",
+    "expense-group": "Expense Group",
+    "yes": "It's shared",
+    "no": "It's not shared",
+    "delete-selected": "Delete expenses",
+    "delete-many-tooltip": "Select more than one expense to delete them",
+    "add-expense-group": "Add expense group",
+    "no-expenses": "No expenses yet. Please add some to see the expense chart",
   "visits": {
     "fields": {
       "end_date": "End time",

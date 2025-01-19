@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### Budget tests
-POST http://localhost:8000/api/trips/40/budget
+POST http://localhost:8000/api/trips/41/budget
 Content-Type: application/json
 
 {
@@ -54,7 +54,7 @@ Content-Type: application/json
   "is_shared": false
 }
 ###
-POST http://localhost:8000/api/trips/40/budget/expenses
+POST http://localhost:8000/api/trips/41/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 
@@ -67,7 +67,7 @@ Content-Type: application/json
   "is_shared": false
 }
 ###
-POST http://localhost:8000/api/trips/40/budget/expenses
+POST http://localhost:8000/api/trips/41/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 
@@ -79,7 +79,7 @@ Content-Type: application/json
   "is_shared": false
 }
 ###
-POST http://localhost:8000/api/trips/40/budget/expenses
+POST http://localhost:8000/api/trips/41/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 
@@ -91,7 +91,7 @@ Content-Type: application/json
   "is_shared": false
 }
 ###
-POST http://localhost:8000/api/trips/40/budget/expenses
+POST http://localhost:8000/api/trips/41/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 
@@ -103,7 +103,7 @@ Content-Type: application/json
   "is_shared": false
 }
 ###
-GET http://localhost:8000/api/trips/40/budget/expenses
+GET http://localhost:8000/api/trips/41/budget/expenses
 ###
 GET http://localhost:8000/api/trips/37/budget/expenses/10
 ###
@@ -119,8 +119,8 @@ Content-Type: application/json
   "is_shared": false,
   "expense_group": 2
 }
-
-
+###
+DELETE http://localhost:8000/api/trips/41/budget/expenses/13
 ### Expense Share tests
 POST http://localhost:8000/api/trips/37/budget/expenses/share
 Content-Type: application/json

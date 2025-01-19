@@ -193,6 +193,23 @@ class ExpenseView(ProtectableAPIView):
         else:
             return ExpenseView.__get_by_id(request, trip_id, expense_id)
 
+    @staticmethod
+    def delete(request, trip_id, expense_id):
+        """
+        Delete an expense for a trip.
+        """
+        user_id = request.user.user_id
+        try:
+            expense = ExpenseService.delete_expense(user_id, trip_id, expense_id)
+            serializer = ExpenseSerializer(expense)
+            return Response(serializer.data, status=200)
+
+        except Expense.DoesNotExist:
+            return Response({"error": f"Expense {expense_id} not found"}, status=404)
+
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+
 
 ############################################################################################################
 class ExpenseShareView(ProtectableAPIView):
