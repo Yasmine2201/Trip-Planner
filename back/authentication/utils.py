@@ -20,6 +20,7 @@ SUPABASE_SIGNING_KEY = os.getenv("SUPABASE_SIGNING_KEY")
 
 ACCESS_TOKEN_COOKIE_NAME = "sb-access-token"
 REFRESH_TOKEN_COOKIE_NAME = "sb-refresh-token"
+REFRESH_TOKEN_MAX_AGE = 60 * 60 * 24 * 30  # 30 days
 
 
 def set_supabase_cookies(response: Response, session: AuthSession):
@@ -27,6 +28,7 @@ def set_supabase_cookies(response: Response, session: AuthSession):
         ACCESS_TOKEN_COOKIE_NAME,
         session.access_token,
         expires=session.expires_at,
+        max_age=session.expires_in,
         httponly=True,
         secure=True,
         samesite="None"
@@ -35,6 +37,7 @@ def set_supabase_cookies(response: Response, session: AuthSession):
     response.set_cookie(
         REFRESH_TOKEN_COOKIE_NAME,
         session.refresh_token,
+        max_age=REFRESH_TOKEN_MAX_AGE,
         httponly=True,
         secure=True,
         samesite="None"
@@ -62,6 +65,17 @@ def remove_supabase_cookies(response: Response):
 
 class TokenAuthentication(BaseAuthentication):
     def authenticate(self, request: Request) -> tuple[User, dict]:
+        def perform_refresh_token():
+            auth_session = AuthClient().refresh_token(refresh_token)
+            _payload = jwt.decode(auth_session.access_token, SUPABASE_SIGNING_KEY, algorithms=["HS256"],
+                                 audience="authenticated")
+            _auth = {
+                'access_token': auth_session.access_token,
+                'refresh_token': auth_session.refresh_token,
+                'new_session': auth_session
+            }
+            return _auth, _payload
+
         access_token = request.COOKIES.get(ACCESS_TOKEN_COOKIE_NAME)
         refresh_token = request.COOKIES.get(REFRESH_TOKEN_COOKIE_NAME)
 
@@ -74,28 +88,31 @@ class TokenAuthentication(BaseAuthentication):
         }
 
         try:
-            payload = jwt.decode(access_token, SUPABASE_SIGNING_KEY, algorithms=["HS256"], audience="authenticated")
+            if access_token:
+                payload = jwt.decode(access_token, SUPABASE_SIGNING_KEY, algorithms=["HS256"], audience="authenticated")
+            else:
+                auth, payload = perform_refresh_token()
 
         except jwt.ExpiredSignatureError:
             try:
-                auth_session = AuthClient().refresh_token(refresh_token)
-                payload = jwt.decode(auth_session.access_token, SUPABASE_SIGNING_KEY, algorithms=["HS256"],
-                                     audience="authenticated")
-                auth = {
-                    'access_token': auth_session.access_token,
-                    'refresh_token': auth_session.refresh_token,
-                    'new_session': auth_session
-                }
+                auth, payload = perform_refresh_token()
             except InvalidRefreshToken:
-                raise AuthenticationFailed("Token has expired and refresh token is invalid")
+                raise AuthenticationFailed("Token has expired and refresh token is invalid or missing.")
+
         except jwt.InvalidTokenError:
             raise AuthenticationFailed("Invalid token")
+
+        except InvalidRefreshToken:
+            raise AuthenticationFailed("Token has expired and refresh token is invalid or missing.")
 
         try:
             user = User.objects.get(user_id=payload['sub'])
             return user, auth
         except User.DoesNotExist:
             raise AuthenticationFailed("User not found")
+
+    def authenticate_header(self, request: Request) -> str:
+        return 'OAuth realm="api"'
 
 
 def _replace_token_in_response(request: Request, response: Response) -> Response:
