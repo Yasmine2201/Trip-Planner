@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     storesDirs: ['./stores/**']
   },
 
-  piniaPersistedstate: {
+  piniaPluginPersistedstate: {
     storage: 'localStorage',
   },
 

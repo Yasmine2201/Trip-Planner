@@ -1,6 +1,9 @@
-export function useApiFetch<T>(url: string, options: RequestInit = {}): ReturnType<useFetch<T>> {
+export function useApiFetch<T>(url: string, options: RequestInit = {}): ReturnType<typeof useFetch<T>> {
   const config = useRuntimeConfig();
-  return useFetch<T>(url, {
+  const authStore = useAuthStore();
+
+  return useFetch<T>(url,
+    {
       baseURL: config.public.apiBaseUrl,
       credentials: 'include',
       headers: {
@@ -8,5 +11,13 @@ export function useApiFetch<T>(url: string, options: RequestInit = {}): ReturnTy
         ...(options.headers || {}),
       },
       ...options,
-  });
+      onResponseError: async ({ response}) => {
+        if (response.status === 404) {
+          navigateTo('/not-found');
+        } else if (response.status === 401) {
+          await authStore.clearUser();
+          navigateTo('/login');
+        }
+      }
+    });
 }

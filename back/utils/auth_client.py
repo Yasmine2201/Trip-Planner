@@ -122,6 +122,9 @@ class AuthClient(metaclass=Singleton):
 
         :raises InvalidRefreshToken: If the refresh token is invalid
         """
+        if not refresh_token:
+            raise InvalidRefreshToken("No refresh token provided")
+
         data = {
             "refresh_token": refresh_token
         }

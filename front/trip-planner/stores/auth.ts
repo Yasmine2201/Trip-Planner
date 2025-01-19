@@ -4,7 +4,7 @@ export const useAuthStore = defineStore('auth', {
   persist: true,
 
   state: () => ({
-    user: null as User,
+    user: null as User | null,
     isAuthenticated: false,
   }),
 
@@ -42,10 +42,14 @@ export const useAuthStore = defineStore('auth', {
       try {
         await $api('/auth/logout', {method: 'POST'});
       } finally {
-        this.user = null;
-        this.isAuthenticated = false;
+        this.clearUser();
         navigateTo('/login');
       }
+    },
+
+    async clearUser() {
+      this.user = null;
+      this.isAuthenticated = false;
     },
 
     async refreshUser() {
