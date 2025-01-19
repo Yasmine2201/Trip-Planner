@@ -135,6 +135,7 @@
   },
   "misc": {
     "delete": "Supprimer",
+    "deletion": "Suppression",
     "edit": "Modifier",
     "error": "Échec de l'opération",
     "loading": "Chargement...",
@@ -144,7 +145,8 @@
     "search": "Rechercher...",
     "see": "Voir",
     "select-value": "Sélectionnez des valeurs",
-    "success": "Succès de l'opération"
+    "success": "Succès de l'opération",
+    "not-defined": "Non défini"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -218,5 +220,37 @@
       "add": "Ajouter une visite",
       "title": "Mes visites"
     }
+  "budget": {
+    "title": "Budget",
+    "debts-and-credits": "Créances et dettes",
+    "expenses": "Dépenses",
+    "expenses-description": "Ici vous trouverez les dépenses du voyage",
+    "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
+    "remaining-budget": "Budget restant",
+    "initial-budget": "Budget initial",
+    "edit-budget": "Modifier le budget",
+    "add-expense": "Ajouter une dépense",
+    "manage-expenses": "Gérer mes dépenses",
+    "food": "Nourriture",
+    "accommodation": "Hébergement",
+    "transport": "Transport",
+    "activity": "Activités",
+    "others": "Autres"
+  },
+  "expense": {
+    "expense-id": "ID",
+    "name": "Nom",
+    "description": "Description",
+    "planned-amount": "Montant prévu",
+    "actual-amount": "Montant réel",
+    "is-shared": "Partagé?",
+    "category": "Catégorie",
+    "expense-group": "Groupe de dépenses",
+    "yes": "C'est partagé",
+    "no": "Ce n'est pas partagé",
+    "delete-selected": "Supprimer les dépenses",
+    "delete-many-tooltip": "Sélectionnez plus d'une dépense pour les supprimer",
+    "add-expense-group": "Ajouter groupe de dépenses",
+    "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses"
   }
 }

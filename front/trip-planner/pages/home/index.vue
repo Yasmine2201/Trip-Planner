@@ -49,7 +49,7 @@ const deleteTrip = async (tripId: number) => {
     });
     rows.value = rows.value.filter((trip) => trip.trip_id !== tripId);
     toast.add({
-      title: t('misc.delete'),
+      title: t('misc.deletion'),
       description: t('misc.success'),
       icon: 'i-heroicons-check-badge',
       color: "green",

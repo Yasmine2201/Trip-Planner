@@ -11,7 +11,6 @@ import {
 import type {Expense} from "~/types/expense";
 const route = useRoute();
 const tripId = ref(route.params.tripId);
-const router = useRouter();
 const { t } = useI18n();
 
 // API cals
@@ -128,18 +127,23 @@ onBeforeUnmount(() => {
       </div>
     </template>
 
-    <div class="h-100">
-      <div class="chart-container">
-        <canvas ref="chartCanvas"></canvas>
-      </div>
+   <div class="h-100">
+
+    <div v-if="expenses.length === 0" class="flex items-center justify-center h-full">
+      <p>{{ t('expense.no-expenses') }}</p>
     </div>
+
+    <div v-else class="chart-container">
+      <canvas ref="chartCanvas"></canvas>
+    </div>
+</div>
 
 
     <template #footer>
       <div class="h-8 footer flex justify-center space-x-8 px-12">
 
         <UButton
-            @click="$router.push(`/home/trips/${tripId.value}/budget/edit`)"
+            @click="$router.push(`/home/trips/${tripId}/budget/edit`)"
             color="primary"
             icon="material-symbols-light:box-edit"
             :label="t('budget.edit-budget')"
@@ -149,7 +153,7 @@ onBeforeUnmount(() => {
             class = "flex-1 flex items-center justify-center"
         />
         <UButton
-            @click="$router.push(`/home/trips/${tripId.value}/budget/expenses`)"
+            @click="$router.push(`/home/trips/${tripId}/budget/expenses`)"
             color="red"
             icon="material-symbols:analytics"
             :label="t('budget.manage-expenses')"
