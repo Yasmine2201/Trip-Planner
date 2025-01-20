@@ -18,9 +18,10 @@ Content-Type: application/json
   "start_date": "2021-12-01",
   "end_date": "2021-12-10"
 }
-###
+
+### GET all visits
 GET http://localhost:8000/api/trips/38/visits
 ###
 
-###
+### GET all locations
 GET http://localhost:8000/api/locations
