@@ -10,7 +10,7 @@ export default defineNuxtPlugin(() => {
     },
     onResponseError: async ({ response}) => {
       if (response.status === 404) {
-        navigateTo('/not-found');
+        navigateTo('/notfound');
       } else if (response.status === 401) {
         await authStore.clearUser();
         navigateTo('/login');

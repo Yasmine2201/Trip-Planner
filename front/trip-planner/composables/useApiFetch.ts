@@ -1,8 +1,11 @@
-export function useApiFetch<T>(url: string, options: RequestInit = {}): ReturnType<typeof useFetch<T>> {
+import type { UseFetchOptions } from "#app";
+
+export const useApiFetch = <T>(url: string, options: UseFetchOptions<T> = {}, redirect: boolean = false) => {
   const config = useRuntimeConfig();
   const authStore = useAuthStore();
 
-  return useFetch<T>(url,
+  return useFetch<T>(
+    url,
     {
       baseURL: config.public.apiBaseUrl,
       credentials: 'include',
@@ -10,14 +13,14 @@ export function useApiFetch<T>(url: string, options: RequestInit = {}): ReturnTy
         'Content-Type': 'application/json',
         ...(options.headers || {}),
       },
-      ...options,
       onResponseError: async ({ response}) => {
-        if (response.status === 404) {
-          navigateTo('/not-found');
+        if (response.status === 404 && redirect) {
+          navigateTo('/notfound');
         } else if (response.status === 401) {
           await authStore.clearUser();
           navigateTo('/login');
         }
-      }
+      },
+      ...options as any,
     });
 }
