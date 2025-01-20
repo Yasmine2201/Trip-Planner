@@ -1,9 +1,17 @@
 from rest_framework import serializers
 
-from visits.models import Visit, Location
+from visits.models import Visit, Location, LocationPrice
+
+
+class LocationPriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LocationPrice
+        exclude = ('location', 'created_on')
 
 
 class LocationSerializer(serializers.ModelSerializer):
+    prices = LocationPriceSerializer(many=True, read_only=True)
+
     class Meta:
         model = Location
         fields = '__all__'
