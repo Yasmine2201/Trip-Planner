@@ -28,11 +28,21 @@
     "register-title": "Création d'un compte"
   },
   "budget": {
+    "accommodation": "Hébergement",
+    "activity": "Activités",
+    "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
+    "edit-budget": "Modifier le budget",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
-    "title": "Budget"
+    "food": "Nourriture",
+    "initial-budget": "Budget initial",
+    "manage-expenses": "Gérer mes dépenses",
+    "others": "Autres",
+    "remaining-budget": "Budget restant",
+    "title": "Budget",
+    "transport": "Transport"
   },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
@@ -197,21 +207,16 @@
     "start": "Date de début",
     "triplist-title": "Mes voyages"
   },
-  "budget": {
-    "title": "Budget",
-    "debts-and-credits": "Créances et dettes",
-    "expenses": "Dépenses",
-    "expenses-description": "Ici vous trouverez les dépenses du voyage",
-    "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
-    "remaining-budget": "Budget restant",
-    "initial-budget": "Budget initial",
-    "edit-budget": "Modifier le budget",
-    "add-expense": "Ajouter une dépense",
-    "manage-expenses": "Gérer mes dépenses",
-    "food": "Nourriture",
-    "accommodation": "Hébergement",
-    "transport": "Transport",
-    "activity": "Activités",
-    "others": "Autres"
+  "visits": {
+    "fields": {
+      "end_date": "Horaire de fin",
+      "location_name": "Lieu",
+      "name": "Nom",
+      "start_date": "Horaire de début"
+    },
+    "list": {
+      "add": "Ajouter une visite",
+      "title": "Mes visites"
+    }
   }
 }
