@@ -13,4 +13,12 @@ export type Location = {
   latitude: number;
   longitude: number;
   description: string;
+  prices: LocationPrice[];
+}
+
+export type LocationPrice = {
+  location_id: number;
+  price: number;
+  price_name: string;
+  description?: string | null;
 }
