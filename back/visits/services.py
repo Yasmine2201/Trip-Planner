@@ -3,7 +3,7 @@ from trips.models import Trip
 from trips.services import TripService
 from utils import ForbiddenActionError
 from visits.models import Visit, Location, VisitParticipation
-from visits.serializers import VisitSerializerInput
+from visits.serializers import VisitInputSerializer
 
 
 class VisitService:
@@ -14,7 +14,7 @@ class VisitService:
         Create a new visit for a user in a trip.
         """
 
-        visit_serializer = VisitSerializerInput(data=visit_data)
+        visit_serializer = VisitInputSerializer(data=visit_data)
         visit_serializer.is_valid(raise_exception=True)
 
         visit_data_object = visit_serializer.validated_data

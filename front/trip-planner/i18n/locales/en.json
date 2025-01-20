@@ -28,11 +28,21 @@
     "register-title": "Register"
   },
   "budget": {
+    "accommodation": "Accomodation",
+    "activity": "Activities",
+    "add-expense": "Add expense",
     "debts-and-credits": "Debts and credits",
     "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
+    "edit-budget": "Edit budget",
     "expenses": "Expenses",
     "expenses-description": "Here you can see all the expenses of the trip",
-    "title": "Budget"
+    "food": "Food",
+    "initial-budget": "Initial budget",
+    "manage-expenses": "Manage my expenses",
+    "others": "Others",
+    "remaining-budget": "Remaining budget",
+    "title": "Budget",
+    "transport": "Transport"
   },
   "create_trip": {
     "trip_create_button": "Create a trip",
@@ -197,21 +207,16 @@
     "start": "Start date",
     "triplist-title": "My trips"
   },
-  "budget": {
-    "title": "Budget",
-    "debts-and-credits": "Debts and credits",
-    "expenses": "Expenses",
-    "expenses-description": "Here you can see all the expenses of the trip",
-    "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
-    "remaining-budget": "Remaining budget",
-    "initial-budget": "Initial budget",
-    "edit-budget": "Edit budget",
-    "add-expense": "Add expense",
-    "manage-expenses": "Manage my expenses",
-    "food": "Food",
-    "accommodation": "Accomodation",
-    "transport": "Transport",
-    "activity": "Activities",
-    "others": "Others"
+  "visits": {
+    "fields": {
+      "end_date": "End time",
+      "location_name": "Location",
+      "name": "Name",
+      "start_date": "Start time"
+    },
+    "list": {
+      "add": "Add a visit",
+      "title": "My visits"
+    }
   }
 }

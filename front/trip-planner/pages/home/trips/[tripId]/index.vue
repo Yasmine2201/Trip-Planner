@@ -36,7 +36,6 @@ const getLocationDetails = async (trip: Trip) => {
 
 
 onMounted(async () => {
-
   const { data, status, error } = await useApiFetch<Trip>(`/trips/${tripId.value}`);
 
   if (status.value === 'error' && error.value.statusCode === 404) {

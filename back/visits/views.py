@@ -1,13 +1,11 @@
+from rest_framework.request import Request
 from rest_framework.response import Response
 
-from authentication.utils import ProtectableAPIView, TokenAuthentication
+from authentication.utils import ProtectableAPIView
 from trips.models import Trip
 from utils import ForbiddenActionError
-from visits.models import Visit
-from visits.serializers import VisitSerializerInput, LocationSerializer
+from visits.serializers import LocationSerializer, VisitSerializer
 from visits.services import VisitService, LocationService
-
-from rest_framework.request import Request
 
 
 # Create your views here.
@@ -21,7 +19,7 @@ class VisitView(ProtectableAPIView):
         visit_data = request.data
         try:
             visit = VisitService.create_visit(request.user, trip_id, visit_data)
-            serializer = VisitSerializerInput(visit)
+            serializer = VisitSerializer(visit)
 
             return Response(serializer.data, status=200)
 
@@ -38,7 +36,7 @@ class VisitView(ProtectableAPIView):
             if visits is None:
                 return Response({"error": "No visits found"}, status=404)
 
-            serializer = VisitSerializerInput(visits, many=True)
+            serializer = VisitSerializer(visits, many=True)
             return Response(serializer.data, status=200)
 
         except Trip.DoesNotExist:
