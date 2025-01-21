@@ -140,8 +140,6 @@ class ExpenseView(ProtectableAPIView):
         except TripParticipation.DoesNotExist:
             return Response({"error": f"TripParticipation deduced from the payload not found"}, status=404)
 
-        except Warning as w:
-            return Response({"warning": str(w)}, status=400)
 
     @staticmethod
     def put(request, trip_id, expense_id):

@@ -11,13 +11,13 @@ const { t } = useI18n();
 const toast = useToast();
 const route = useRoute();
 const tripId = ref(route.params.tripId);
+const router = useRouter();
 
 const expenses = ref<Expense[]>([]);
 const expensesResponse = await useApiFetch<Expense[]>(`/trips/${tripId.value}/budget/expenses`);
 expenses.value = expensesResponse.data.value ?? [];
 
-console.log("hii",expenses.value);
-const columns = [
+const columns = computed(() => [
   {
   key: 'name',
   label: t('expense.name'),
@@ -52,7 +52,8 @@ const columns = [
     label: t('expense.expense-group'),
   },
   {key: 'actions'}
-]
+]);
+
 const actionItems = (row) => [
     [
   {
@@ -60,7 +61,7 @@ const actionItems = (row) => [
     icon: 'i-heroicons-pencil',
     class: 'bg-primary-500 text-white dark:bg-primary dark:text-black mb-2',
     iconClass: 'text-white dark:text-black',
-    click: () => console.log('edit')
+    click: () => router.push(`/home/trips/${tripId.value}/budget/expenses/${row.expense_id}/edit`)
   },
   {
     label: t('misc.delete'),
@@ -72,7 +73,7 @@ const actionItems = (row) => [
   ]
 ]
 const selected = ref([]);
-const multipleSelected = computed(() => selected.value.length >= 2);
+const anySelected = computed(() => selected.value.length >= 1);
 
 const deleteExpense = async (expenseId: number) => {
   try {
@@ -103,6 +104,7 @@ const deleteAllSelected = async () => {
   selected.value.forEach((expense : Expense) => {
     deleteExpense(expense.expense_id);
   });
+  selected.value = [];
 };
 
 </script>
@@ -117,7 +119,7 @@ const deleteAllSelected = async () => {
           :label="t('expense.delete-selected')"
           size="xs"
           variant="solid"
-          :disabled="!multipleSelected"
+          :disabled="!anySelected"
           />
 
       <div class="flex">
@@ -131,7 +133,7 @@ const deleteAllSelected = async () => {
           variant="solid"
           class = "mr-2"/>
       <UButton
-        @click=""
+        @click="$router.push(`/home/trips/${tripId}/budget/expenses/create`)"
         color="primary"
         icon="material-symbols:add-shopping-cart"
         :label="t('budget.add-expense')"
@@ -146,7 +148,7 @@ const deleteAllSelected = async () => {
       :rows="expenses"
       :columns="columns">
     <template #is_shared-data="{ row }">
-        <UButton v-if="row.is_shared" icon="material-symbols-light:people" color="gray" size="sm" :title="t('expense.yes')" />
+        <UButton v-if="row.is_shared" icon="ic:sharp-people-alt" color="gray" size="sm" :title="t('expense.yes')" />
         <UButton v-else icon="material-symbols-light:person-rounded" color="gray" size="sm" :title="t('expense.no')"/>
     </template>
     <template #actions-data="{row}">

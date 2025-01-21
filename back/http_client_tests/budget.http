@@ -6,7 +6,8 @@ Content-Type: application/json
   "email": "john.doe@example.com",
   "password": "123456"
 }
-
+### Category tests
+GET http://localhost:8000/api/categories
 ### Budget tests
 POST http://localhost:8000/api/trips/41/budget
 Content-Type: application/json
@@ -25,7 +26,7 @@ Content-Type: application/json
 }
 
 ### Expens Group tests
-POST http://localhost:8000/api/trips/37/budget/groups
+POST http://localhost:8000/api/trips/41/budget/groups
 Content-Type: application/json
 
 {
@@ -41,7 +42,7 @@ GET http://localhost:8000/api/trips/37/budget/groups/1
 DELETE http://localhost:8000/api/trips/37/budget/groups/1
 
 ### Expense tests
-POST http://localhost:8000/api/trips/40/budget/expenses
+POST http://localhost:8000/api/trips/41/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 
