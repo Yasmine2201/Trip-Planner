@@ -104,9 +104,6 @@ class ExpenseService:
         expense = Expense.objects.create(trip_participation=trip_participation, **expense_data_object)
         expense.save()
 
-        if expense.is_shared:
-            raise Warning("The expense is shared, please declare the debts or refunds")
-
         return expense
 
     @staticmethod
@@ -142,6 +139,16 @@ class ExpenseService:
             raise ValueError(f"Expense {expense_id} does not belong to user {user_id} in trip {trip_id}")
         return expense
 
+    @staticmethod
+    def delete_expense(user_id: str, trip_id: str, expense_id: str):
+        """
+        Delete an expense for a user in a trip.
+        """
+        expense = Expense.objects.get(expense_id=expense_id)
+        if expense.trip_participation.user.user_id != user_id or expense.trip_participation.trip.trip_id != trip_id:
+            raise ValueError(f"Expense {expense_id} does not belong to user {user_id} in trip {trip_id}")
+        expense.delete()
+        return expense
 
 ############################################################################################################
 class ExpenseShareService:

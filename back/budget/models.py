@@ -47,7 +47,7 @@ class Expense(models.Model):
     trip_participation = models.ForeignKey(TripParticipation, on_delete=models.CASCADE)
     category = models.ForeignKey(ExpenseCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     planned_amount = models.FloatField(null=True, blank=True)
     actual_amount = models.FloatField(null=True, blank=True)
     is_shared = models.BooleanField(default=False)

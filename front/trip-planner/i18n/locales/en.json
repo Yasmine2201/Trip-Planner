@@ -53,11 +53,15 @@
     "trip_start_date": "Start date"
   },
   "errors": {
+    "name-required": "Name is required.",
     "alias-required": "Alias is required.",
     "already-have-account": "Already have an account ? Login here.",
     "birthdate-invalid": "Invalid birthdate.",
     "confirm-password-required": "Please repeat your password.",
     "description-too-long": "Description is limitied to 1000 caracters",
+    "planned-amount-positive": "Planned amount must be a positive number",
+    "actual-amount-positive": "Actual amount must be a positive number",
+    "category-invalid": "Invalid category",
     "email-already-exists": "This email is already used.",
     "email-invalid": "Please enter a valid email.",
     "email-required": "Email is required.",
@@ -72,6 +76,7 @@
     "invalid-start-date": "Invalid start date",
     "last-name-required": "Last name is required.",
     "oops": "Something went wrong.",
+    "fyi": "For your information",
     "page-not-found": "404 - Page not found",
     "password-rejected": "Invalid password",
     "password-required": "Password is required.",
@@ -79,7 +84,9 @@
     "radius-required": "Radius is required and must be a positive number",
     "start-date-before-end-date": "Start date must be before end date",
     "trip-name-required": "Trip name is required",
-    "unknown-error": "Please retry later."
+    "unknown-error": "Please retry later.",
+    "sent-invalid-data": "Sent invalid data",
+    "must-be-number": "Must be a number"
   },
   "language": {
     "af": "Afrikaans",
@@ -135,6 +142,7 @@
   },
   "misc": {
     "delete": "Delete",
+    "deletion": "Deletion",
     "edit": "Edit",
     "error": "Operation failed",
     "loading": "Loading...",
@@ -144,7 +152,10 @@
     "search": "Search...",
     "see": "See",
     "select-value": "Select values",
-    "success": "Operation succeeded"
+    "success": "Operation succeeded",
+    "not-defined": "Not defined",
+    "reinitialize": "Reinitialize the form",
+    "back": "Back"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -206,6 +217,57 @@
     "name": "Name",
     "start": "Start date",
     "triplist-title": "My trips"
+  },
+  "budget": {
+    "title": "Budget",
+    "debts-and-credits": "Debts and credits",
+    "expenses": "Expenses",
+    "expenses-description": "Here you can see all the expenses of the trip",
+    "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
+    "remaining-budget": "Remaining budget",
+    "initial-budget": "Initial budget",
+    "declared-budget": "Declared my budget",
+    "edit-budget": "Edit budget",
+    "add-expense": "Add expense",
+    "manage-expenses": "Manage my expenses",
+    "food": "Food",
+    "accommodation": "Accomodation",
+    "transport": "Transport",
+    "activity": "Activities",
+    "others": "Others"
+  },
+  "expense": {
+    "add-expense": "Add expense",
+    "edit-expense": "Edit expense",
+    "expense-id": "ID",
+    "name": "Name",
+    "description": "Description",
+    "planned-amount": "Planned Amount",
+    "actual-amount": "Actual Amount",
+    "is-shared": "Shared?",
+    "category": "Category",
+    "expense-group": "Expense Group",
+    "yes": "It's shared",
+    "no": "It's not shared",
+    "delete-selected": "Delete expenses",
+    "delete-many-tooltip": "Select more than one expense to delete them",
+    "add-expense-group": "Add expense group",
+    "no-expenses": "No expenses yet. Please add some to see the expense chart",
+    "categories": {
+        "food": "Food",
+        "accommodation": "Accommodation",
+        "transport": "Transport",
+        "activity": "Activity",
+        "others": "Others"
+    },
+    "placeholders": {
+      "select-category": "Food, accommodation, transport, activity, others",
+      "enter-name": "My expense name",
+      "enter-description": "My expense description",
+      "enter-planned-amount": "100",
+      "enter-actual-amount": "101",
+      "select-expense-group": "My expense group"
+    }
   },
   "visits": {
     "fields": {
