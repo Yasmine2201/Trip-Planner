@@ -147,7 +147,9 @@ const deleteAllSelected = async () => {
   <UTable
       v-model="selected"
       :rows="expenses"
-      :columns="columns">
+      :columns="columns"
+      class="text-center"
+  >
     <template #is_shared-data="{ row }">
         <UButton v-if="row.is_shared" icon="ic:sharp-people-alt" color="gray" size="sm" :title="t('expense.yes')" />
         <UButton v-else icon="material-symbols-light:person-rounded" color="gray" size="sm" :title="t('expense.no')"/>
@@ -167,4 +169,7 @@ const deleteAllSelected = async () => {
 </template>
 
 <style scoped>
+.text-center {
+  text-align: center;
+}
 </style>
