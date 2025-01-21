@@ -104,9 +104,6 @@ class ExpenseService:
         expense = Expense.objects.create(trip_participation=trip_participation, **expense_data_object)
         expense.save()
 
-        if expense.is_shared:
-            raise Warning("The expense is shared, please declare the debts or refunds")
-
         return expense
 
     @staticmethod

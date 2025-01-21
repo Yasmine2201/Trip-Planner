@@ -1,30 +1,35 @@
 <script setup lang="ts">
 definePageMeta({
-title: 'budget.title',
-requiresAuth: true,
-layout: 'navigation'
+  title: 'budget.title',
+  requiresAuth: true,
+  layout: 'navigation'
 });
-const { t } = useI18n();
+const {t} = useI18n();
 
-const budgetItems = [{
-  label: t('budget.debts-and-credits'),
-  icon: 'material-symbols:account-balance-wallet',
-  content: t('budget.debts-and-credits-description'),
-  component: 'DebtsAndCredits'
-}, {
-  label: t('budget.expenses'),
-  icon: 'solar:banknote-2-linear',
-  content: t('budget.expenses-description'),
-  component: 'Expenses'
-}]
+const budgetItems = computed(() =>
+  [
+    {
+      label: t('budget.expenses'),
+      icon: 'solar:banknote-2-linear',
+      content: t('budget.expenses-description'),
+      component: 'Expenses'
+    },
+    {
+      label: t('budget.debts-and-credits'),
+      icon: 'material-symbols:account-balance-wallet',
+      content: t('budget.debts-and-credits-description'),
+      component: 'DebtsAndCredits'
+    }
+  ]
+);
 
 </script>
 
 <template>
   <UTabs :items="budgetItems">
-    <template #item ="{item}">
-      <Expenses v-if="item.component === 'Expenses'" />
-      <DebtsAndCredits v-if="item.component === 'DebtsAndCredits'" />
+    <template #item="{item}">
+      <DebtsAndCredits v-if="item.component === 'DebtsAndCredits'"/>
+      <Expenses v-if="item.component === 'Expenses'"/>
     </template>
   </UTabs>
 
