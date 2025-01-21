@@ -20,8 +20,10 @@ Content-Type: application/json
 }
 
 ### GET all visits
-GET http://localhost:8000/api/trips/38/visits
-###
+GET http://localhost:8000/api/trips/1/visits
 
 ### GET all locations
-GET http://localhost:8000/api/locations
+GET http://localhost:8000/api/locations&page=5
+
+### GET filtered locations
+GET http://localhost:8000/api/locations?lat=47.61276&lon=5.27333&radius=1&search=chateau

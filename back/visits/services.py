@@ -1,9 +1,13 @@
+from django.core.paginator import Paginator
+from django.db.models import Min, Max, Q
+from rest_framework.exceptions import ValidationError
+
 from core.models import User
 from trips.models import Trip
 from trips.services import TripService
-from utils import ForbiddenActionError
+from utils import ForbiddenActionError, haversine
 from visits.models import Visit, Location, VisitParticipation
-from visits.serializers import VisitInputSerializer
+from visits.serializers import VisitInputSerializer, LocationQueryParamsSerializer
 
 
 class VisitService:
@@ -49,6 +53,7 @@ class VisitService:
 
 
 class LocationService:
+    PAGE_SIZE = 50
     # @staticmethod
     # def create_location(location_data: dict):
     #     location = Location.objects.create(**location_data)
@@ -56,5 +61,54 @@ class LocationService:
     #     return location
 
     @staticmethod
-    def get_all_locations():
-        return Location.objects.all()
+    def get_all_locations(page: int) -> list[Location]:
+        return Paginator(Location.objects.all(), LocationService.PAGE_SIZE).get_page(page)
+
+    @staticmethod
+    def get_filtered_locations(query_params: dict, page: int) -> list[Location]:
+        params_serializer = LocationQueryParamsSerializer(data=query_params)
+        params_serializer.is_valid(raise_exception=True)
+        params: dict = params_serializer.validated_data
+
+        # Extract query parameters
+        lat: float | None = params.get('lat', None)
+        lon: float | None = params.get('lon', None)
+        radius: float | None = params.get('radius', None)
+        min_price: float | None = params.get('minPrice')
+        max_price: float | None = params.get('maxPrice')
+        search: str | None = params.get('search', None)
+
+        # Initialize base query
+        queryset = Location.objects.all()
+
+        # 1. Add a complex filter for partial name search
+        filters = Q()
+        if search:
+            filters &= Q(name__icontains=search)
+
+        # 2. Add price range filter
+        if min_price and min_price > 0:
+            queryset = queryset.annotate(
+                min_price=Min('prices__price'),
+            )
+            filters &= Q(min_price__gte=min_price)
+
+        if max_price:
+            queryset = queryset.annotate(
+                max_price=Max('prices__price')
+            )
+            filters &= Q(max_price__lte=max_price)
+
+        # 3. Add geographical filter (Haversine formula or GeoDjango)
+        if lat and lon and radius:
+            try:
+                valid_ids = [
+                    loc.location_id for loc in queryset
+                    if haversine(lat, lon, loc.latitude, loc.longitude) <= radius
+                ]
+                filters &= Q(location_id__in=valid_ids)
+            except ValueError:
+                raise ValidationError("Invalid latitude, longitude, or radius.")
+
+        # Apply filters to the queryset
+        return Paginator(queryset.filter(filters), LocationService.PAGE_SIZE).get_page(page)
