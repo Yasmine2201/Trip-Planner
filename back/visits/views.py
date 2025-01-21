@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from authentication.utils import ProtectableAPIView
 from trips.models import Trip
 from utils import ForbiddenActionError
+from visits.models import Location
 from visits.serializers import LocationSerializer, VisitSerializer
 from visits.services import VisitService, LocationService
 
@@ -49,10 +50,15 @@ class VisitView(ProtectableAPIView):
 class LocationView(ProtectableAPIView):
 
     @staticmethod
-    def get(request):
+    def get(request: Request) -> Response:
         """
-        Get all locations.
+        Get locations.
         """
-        locations = LocationService.get_all_locations()
+
+        if len(request.query_params) > 0:
+            locations = LocationService.get_filtered_locations(request.query_params)
+        else:
+            locations = LocationService.get_all_locations()
+
         serializer = LocationSerializer(locations, many=True)
         return Response(serializer.data, status=200)
