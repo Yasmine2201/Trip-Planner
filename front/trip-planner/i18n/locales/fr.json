@@ -226,6 +226,7 @@
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
     "remaining-budget": "Budget restant",
     "initial-budget": "Budget initial",
+    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
     "add-expense": "Ajouter une dépense",
     "manage-expenses": "Gérer mes dépenses",
@@ -250,7 +251,7 @@
     "no": "Ce n'est pas partagé",
     "delete-selected": "Supprimer les dépenses",
     "delete-many-tooltip": "Sélectionnez plus d'une dépense pour les supprimer",
-    "add-expense-group": "Ajouter groupe de dépenses",
+    "add-expense-group": "Ajouter un groupe de dépenses",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "categories": {
         "food": "Nourriture",

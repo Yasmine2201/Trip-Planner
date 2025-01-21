@@ -146,7 +146,7 @@ onBeforeUnmount(() => {
             @click="$router.push(`/home/trips/${tripId}/budget/edit`)"
             color="primary"
             icon="material-symbols-light:box-edit"
-            :label="t('budget.edit-budget')"
+            :label="declaredBudget === 0 ? t('budget.declare-budget') : t('budget.edit-budget')"
             size="md"
             square
             variant="solid"

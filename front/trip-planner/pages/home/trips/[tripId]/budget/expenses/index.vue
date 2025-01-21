@@ -122,7 +122,7 @@ const deleteAllSelected = async () => {
           :disabled="!anySelected"
           />
 
-      <div class="flex">
+      <div class="flex w-1/2 space-x-5 px-5">
         <UButton
           @click=""
           color="primary"
@@ -131,7 +131,7 @@ const deleteAllSelected = async () => {
           size="xs"
           square
           variant="solid"
-          class = "mr-2"/>
+          class = "w-1/2 justify-center"/>
       <UButton
         @click="$router.push(`/home/trips/${tripId}/budget/expenses/create`)"
         color="primary"
@@ -139,7 +139,8 @@ const deleteAllSelected = async () => {
         :label="t('budget.add-expense')"
         size="xs"
         square
-        variant="solid"/>
+        variant="solid"
+        class = "w-1/2 justify-center"/>
     </div>
   </div>
 
