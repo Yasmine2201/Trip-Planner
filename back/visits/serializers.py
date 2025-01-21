@@ -1,3 +1,5 @@
+import math
+
 from rest_framework import serializers
 
 from visits.models import Visit, Location, LocationPrice
@@ -20,7 +22,7 @@ class LocationQueryParamsSerializer(serializers.Serializer):
             raise serializers.ValidationError("lat, lon and radius must be provided together")
 
         min_price = data.get('minPrice', 0)
-        max_price = data.get('maxPrice', float('inf'))
+        max_price = data.get('maxPrice', 10000000)
         if min_price < 0 or max_price < 0:
             raise serializers.ValidationError("Prices must be positive")
         if min_price > max_price:

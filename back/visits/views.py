@@ -55,10 +55,15 @@ class LocationView(ProtectableAPIView):
         Get locations.
         """
 
+        params = {k: v for k, v in request.query_params.items()}
+        page: int = params.get('page', 1)
+        if 'page' in params:
+            del params['page']
+
         if len(request.query_params) > 0:
-            locations = LocationService.get_filtered_locations(request.query_params)
+            locations = LocationService.get_filtered_locations(request.query_params, page)
         else:
-            locations = LocationService.get_all_locations()
+            locations = LocationService.get_all_locations(page)
 
         serializer = LocationSerializer(locations, many=True)
         return Response(serializer.data, status=200)
