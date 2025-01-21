@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import type {Expense} from "~/types/expense";
+import {CategoryValues} from "~/schemas/expense";
 const route = useRoute();
 const tripId = ref(route.params.tripId);
 const { t } = useI18n();
@@ -27,7 +28,7 @@ expenses.value = expensesResponse.data.value ?? [];
 const totalExpenses = computed(() => expenses.value.reduce((acc, expense) => acc + expense.actual_amount, 0));
 const remainingBudget = computed(() => declaredBudget.value - totalExpenses.value);
 const ratio = computed(() => (remainingBudget.value / declaredBudget.value) * 100);
-const presentCategories = computed(() => Array.from(new Set(expenses.value.map((expense: Expense) => expense.category))).sort());
+const allCategories = Object.values(CategoryValues).sort();
 const groupedExpenses = computed(() => {
   const colors = [
     'rgba(54, 162, 235, 0.8)', //Accommodation
@@ -37,7 +38,7 @@ const groupedExpenses = computed(() => {
     'rgba(75, 192, 192, 0.8)', //Transport
   ];
 
-  return presentCategories.value.map((category: string, index: number) => {
+  return allCategories.map((category: string, index: number) => {
     const total = expenses.value
       .filter((expense: Expense) => expense.category === category)
       .reduce((sum: number, expense: Expense) => sum + expense.actual_amount, 0);
@@ -61,7 +62,8 @@ const chartCanvas = ref(null);
 let chartInstance : Chart | null = null;
 
 // Data for the donut chart
-const chartData = {
+
+const chartData = computed(() => ({
   labels: groupedExpenses.value.map((expense) => t(`budget.${expense.category.toLowerCase()}`)),
   datasets: [
     {
@@ -71,16 +73,17 @@ const chartData = {
       hoverOffset: 15, // Makes segments expand on hover
     },
   ],
-};
+}));
+
 // Options for the donut chart
-const chartOptions = {
+const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     tooltip: {
       enabled: true,
       callbacks: {
-         label: function (tooltipItem) {
+        label: function (tooltipItem: any) {
           const data = tooltipItem.dataset.data[tooltipItem.dataIndex];
           return `${data} €`;
         },
@@ -91,14 +94,14 @@ const chartOptions = {
       position: 'top',
     },
   },
-};
+}));
 
 onMounted(() => {
   if (chartCanvas.value) {
     chartInstance = new Chart(chartCanvas.value, {
       type: 'doughnut', // Specify the type as "doughnut"
-      data: chartData,
-      options: chartOptions,
+      data: chartData.value,
+      options: chartOptions.value,
     });
   }
 });
