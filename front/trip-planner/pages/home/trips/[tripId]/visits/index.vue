@@ -67,7 +67,7 @@ const deleteVisit = async (visit: Visit) => {
     });
   } catch (error) {
     toast.add({
-      title: t('misc.delete'),
+      title: t('misc.deletion'),
       description: t('misc.error'),
       icon: 'i-heroicons-x-circle',
       color: "red",
@@ -101,7 +101,7 @@ const deleteVisit = async (visit: Visit) => {
 
   >
     <template #name-data="{ row }">
-      <NuxtLink :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`">{{ row.name }}</NuxtLink>
+      <NuxtLink :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`" class="font-semibold underline text-left">{{ row.name }}</NuxtLink>
     </template>
 
     <template #start_date-data="{ row }">

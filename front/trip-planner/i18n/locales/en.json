@@ -33,6 +33,7 @@
     "add-expense": "Add expense",
     "debts-and-credits": "Debts and credits",
     "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
+    "declared-budget": "Declared my budget",
     "edit-budget": "Edit budget",
     "expenses": "Expenses",
     "expenses-description": "Here you can see all the expenses of the trip",
@@ -91,6 +92,7 @@
   },
   "expense": {
     "actual-amount": "Actual Amount",
+    "actual-amount-short": "Actual",
     "add-expense": "Add expense",
     "add-expense-group": "Add expense group",
     "categories": {
@@ -105,11 +107,11 @@
     "delete-selected": "Delete expenses",
     "description": "Description",
     "edit-expense": "Edit expense",
-    "expense-group": "Expense Group",
+    "expense-group": "Group",
     "expense-id": "ID",
     "is-shared": "Shared ?",
     "name": "Name",
-    "no": "It's not shared",
+    "no": "Not shared",
     "no-expenses": "No expenses yet. Please add some to see the expense chart",
     "placeholders": {
       "enter-actual-amount": "101",
@@ -120,7 +122,8 @@
       "select-expense-group": "My expense group"
     },
     "planned-amount": "Planned Amount",
-    "yes": "It's shared"
+    "planned-amount-short": "Planned",
+    "yes": "Shared"
   },
   "language": {
     "af": "Afrikaans",

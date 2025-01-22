@@ -33,6 +33,7 @@
     "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
+    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
@@ -91,8 +92,9 @@
   },
   "expense": {
     "actual-amount": "Montant réel",
+    "actual-amount-short": "Réel",
     "add-expense": "Ajouter une dépense",
-    "add-expense-group": "Ajouter groupe de dépenses",
+    "add-expense-group": "Ajouter un groupe de dépenses",
     "categories": {
       "accommodation": "Hébergement",
       "activity": "Activités",
@@ -105,11 +107,11 @@
     "delete-selected": "Supprimer les dépenses",
     "description": "Description",
     "edit-expense": "Modifier une dépense",
-    "expense-group": "Groupe de dépenses",
+    "expense-group": "Groupe",
     "expense-id": "ID",
     "is-shared": "Partagée ?",
     "name": "Nom",
-    "no": "Ce n'est pas partagé",
+    "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
       "enter-actual-amount": "101",
@@ -120,7 +122,8 @@
       "select-expense-group": "Mon groupe de dépenses"
     },
     "planned-amount": "Montant prévu",
-    "yes": "C'est partagé"
+    "planned-amount-short": "Prévu",
+    "yes": "Partagé"
   },
   "language": {
     "af": "Afrikaans",

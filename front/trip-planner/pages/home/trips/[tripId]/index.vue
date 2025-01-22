@@ -77,6 +77,7 @@ const deleteTrip = async (tripId: number) => {
   <div class="overflow-x-auto">
     <PageTitle :name="t('trip_home.trip_details')">
       <template #actions>
+        <UButton @click="router.push(`/home/`)" icon="i-heroicons-arrow-uturn-left" class="mr-2" :title="t('misc.back')" color="gray" />
         <UButton
             :to="`/home/trips/${trip?.trip_id}/edit`"
             color="primary"

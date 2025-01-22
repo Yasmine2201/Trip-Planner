@@ -84,9 +84,6 @@ async function resetForm() {
 </script>
 
 <template>
-  <PageTitle>
-    {{ t(props.mode === 'edit' ? 'expense.edit-expense' : 'expense.add-expense' as string) }}
-  </PageTitle>
   <UForm :schema="expenseSchema" :state="state" class="space-y-5" @submit="onSubmit">
     <div class="flex w-full justify-between gap-8">
       <UFormGroup class="flex-1" :label="t('expense.name')" name="name" required>

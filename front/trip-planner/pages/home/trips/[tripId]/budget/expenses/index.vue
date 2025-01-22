@@ -1,13 +1,13 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type {Expense} from "~/types/expense";
 import {ref} from "vue";
 
 definePageMeta({
-title: 'budget.expenses',
-requiresAuth: true,
-layout: 'navigation'
+  title: 'budget.expenses',
+  requiresAuth: true,
+  layout: 'navigation'
 });
-const { t } = useI18n();
+const {t} = useI18n();
 const toast = useToast();
 const route = useRoute();
 const tripId = ref(route.params.tripId);
@@ -18,29 +18,21 @@ const expensesResponse = await useApiFetch<Expense[]>(`/trips/${tripId.value}/bu
 expenses.value = expensesResponse.data.value ?? [];
 
 const columns = computed(() => [
+  {},
   {
-  key: 'name',
-  label: t('expense.name'),
-  sortable: true
+    key: 'name',
+    label: t('expense.name'),
+    sortable: true,
   },
   {
-    key: 'description',
-    label: t('expense.description'),
-  },
-    {
     key: 'planned_amount',
-    label: t('expense.planned-amount'),
+    label: t('expense.planned-amount-short'),
     sortable: true
   },
   {
     key: 'actual_amount',
-    label: t('expense.actual-amount'),
+    label: t('expense.actual-amount-short'),
     sortable: true
-  },
-  {
-    key: 'is_shared',
-    label: t('expense.is-shared'),
-
   },
   {
     key: 'category',
@@ -55,25 +47,28 @@ const columns = computed(() => [
 ]);
 
 const actionItems = (row) => [
-    [
-  {
-    label: t('misc.edit'),
-    icon: 'i-heroicons-pencil',
-    class: 'bg-primary-500 text-white dark:bg-primary dark:text-black mb-2',
-    iconClass: 'text-white dark:text-black',
-    click: () => router.push(`/home/trips/${tripId.value}/budget/expenses/${row.expense_id}/edit`)
-  },
-  {
-    label: t('misc.delete'),
-    icon : 'i-heroicons-trash',
-    class: 'bg-red-500 text-white dark:bg-red-400 dark:text-black',
-    iconClass: 'text-white dark:text-black',
-    click: () =>  deleteExpense(row.expense_id)
-  }
+  [
+    {
+      label: t('misc.edit'),
+      icon: 'i-heroicons-pencil',
+      class: 'bg-primary-500 text-white dark:bg-primary dark:text-black mb-2',
+      iconClass: 'text-white dark:text-black',
+      click: () => router.push(`/home/trips/${tripId.value}/budget/expenses/${row.expense_id}/edit`)
+    },
+    {
+      label: t('misc.delete'),
+      icon: 'i-heroicons-trash',
+      class: 'bg-red-500 text-white dark:bg-red-400 dark:text-black',
+      iconClass: 'text-white dark:text-black',
+      click: () => deleteExpense(row.expense_id)
+    }
   ]
 ]
-const selected = ref([]);
-const anySelected = computed(() => selected.value.length >= 1);
+
+const getCategoryLabel = (category: string) => t(`expense.categories.${category.toLowerCase()}`);
+
+const selected = ref<Expense[]>([]);
+const anySelected = computed(() => selected.value?.length >= 1);
 
 const deleteExpense = async (expenseId: number) => {
   try {
@@ -90,7 +85,7 @@ const deleteExpense = async (expenseId: number) => {
     });
   } catch (error) {
     toast.add({
-      title: t('misc.delete'),
+      title: t('misc.deletion'),
       description: t('misc.error'),
       icon: 'i-heroicons-x-circle',
       color: "red",
@@ -98,8 +93,9 @@ const deleteExpense = async (expenseId: number) => {
     });
   }
 };
+
 const deleteAllSelected = async () => {
-  selected.value.forEach((expense : Expense) => {
+  selected.value?.forEach((expense: Expense) => {
     deleteExpense(expense.expense_id);
   });
   selected.value = [];
@@ -108,66 +104,107 @@ const deleteAllSelected = async () => {
 </script>
 
 <template>
-    <div class="flex justify-between mb-10">
-        <UButton
-          @click="deleteAllSelected"
-          :title="t('expense.delete-many-tooltip')"
-          color="red"
-          icon="material-symbols:delete"
-          :label="t('expense.delete-selected')"
-          size="xs"
-          variant="solid"
-          :disabled="!anySelected"
-          />
+  <PageTitle :name="t('budget.expenses')" />
 
-      <div class="flex w-1/2 space-x-5 px-5">
-        <UButton
-          @click=""
+  <div class="flex justify-between mb-10">
+    <UButton
+        :disabled="!anySelected"
+        :label="t('expense.delete-selected')"
+        :title="t('expense.delete-many-tooltip')"
+        color="red"
+        icon="material-symbols:delete"
+        size="xs"
+        variant="solid"
+        @click="deleteAllSelected"
+    />
+
+    <div class="flex w-1/2 space-x-5 px-5">
+      <UButton
+          :label="t('expense.add-expense-group')"
+          class="w-1/2 justify-center"
           color="primary"
           icon="material-symbols:cards-star-outline"
-          :label="t('expense.add-expense-group')"
           size="xs"
           square
           variant="solid"
-          class = "w-1/2 justify-center"/>
+          @click=""/>
       <UButton
-        @click="$router.push(`/home/trips/${tripId}/budget/expenses/create`)"
-        color="primary"
-        icon="material-symbols:add-shopping-cart"
-        :label="t('budget.add-expense')"
-        size="xs"
-        square
-        variant="solid"
-        class = "w-1/2 justify-center"/>
+          :label="t('budget.add-expense')"
+          class="w-1/2 justify-center"
+          color="primary"
+          icon="material-symbols:add-shopping-cart"
+          size="xs"
+          square
+          variant="solid"
+          @click="$router.push(`/home/trips/${tripId}/budget/expenses/create`)"/>
     </div>
   </div>
 
   <UTable
       v-model="selected"
-      :rows="expenses"
       :columns="columns"
-      class="text-center"
+      :rows="expenses"
   >
-    <template #is_shared-data="{ row }">
-        <UButton v-if="row.is_shared" icon="ic:sharp-people-alt" color="gray" size="sm" :title="t('expense.yes')" />
-        <UButton v-else icon="material-symbols-light:person-rounded" color="gray" size="sm" :title="t('expense.no')"/>
+    <template #name-data="{ row }">
+      <UTooltip >
+        <span class="font-semibold underline text-left">{{ row.name }}</span>
+
+        <template #text>
+          <p class="font-bold">{{ t('expense.description') }}:</p>
+          <p>{{ row.description }}</p>
+        </template>
+      </UTooltip>
+
     </template>
-    <template #actions-data="{row}">
-      <UDropdown :items="actionItems(row)" >
-        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" size="sm" square/>
-      </UDropdown>
+
+    <template #planned_amount-data="{ row }">
+      <span v-if="row.planned_amount">{{ row.planned_amount?.toLocaleString(undefined, { minimumFractionDigits: 2 }) }} €</span>
+      <span v-else>-</span>
     </template>
+
+    <template #actual_amount-data="{ row }">
+      <span v-if="row.actual_amount">{{ row.actual_amount?.toLocaleString(undefined, { minimumFractionDigits: 2 }) }} €</span>
+      <span v-else>-</span>
+    </template>
+
+    <template #category-data="{ row }">
+      <span>{{ getCategoryLabel(row.category) }}</span>
+    </template>
+
     <template #expense_group-data="{ row }">
-    <p v-if="row.expense_group == null"> {{t('misc.not-defined') }} </p>
+      <p v-if="row.expense_group == null"> {{ t('misc.not-defined') }} </p>
     </template>
 
+    <template #actions-data="{ row }">
+      <div class="flex space-x-2 items-center">
+        <div class="mr-4 pt-1">
+          <UTooltip v-if="row.is_shared" :title="t('expense.yes')">
+            <UIcon color="gray" name="ic:sharp-people-alt" class="w-5 h-5 aspect-1"/>
+          </UTooltip>
+          <UTooltip v-else :title="t('expense.no')">
+            <UIcon color="gray" name="material-symbols-light:person-rounded" class="w-5 h-5 aspect-1"/>
+          </UTooltip>
+        </div>
+        <UButton
+            icon="i-heroicons-pencil-square"
+            size="xs"
+            color="primary"
+            square
+            variant="solid"
+            :to="`/home/trips/${tripId}/budget/expenses/${row.expense_id}/edit`"
+        />
+        <UButton
+            icon="i-heroicons-trash"
+            size="xs"
+            color="red"
+            square
+            variant="solid"
+            @click="deleteExpense(row.expense_id)"
+        />
+      </div>
+    </template>
   </UTable>
-
-
 </template>
 
 <style scoped>
-.text-center {
-  text-align: center;
-}
 </style>

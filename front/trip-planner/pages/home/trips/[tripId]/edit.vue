@@ -25,6 +25,10 @@ const tripData = Object.assign({}, row.value ?? {});
 </script>
 
 <template>
-  <PageTitle :name="t('modify_trip.title')" />
+  <PageTitle :name="t('modify_trip.title')">
+    <template v-slot:actions>
+      <UButton @click="router.back()" icon="i-heroicons-arrow-uturn-left" class="mr-2" :title="t('misc.back')" color="gray" />
+    </template>
+  </PageTitle>
   <TripForm mode="modify" :tripData="tripData" />
 </template>

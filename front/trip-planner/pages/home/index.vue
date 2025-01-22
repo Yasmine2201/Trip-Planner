@@ -57,7 +57,7 @@ const deleteTrip = async (tripId: number) => {
     });
   } catch (error) {
     toast.add({
-      title: t('misc.delete'),
+      title: t('misc.deletion'),
       description: t('misc.error'),
       icon: 'i-heroicons-x-circle',
       color: "red",
