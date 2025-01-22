@@ -2,7 +2,7 @@
 definePageMeta({
 title: 'expense.add-expense',
 requiresAuth: true,
-layout: false
+layout: 'navigation'
 });
 
 </script>

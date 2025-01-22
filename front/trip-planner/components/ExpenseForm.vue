@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useI18n} from "vue-i18n";
-import {ref, reactive, computed} from "vue";
+import {computed, reactive, ref} from "vue";
 import {CategoryValues, type ExpenseDto, expenseSchema} from "~/schemas/expense";
 import type {FormSubmitEvent} from "#ui/types";
 import {FetchError} from "ofetch";
@@ -15,8 +15,10 @@ const {$api} = useNuxtApp();
 const route = useRoute();
 const tripId = ref(route.params.tripId);
 
+const getCategoryLabel = (category: string) => t(`expense.categories.${category.toLowerCase()}`);
+
 const categoryOptions = computed(() => Object.values(CategoryValues).map(value => ({
-      label: t(`expense.categories.${value.toLowerCase()}`),
+      label: getCategoryLabel(value),
       value: value,
     }))
 );
@@ -24,10 +26,10 @@ const categoryOptions = computed(() => Object.values(CategoryValues).map(value =
 const state = reactive({
   category: props.expenseData.category || undefined,
   name: props.expenseData.name || undefined,
-  description: props.expenseData.description || undefined,
+  description: props.expenseData.description || '',
   planned_amount: props.expenseData.planned_amount || undefined,
   actual_amount: props.expenseData.actual_amount || undefined,
-  is_shared: props.expenseData.is_shared || undefined,
+  is_shared: props.expenseData.is_shared || false,
   expense_group: props.expenseData.expense_group || undefined,
 });
 
@@ -35,15 +37,6 @@ const formError = ref('');
 
 const onSubmit = async ({data}: FormSubmitEvent<ExpenseDto>) => {
   try {
-    if (data.planned_amount === undefined) {
-      data.planned_amount = null;
-    }
-    if (data.expense_group === undefined) {
-      data.expense_group = null;
-    }
-    if (data.description === undefined) {
-      data.description = null;
-    }
     const sentData = JSON.stringify(
         {
           category: data.category,
@@ -67,7 +60,7 @@ const onSubmit = async ({data}: FormSubmitEvent<ExpenseDto>) => {
       });
     }
 
-    navigateTo(`/home/trips/${tripId.value}/budget/expenses`);
+    navigateTo(`/home/trips/${tripId.value}/budget/expenses` as any);
 
   } catch (error) {
     if (error instanceof FetchError) {
@@ -83,7 +76,7 @@ async function resetForm() {
     description: '',
     planned_amount: undefined,
     actual_amount: undefined,
-    is_shared: undefined,
+    is_shared: false,
     expense_group: '',
   });
   formError.value = '';
@@ -91,84 +84,97 @@ async function resetForm() {
 </script>
 
 <template>
-  <NuxtLayout name="auth">
-    <template #title>
-      {{ t(props.mode === 'edit' ? 'expense.edit-expense' : 'expense.add-expense') }}
-    </template>
-
-    <UForm :schema="expenseSchema" :state="state" class="space-y-5" @submit="onSubmit">
-      <UFormGroup name="category" :label="t('expense.category')" required>
-        <USelectMenu v-model="state.category" :options="categoryOptions" value-attribute="value"
-                     :placeholder="t('expense.placeholders.select-category')"/>
-        <template #error="{ error }">
-          <span>{{ t(error) }}</span>
-        </template>
-      </UFormGroup>
-
-      <UFormGroup name="name" label="Name" required>
+  <PageTitle>
+    {{ t(props.mode === 'edit' ? 'expense.edit-expense' : 'expense.add-expense' as string) }}
+  </PageTitle>
+  <UForm :schema="expenseSchema" :state="state" class="space-y-5" @submit="onSubmit">
+    <div class="flex w-full justify-between gap-8">
+      <UFormGroup class="flex-1" :label="t('expense.name')" name="name" required>
         <UInput v-model="state.name" :placeholder="t('expense.placeholders.enter-name')"/>
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
 
-      <UFormGroup name="description" :label="t('expense.description')">
-        <UTextarea v-model="state.description" :placeholder="t('expense.placeholders.enter-description')"/>
+      <UFormGroup :label="t('expense.category')" class="flex-1" name="category" required>
+        <USelectMenu v-model="state.category" :options="categoryOptions" value-attribute="value">
+          <template #label>
+            <span v-if="state.category" class="truncate">{{ getCategoryLabel(state.category) }}</span>
+            <span v-else class="text-gray-400 dark:text-gray-500">{{ t('expense.placeholders.select-category') }}</span>
+          </template>
+        </USelectMenu>
+        <template #error="{ error }">
+          <span>{{ t(error) }}</span>
+        </template>
+      </UFormGroup>
+    </div>
+
+    <UFormGroup :label="t('expense.description')" name="description">
+      <UTextarea v-model="state.description" :placeholder="t('expense.placeholders.enter-description')" resize rows="10"/>
+      <template #error="{ error }">
+        <span>{{ t(error) }}</span>
+      </template>
+    </UFormGroup>
+
+    <div class="flex w-full justify-between gap-8">
+      <UFormGroup :label="t('expense.planned-amount')" class="flex-1" name="planned_amount">
+        <UInput v-model="state.planned_amount" :placeholder="t('expense.placeholders.enter-planned-amount')"
+                type="number">
+          <template #trailing>
+            <span class="text-gray-500 dark:text-gray-400 text-xs">€</span>
+          </template>
+        </UInput>
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
 
-      <UFormGroup name="planned_amount" :label="t('expense.planned-amount')">
-        <UInput v-model="state.planned_amount" type="number"
-                :placeholder="t('expense.placeholders.enter-planned-amount')"/>
+      <UFormGroup :label="t('expense.actual-amount')" class="flex-1" name="actual_amount">
+        <UInput v-model="state.actual_amount" :placeholder="t('expense.placeholders.enter-actual-amount')"
+                type="number">
+          <template #trailing>
+            <span class="text-gray-500 dark:text-gray-400 text-xs">€</span>
+          </template>
+        </UInput>
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
 
-      <UFormGroup name="actual_amount" :label="t('expense.actual-amount')" required>
-        <UInput v-model="state.actual_amount" type="number"
-                :placeholder="t('expense.placeholders.enter-actual-amount')"/>
+      <UFormGroup :label="t('expense.is-shared')" name="is_shared">
+        <UToggle v-model="state.is_shared"/>
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
         </template>
       </UFormGroup>
+    </div>
 
-      <UFormGroup name="is_shared" :label="t('expense.is-shared')" required>
-        <UCheckbox v-model="state.is_shared" :checked="false"/>
-        <template #error="{ error }">
-          <span>{{ t(error) }}</span>
-        </template>
-      </UFormGroup>
+    <UFormGroup :label="t('expense.expense-group')" name="expense_group">
+      <UInput v-model="state.expense_group" :placeholder="t('expense.placeholders.select-expense-group')"/>
+      <template #error="{ error }">
+        <span>{{ t(error) }}</span>
+      </template>
+    </UFormGroup>
 
-      <UFormGroup name="expense_group" :label="t('expense.expense-group')">
-        <UInput v-model="state.expense_group" :placeholder="t('expense.placeholders.select-expense-group')"/>
-        <template #error="{ error }">
-          <span>{{ t(error) }}</span>
-        </template>
-      </UFormGroup>
+    <UAlert
+        v-if="formError !== ''"
+        :description="t(formError)"
+        :title="t('errors.oops')"
+        class="mb-4 w-full"
+        color="red"
+        variant="outline"
+    />
 
-      <UAlert
-          class="mb-4 w-full"
-          v-if="formError !== ''"
-          color="red"
-          variant="outline"
-          :title="t('errors.oops')"
-          :description="t(formError)"
-      />
+    <div class="flex justify-center space-x-4">
+      <UButton class="w-1/3 justify-center text-center" color="primary" type="submit">
+        {{ t(props.mode === 'edit' ? 'expense.edit-expense' : 'expense.add-expense' as string) }}
+      </UButton>
+      <UButton class="w-1/3 justify-center text-center" color="gray" type="button" @click="resetForm">
+        {{ t('misc.reinitialize') }}
+      </UButton>
+    </div>
 
-      <div class="flex justify-center space-x-4">
-        <UButton type="submit" color="primary" class="w-1/3 justify-center text-center">
-          {{ t(props.mode === 'edit' ? 'expense.edit-expense' : 'expense.add-expense') }}
-        </UButton>
-        <UButton type="button" color="gray" class="w-1/3 justify-center text-center" @click="resetForm">
-          {{ t('misc.reinitialize') }}
-        </UButton>
-      </div>
-
-    </UForm>
-  </NuxtLayout>
+  </UForm>
 </template>
 
 <style scoped>

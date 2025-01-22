@@ -1,20 +1,23 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import {onBeforeUnmount, onMounted, ref} from 'vue';
 import {
-  Chart,
-  DoughnutController,
   ArcElement,
-  Tooltip,
+  Chart,
+  type ChartDataset,
+  type ChartOptions,
+  DoughnutController,
   Legend,
+  Tooltip,
 } from 'chart.js';
 import type {Expense} from "~/types/expense";
 import {CategoryValues} from "~/schemas/expense";
+
 const route = useRoute();
 const tripId = ref(route.params.tripId);
-const { t } = useI18n();
+const {t} = useI18n();
 
-// API cals
+// API calls
 const declaredBudget = ref<number>(0);
 const expenses = ref<Expense[]>([]);
 
@@ -40,17 +43,20 @@ const groupedExpenses = computed(() => {
 
   return allCategories.map((category: string, index: number) => {
     const total = expenses.value
-      .filter((expense: Expense) => expense.category === category)
-      .reduce((sum: number, expense: Expense) => sum + expense.actual_amount, 0);
-    return { category, total, backgroundColor: colors[index % colors.length] };
+        .filter((expense: Expense) => expense.category === category)
+        .reduce((sum: number, expense: Expense) => sum + expense.actual_amount, 0);
+    return {category, total, backgroundColor: colors[index % colors.length]};
   });
 });
 
 const color = computed(() => {
   switch (true) {
-    case ratio.value > 50: return 'text-green-500 dark:text-green-400'
-    case ratio.value > 30: return 'text-primary dark:text-primary'
-    default: return 'text-red-500 dark:text-red-400'
+    case ratio.value > 50:
+      return 'text-green-500 dark:text-green-400'
+    case ratio.value > 30:
+      return 'text-primary dark:text-primary'
+    default:
+      return 'text-red-500 dark:text-red-400'
   }
 })
 
@@ -59,11 +65,11 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 // Ref for the chart canvas
 const chartCanvas = ref(null);
-let chartInstance : Chart | null = null;
+let chartInstance: Chart<"doughnut", number[], string> | null = null;
 
 // Data for the donut chart
 
-const chartData = computed(() => ({
+const chartData: ComputedRef<ChartDataset<"doughnut", number[]>> = computed(() => ({
   labels: groupedExpenses.value.map((expense) => t(`budget.${expense.category.toLowerCase()}`)),
   datasets: [
     {
@@ -76,7 +82,7 @@ const chartData = computed(() => ({
 }));
 
 // Options for the donut chart
-const chartOptions = computed(() => ({
+const chartOptions: ComputedRef<ChartOptions<"doughnut">> = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -98,11 +104,18 @@ const chartOptions = computed(() => ({
 
 onMounted(() => {
   if (chartCanvas.value) {
-    chartInstance = new Chart(chartCanvas.value, {
-      type: 'doughnut', // Specify the type as "doughnut"
+    chartInstance = new Chart<"doughnut", number[], string>(chartCanvas.value, {
+      type: "doughnut",
       data: chartData.value,
       options: chartOptions.value,
     });
+  }
+});
+
+watch(chartData, () => {
+  if (chartInstance) {
+    chartInstance.data = chartData.value;
+    chartInstance.update();
   }
 });
 
@@ -115,55 +128,55 @@ onBeforeUnmount(() => {
 
 <template>
   <UCard>
-     <template #header>
+    <template #header>
       <div class="h-8 header flex">
-      <!--left -->
+        <!--left -->
         <div class="flex-1 flex flex-col justify-center items-center">
           <div class="text-sm">{{ t('budget.initial-budget') }}</div>
-          <div class="text-lg text-primary">{{declaredBudget}} € </div>
+          <div class="text-lg text-primary">{{ declaredBudget }} €</div>
         </div>
         <!--right -->
         <div class="flex-1 flex flex-col justify-center items-center space-y-1">
-           <div class="text-sm">{{ t('budget.remaining-budget') }}</div>
-            <div class="text-lg" :class="color">{{remainingBudget}} € </div>
+          <div class="text-sm">{{ t('budget.remaining-budget') }}</div>
+          <div :class="color" class="text-lg">{{ remainingBudget }} €</div>
         </div>
       </div>
     </template>
 
-   <div class="h-100">
+    <div class="h-100">
 
-    <div v-if="expenses.length === 0" class="flex items-center justify-center h-full">
-      <p>{{ t('expense.no-expenses') }}</p>
-    </div>
+      <div v-if="expenses.length === 0" class="flex items-center justify-center h-full">
+        <p>{{ t('expense.no-expenses') }}</p>
+      </div>
 
-    <div v-else class="chart-container">
-      <canvas ref="chartCanvas"></canvas>
+      <div v-else class="chart-container">
+        <canvas ref="chartCanvas"></canvas>
+      </div>
     </div>
-</div>
 
 
     <template #footer>
       <div class="h-8 footer flex justify-center space-x-8 px-12">
 
         <UButton
-            @click="$router.push(`/home/trips/${tripId}/budget/edit`)"
+            :label="t('budget.edit-budget')"
+            class="flex-1 flex items-center justify-center"
             color="primary"
             icon="material-symbols-light:box-edit"
-            :label="declaredBudget === 0 ? t('budget.declare-budget') : t('budget.edit-budget')"
             size="md"
             square
             variant="solid"
-            class = "flex-1 flex items-center justify-center"
+            @click="$router.push(`/home/trips/${tripId}/budget/edit`)"
         />
         <UButton
-            @click="$router.push(`/home/trips/${tripId}/budget/expenses`)"
+            :label="t('budget.manage-expenses')"
+            class="flex-1 flex items-center justify-center"
             color="red"
             icon="material-symbols:analytics"
-            :label="t('budget.manage-expenses')"
             size="md"
             square
             variant="solid"
-            class = "flex-1 flex items-center justify-center"
+            @click="$router.push(`/home/trips/${tripId}/budget/expenses`)"
         />
       </div>
 
