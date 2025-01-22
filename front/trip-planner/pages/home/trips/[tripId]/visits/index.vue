@@ -2,7 +2,6 @@
 
 import type { Trip } from '~/types';
 import type {AsyncData} from "#app";
-import Interceptors from "undici-types/interceptors";
 
 definePageMeta({
   title: 'visits.list.title',
@@ -65,7 +64,6 @@ const deleteVisit = async (visit: Visit) => {
       icon: 'i-heroicons-check-badge',
       color: "green",
       timeout: 2000,
-      pauseOnHover: false
     });
   } catch (error) {
     toast.add({
@@ -74,7 +72,6 @@ const deleteVisit = async (visit: Visit) => {
       icon: 'i-heroicons-x-circle',
       color: "red",
       timeout: 2000,
-      pauseOnHover: false
     });
   }
 }

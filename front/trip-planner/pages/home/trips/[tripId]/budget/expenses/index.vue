@@ -87,7 +87,6 @@ const deleteExpense = async (expenseId: number) => {
       icon: 'i-heroicons-check-badge',
       color: "green",
       timeout: 2000,
-      pauseOnHover: false
     });
   } catch (error) {
     toast.add({
@@ -96,7 +95,6 @@ const deleteExpense = async (expenseId: number) => {
       icon: 'i-heroicons-x-circle',
       color: "red",
       timeout: 2000,
-      pauseOnHover: false
     });
   }
 };
