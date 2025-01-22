@@ -42,7 +42,7 @@ GET http://localhost:8000/api/trips/37/budget/groups/1
 DELETE http://localhost:8000/api/trips/37/budget/groups/1
 
 ### Expense tests
-POST http://localhost:8000/api/trips/41/budget/expenses
+POST http://localhost:8000/api/trips/1/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 
@@ -68,7 +68,7 @@ Content-Type: application/json
   "is_shared": false
 }
 ###
-POST http://localhost:8000/api/trips/41/budget/expenses
+POST http://localhost:8000/api/trips/1/budget/expenses
 # expense_group is optional
 Content-Type: application/json
 

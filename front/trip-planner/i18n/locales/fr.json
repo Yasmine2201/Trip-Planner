@@ -53,19 +53,19 @@
     "trip_start_date": "Date de début"
   },
   "errors": {
-    "name-required": "Un nom est requis.",
+    "actual-amount-positive": "Le montant réel doit être un nombre positif",
     "alias-required": "Un pseudonyme est requis.",
     "already-have-account": "Déjà un compte ? Connectez-vous ici.",
     "birthdate-invalid": "Date de naissance invalide",
+    "category-invalid": "Catégorie invalide",
+    "category-required": "Une catégorie est requise",
     "confirm-password-required": "Veuillez répéter le mot de passe.",
     "description-too-long": "La description est limitée à 1000 caractères",
     "email-already-exists": "Cet email est déjà utilisé.",
     "email-invalid": "Veuillez entrer un email valide.",
     "email-required": "Un email est requis.",
-    "actual-amount-positive": "Le montant réel doit être un nombre positif",
-    "planned-amount-positive": "Le montant prévu doit être un nombre positif",
-    "category-invalid": "Catégorie invalide",
     "first-name-required": "Votre prénom est requis.",
+    "fyi": "Pour votre information",
     "go-home": "Retour à l'accueil",
     "invalid-birthdate": "Date invalide",
     "invalid-coordinates": "Les coordonnées doivent être entre -90 et 90 pour la latitude et -180 et 180 pour la longitude",
@@ -75,18 +75,52 @@
     "invalid-location": "Les coordonnées sont invalides",
     "invalid-start-date": "La date de début est invalide",
     "last-name-required": "Votre nom de famille est requis.",
+    "must-be-number": "Doit être un nombre",
+    "name-required": "Un nom est requis.",
     "oops": "Une erreur est survenue.",
-    "fyi": "Pour votre information",
     "page-not-found": "404 - Page non trouvée",
     "password-rejected": "Mot de passe invalide",
     "password-required": "Un mot de passe est requis.",
     "passwords-must-match": "Les mots de passe doivent être les mêmes.",
+    "planned-amount-positive": "Le montant prévu doit être un nombre positif",
     "radius-required": "Le rayon est requis et doit être un nombre positif",
+    "sent-invalid-data": "Les données envoyées sont invalides",
     "start-date-before-end-date": "La date de début doit être avant la date de fin",
     "trip-name-required": "Le nom du voyage est requis",
-    "unknown-error": "Merci de réessayer ultérieurement.",
-    "sent-invalid-data": "Les données envoyées sont invalides",
-    "must-be-number": "Doit être un nombre"
+    "unknown-error": "Merci de réessayer ultérieurement."
+  },
+  "expense": {
+    "actual-amount": "Montant réel",
+    "add-expense": "Ajouter une dépense",
+    "add-expense-group": "Ajouter groupe de dépenses",
+    "categories": {
+      "accommodation": "Hébergement",
+      "activity": "Activités",
+      "food": "Nourriture",
+      "others": "Autres",
+      "transport": "Transport"
+    },
+    "category": "Catégorie",
+    "delete-many-tooltip": "Sélectionnez plus d'une dépense pour les supprimer",
+    "delete-selected": "Supprimer les dépenses",
+    "description": "Description",
+    "edit-expense": "Modifier une dépense",
+    "expense-group": "Groupe de dépenses",
+    "expense-id": "ID",
+    "is-shared": "Partagée ?",
+    "name": "Nom",
+    "no": "Ce n'est pas partagé",
+    "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
+    "placeholders": {
+      "enter-actual-amount": "101",
+      "enter-description": "Description de la dépense",
+      "enter-name": "Nom de la dépense",
+      "enter-planned-amount": "100",
+      "select-category": "Nourriture, hébergement, transport, activités, autres",
+      "select-expense-group": "Mon groupe de dépenses"
+    },
+    "planned-amount": "Montant prévu",
+    "yes": "C'est partagé"
   },
   "language": {
     "af": "Afrikaans",
@@ -141,6 +175,7 @@
     "zh": "Chinois"
   },
   "misc": {
+    "back": "Retour",
     "delete": "Supprimer",
     "deletion": "Suppression",
     "edit": "Modifier",
@@ -148,14 +183,13 @@
     "loading": "Chargement...",
     "no-items": "Pas de données.",
     "no-results": "Pas de résultats pour {query}",
+    "not-defined": "Non défini",
+    "reinitialize": "Réinitialiser le formulaire",
     "save": "Enregistrer",
     "search": "Rechercher...",
     "see": "Voir",
     "select-value": "Sélectionnez des valeurs",
-    "success": "Succès de l'opération",
-    "not-defined": "Non défini",
-    "reinitialize": "Réinitialiser le formulaire",
-    "back": "Retour"
+    "success": "Succès de l'opération"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -217,56 +251,6 @@
     "name": "Nom",
     "start": "Date de début",
     "triplist-title": "Mes voyages"
-  },
-  "budget": {
-    "title": "Budget",
-    "debts-and-credits": "Créances et dettes",
-    "expenses": "Dépenses",
-    "expenses-description": "Ici vous trouverez les dépenses du voyage",
-    "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
-    "remaining-budget": "Budget restant",
-    "initial-budget": "Budget initial",
-    "edit-budget": "Modifier le budget",
-    "add-expense": "Ajouter une dépense",
-    "manage-expenses": "Gérer mes dépenses",
-    "food": "Nourriture",
-    "accommodation": "Hébergement",
-    "transport": "Transport",
-    "activity": "Activités",
-    "others": "Autres"
-  },
-  "expense": {
-    "add-expense": "Ajouter une dépense",
-    "edit-expense": "Modifier une dépense",
-    "expense-id": "ID",
-    "name": "Nom",
-    "description": "Description",
-    "planned-amount": "Montant prévu",
-    "actual-amount": "Montant réel",
-    "is-shared": "Partagé?",
-    "category": "Catégorie",
-    "expense-group": "Groupe de dépenses",
-    "yes": "C'est partagé",
-    "no": "Ce n'est pas partagé",
-    "delete-selected": "Supprimer les dépenses",
-    "delete-many-tooltip": "Sélectionnez plus d'une dépense pour les supprimer",
-    "add-expense-group": "Ajouter groupe de dépenses",
-    "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
-    "categories": {
-        "food": "Nourriture",
-        "accommodation": "Hébergement",
-        "transport": "Transport",
-        "activity": "Activités",
-        "others": "Autres"
-    },
-    "placeholders": {
-      "enter-name": "Nom de la dépense",
-      "enter-description": "Description de la dépense",
-      "enter-planned-amount": "100",
-      "enter-actual-amount": "101",
-      "select-category": "Nourriture, hébergement, transport, activités, autres",
-      "select-expense-group": "Mon groupe de dépenses"
-    }
   },
   "visits": {
     "fields": {
