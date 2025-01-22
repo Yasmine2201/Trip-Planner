@@ -4,7 +4,7 @@ import LocationSelector from "~/components/LocationSelector.vue";
 import type { FormSubmitEvent } from "#ui/types";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
-import {type CreateTripDto, createTripSchema} from "~/schemas";
+import {createTripSchema} from "~/schemas";
 
 const props = defineProps({
   mode: { type: String, required: true }, // "create" ou "modify"

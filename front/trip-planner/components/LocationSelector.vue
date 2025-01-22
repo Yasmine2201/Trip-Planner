@@ -1,33 +1,3 @@
-<template>
-  <div class="location-selector">
-    <h1 id="title">{{ t('LocationSelect.place') }}</h1>
-    <div id="map" class="map-container"></div>
-    <div class="controls">
-      <div class="control-item">
-        <span class="label">{{ t('LocationSelect.latitude') }}:</span>
-        <span class="value">{{ selectedLat.toFixed(4) }}</span>
-      </div>
-      <div class="control-item">
-        <span class="label">{{ t('LocationSelect.longitude') }}:</span>
-        <span class="value">{{ selectedLng.toFixed(4) }}</span>
-      </div>
-      <div class="control-item">
-        <label class="label">
-          {{ t('LocationSelect.radius') }}:
-        </label>
-        <input
-            type="number"
-            v-model="radius"
-            @input="updateRadius"
-            min="1"
-            class="radius-input"
-            :disabled="!props.modifiable"
-        />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, watch, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
@@ -103,7 +73,37 @@ defineExpose({
 });
 </script>
 
-<style>
+<template>
+  <div class="location-selector">
+    <h1 id="title">{{ t('LocationSelect.place') }}</h1>
+    <div id="map" class="map-container"></div>
+    <div class="controls">
+      <div class="control-item">
+        <span class="label">{{ t('LocationSelect.latitude') }}:</span>
+        <span class="value">{{ selectedLat.toFixed(4) }}</span>
+      </div>
+      <div class="control-item">
+        <span class="label">{{ t('LocationSelect.longitude') }}:</span>
+        <span class="value">{{ selectedLng.toFixed(4) }}</span>
+      </div>
+      <div class="control-item">
+        <label class="label">
+          {{ t('LocationSelect.radius') }}:
+        </label>
+        <input
+            type="number"
+            v-model="radius"
+            @input="updateRadius"
+            min="1"
+            class="radius-input"
+            :disabled="!props.modifiable"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
 .map-container {
   height: 400px;
   width: 100%;
