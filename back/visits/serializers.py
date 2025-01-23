@@ -2,6 +2,8 @@ import math
 
 from rest_framework import serializers
 
+from trips.models import Trip
+from trips.services import TripService
 from visits.models import Visit, Location, LocationPrice
 
 
@@ -47,20 +49,26 @@ class LocationSerializer(serializers.ModelSerializer):
 
 # Visits
 class VisitInputSerializer(serializers.ModelSerializer):
+    trip_id = serializers.IntegerField()
+    location_id = serializers.IntegerField()
+
     class Meta:
         model = Visit
-        fields = '__all__'
+        fields = ['visit_id', 'location_id', 'trip_id', 'name', 'start_date', 'end_date']
 
-        extra_kwargs = {
-            'visit_id': {'required': False},
-        }
-
-    # As trip is a foreign key, we want to return the trip_id instead of the trip object
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['trip_id'] = instance.trip.trip_id
-        if 'trip' in data:
-            del data['trip']
+
+        trip_id = instance['trip_id']
+        if 'trip_id' in data:
+            del data['trip_id']
+        data['trip'] = Trip.objects.get(trip_id=trip_id)
+
+        location_id = instance['location_id']
+        if 'location_id' in data:
+            del data['location_id']
+        data['location'] = Location.objects.get(location_id=location_id)
+
         return data
 
 

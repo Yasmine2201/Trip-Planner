@@ -27,6 +27,12 @@ class VisitView(ProtectableAPIView):
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
 
+        except Trip.DoesNotExist:
+            return Response({"error": "Trip not found"}, status=404)
+
+        except Location.DoesNotExist:
+            return Response({"error": "Location not found"}, status=404)
+
         except ForbiddenActionError as e:
             return Response({"error": str(e)}, status=403)
 

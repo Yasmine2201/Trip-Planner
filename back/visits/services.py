@@ -17,11 +17,10 @@ class VisitService:
         """
         Create a new visit for a user in a trip.
         """
-
         visit_serializer = VisitInputSerializer(data=visit_data)
         visit_serializer.is_valid(raise_exception=True)
 
-        visit_data_object = visit_serializer.validated_data
+        visit_data_object = visit_serializer.data
         trip: Trip = visit_data_object.get('trip')
 
         if trip.trip_id != trip_id:
@@ -112,3 +111,7 @@ class LocationService:
 
         # Apply filters to the queryset
         return Paginator(queryset.filter(filters), LocationService.PAGE_SIZE).get_page(page)
+
+    @staticmethod
+    def get_location_by_id(location_id):
+        return Location.objects.get(location_id=location_id)
