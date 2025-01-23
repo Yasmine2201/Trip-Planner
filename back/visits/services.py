@@ -61,7 +61,7 @@ class LocationService:
 
     @staticmethod
     def get_all_locations(page: int) -> list[Location]:
-        return Paginator(Location.objects.all(), LocationService.PAGE_SIZE).get_page(page)
+        return Paginator(Location.objects.all().order_by('location_id'), LocationService.PAGE_SIZE).get_page(page)
 
     @staticmethod
     def get_filtered_locations(query_params: dict, page: int) -> list[Location]:
@@ -76,6 +76,12 @@ class LocationService:
         min_price: float | None = params.get('minPrice')
         max_price: float | None = params.get('maxPrice')
         search: str | None = params.get('search', None)
+        sort_by: str = params.get('sort_by', 'location_id')
+        sort_order: str = params.get('sort_order', 'asc')
+
+        if sort_by and sort_order:
+            if sort_order == 'desc':
+                sort_by = f"-{sort_by}"
 
         # Initialize base query
         queryset = Location.objects.all()
@@ -110,7 +116,11 @@ class LocationService:
                 raise ValidationError("Invalid latitude, longitude, or radius.")
 
         # Apply filters to the queryset
-        return Paginator(queryset.filter(filters), LocationService.PAGE_SIZE).get_page(page)
+        queryset = queryset.filter(filters)
+        if sort_by:
+            queryset = queryset.order_by(sort_by)
+
+        return Paginator(queryset, LocationService.PAGE_SIZE).get_page(page)
 
     @staticmethod
     def get_location_by_id(location_id):

@@ -1,10 +1,8 @@
-import math
-
 from rest_framework import serializers
 
+from core.serializers import ImageSerializer
 from trips.models import Trip
-from trips.services import TripService
-from visits.models import Visit, Location, LocationPrice
+from visits.models import Visit, Location, LocationPrice, LocationPicture
 
 
 # Locations
@@ -15,6 +13,8 @@ class LocationQueryParamsSerializer(serializers.Serializer):
     minPrice: float = serializers.FloatField(required=False)
     maxPrice: float = serializers.FloatField(required=False)
     search: str = serializers.CharField(required=False, allow_blank=True)
+    sort_by: str = serializers.ChoiceField(choices=['name', 'location_id'], required=False)
+    sort_order: str = serializers.ChoiceField(choices=['asc', 'desc'], required=False)
 
     def validate(self, data: dict):
         lat = data.get('lat')
@@ -33,6 +33,14 @@ class LocationQueryParamsSerializer(serializers.Serializer):
         return data
 
 
+class LocationPictureSerializer(serializers.ModelSerializer):
+    image = ImageSerializer(source='picture')
+
+    class Meta:
+        model = LocationPicture
+        exclude = ['location']
+
+
 class LocationPriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = LocationPrice
@@ -41,10 +49,19 @@ class LocationPriceSerializer(serializers.ModelSerializer):
 
 class LocationSerializer(serializers.ModelSerializer):
     prices = LocationPriceSerializer(many=True, read_only=True)
+    pictures = LocationPictureSerializer(many=True, read_only=True)
 
     class Meta:
         model = Location
         fields = '__all__'
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        if 'pictures' in data and data['pictures']:
+            data['pictures'] = [picture['image'] for picture in data['pictures']]
+
+        return data
 
 
 # Visits

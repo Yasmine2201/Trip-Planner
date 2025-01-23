@@ -14,7 +14,7 @@ class Location(models.Model):
 
 
 class LocationPicture(models.Model):
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name='pictures')
     picture = models.ForeignKey(Image, on_delete=models.CASCADE)
 
     class Meta:
