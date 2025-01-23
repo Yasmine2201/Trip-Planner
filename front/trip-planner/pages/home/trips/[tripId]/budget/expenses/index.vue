@@ -48,35 +48,18 @@ const columns = computed(() => [
   {key: 'actions'}
 ]);
 
-const actionItems = (row) => [
-  [
-    {
-      label: t('misc.edit'),
-      icon: 'i-heroicons-pencil',
-      class: 'bg-primary-500 text-white dark:bg-primary dark:text-black mb-2',
-      iconClass: 'text-white dark:text-black',
-      click: () => router.push(`/home/trips/${tripId.value}/budget/expenses/${row.expense_id}/edit`)
-    },
-    {
-      label: t('misc.delete'),
-      icon: 'i-heroicons-trash',
-      class: 'bg-red-500 text-white dark:bg-red-400 dark:text-black',
-      iconClass: 'text-white dark:text-black',
-      click: () => deleteExpense(row.expense_id)
-    }
-  ]
-]
-
 const getCategoryLabel = (category: string) => t(`expense.categories.${category.toLowerCase()}`);
 
 const selected = ref<Expense[]>([]);
 const anySelected = computed(() => selected.value?.length >= 1);
 
 const deleteExpense = async (expenseId: number) => {
-  try {
-    await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
-      method: 'DELETE'
-    });
+
+  const { status } = await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
+    method: 'DELETE'
+  });
+
+  if (status.value === 'success') {
     expenses.value = expenses.value.filter((expense) => expense.expense_id !== expenseId);
     toast.add({
       title: t('misc.deletion'),
@@ -85,7 +68,7 @@ const deleteExpense = async (expenseId: number) => {
       color: "green",
       timeout: 2000,
     });
-  } catch (error) {
+  } else {
     toast.add({
       title: t('misc.deletion'),
       description: t('misc.error'),
@@ -143,7 +126,7 @@ const deleteAllSelected = async () => {
   </div>
 
   <UTable
-      :model-value="selected"
+      v-model="selected"
       :columns="columns"
       :rows="expenses"
   >

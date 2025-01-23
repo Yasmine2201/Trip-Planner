@@ -43,10 +43,10 @@ const { data: rows, status } = await useApiFetch<Trip[]>('/trips');
 const computedRows = computed(() => rows.value ?? []);
 
 const deleteTrip = async (tripId: number) => {
-  try {
-    await useApiFetch(`/trips/${tripId}`, {
-      method: 'DELETE'
-    });
+  const { status } = await useApiFetch(`/trips/${tripId}`, {
+    method: 'DELETE'
+  });
+  if (status.value === 'success') {
     rows.value = rows.value.filter((trip) => trip.trip_id !== tripId);
     toast.add({
       title: t('misc.deletion'),
@@ -55,7 +55,8 @@ const deleteTrip = async (tripId: number) => {
       color: "green",
       timeout: 2000,
     });
-  } catch (error) {
+  }
+  else {
     toast.add({
       title: t('misc.deletion'),
       description: t('misc.error'),

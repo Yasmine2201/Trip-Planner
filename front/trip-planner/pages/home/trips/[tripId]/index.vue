@@ -27,8 +27,8 @@ const getLocationDetails = async (trip: Trip) => {
 
     const address = response.data.value.address;
 
-    town.value = address.city ?? address.town ?? "";
-    country.value = address.country;
+    town.value = address.village ?? address.town ?? address.city ?? address.municipality ?? address.county ?? address.state ?? address.region ?? "";
+    country.value = address.country ?? address.continent ?? "";
   } catch (error) {
     console.error('Error fetching location details:', error);
   }
@@ -47,10 +47,11 @@ onMounted(async () => {
 });
 
 const deleteTrip = async (tripId: number) => {
-  try {
-    await useApiFetch(`/trips/${tripId}`, {
-      method: 'DELETE'
-    });
+  const { status } = await useApiFetch(`/trips/${tripId}`, {
+    method: 'DELETE'
+  });
+
+  if (status.value === 'success') {
     router.push('/home');
     toast.add({
       title: t('misc.delete'),
@@ -59,8 +60,7 @@ const deleteTrip = async (tripId: number) => {
       color: "green",
       timeout: 2000
     });
-  } catch (error) {
-    console.error('Error deleting trip:', error);
+  } else {
     toast.add({
       title: t('misc.delete'),
       description: t('misc.error'),
@@ -138,7 +138,9 @@ const deleteTrip = async (tripId: number) => {
           {{ t('create_trip.trip_location') }}
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
-          {{ town }}, {{ country }} ({{ trip?.latitude.toFixed(2) }}°, {{ trip?.longitude.toFixed(2) }}°)
+          {{ town && country ? town + ', ' : '' }}{{ country }}
+          {{ (town || country) && trip?.latitude && trip?.longitude ? ' ; ' : '' }}
+          {{ trip?.latitude && trip?.longitude ? '(' + trip?.latitude.toFixed(2) + '°, ' + trip?.longitude.toFixed(2) + '°)' : '' }}
         </td>
       </tr>
 

@@ -11,6 +11,7 @@ definePageMeta({
 
 const route = useRoute();
 const { t } = useI18n();
+const toast = useToast();
 
 const tripId = route.params.tripId as number;
 const { data: trip }: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${tripId}`, {}, true);
@@ -53,10 +54,11 @@ const { data: rows, status }: AsyncData<Visit[], any> = await useApiFetch<Visit[
 const computedRows = computed(() => rows.value ?? []);
 
 const deleteVisit = async (visit: Visit) => {
-  try {
-    await useApiFetch(`/trips/${visit.trip_id}/visits/${visit.visit_id}`, {
-      method: 'DELETE'
-    });
+  const { status } = await useApiFetch(`/trips/${visit.trip_id}/visits/${visit.visit_id}`, {
+    method: 'DELETE'
+  });
+
+  if (status.value === "success") {
     rows.value = rows.value.filter((v) => v.visit_id !== visit.visit_id);
     toast.add({
       title: t('misc.delete'),
@@ -65,7 +67,7 @@ const deleteVisit = async (visit: Visit) => {
       color: "green",
       timeout: 2000,
     });
-  } catch (error) {
+  } else {
     toast.add({
       title: t('misc.deletion'),
       description: t('misc.error'),
