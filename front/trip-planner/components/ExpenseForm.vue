@@ -23,7 +23,7 @@ const categoryOptions = computed(() => Object.values(CategoryValues).map(value =
     }))
 );
 
-const state = reactive({
+const default_state = {
   category: props.expenseData.category || undefined,
   name: props.expenseData.name || undefined,
   description: props.expenseData.description || '',
@@ -31,7 +31,9 @@ const state = reactive({
   actual_amount: props.expenseData.actual_amount || undefined,
   is_shared: props.expenseData.is_shared || false,
   expense_group: props.expenseData.expense_group || undefined,
-});
+};
+
+const state = reactive(Object.assign({}, default_state));
 
 const formError = ref('');
 
@@ -70,15 +72,7 @@ const onSubmit = async ({data}: FormSubmitEvent<ExpenseDto>) => {
 }
 
 async function resetForm() {
-  Object.assign(state, {
-    category: '',
-    name: '',
-    description: '',
-    planned_amount: undefined,
-    actual_amount: undefined,
-    is_shared: false,
-    expense_group: '',
-  });
+  Object.assign(state, default_state);
   formError.value = '';
 }
 </script>

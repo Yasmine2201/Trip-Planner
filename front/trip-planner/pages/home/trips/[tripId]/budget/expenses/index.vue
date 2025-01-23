@@ -18,7 +18,9 @@ const expensesResponse = await useApiFetch<Expense[]>(`/trips/${tripId.value}/bu
 expenses.value = expensesResponse.data.value ?? [];
 
 const columns = computed(() => [
-  {},
+  {
+    key: 'select'
+  },
   {
     key: 'name',
     label: t('expense.name'),
@@ -141,7 +143,7 @@ const deleteAllSelected = async () => {
   </div>
 
   <UTable
-      v-model="selected"
+      :model-value="selected"
       :columns="columns"
       :rows="expenses"
   >
