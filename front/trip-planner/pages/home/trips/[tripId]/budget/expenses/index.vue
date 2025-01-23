@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type {Expense} from "~/types/expense";
-import {ref} from "vue";
+import {computed, ref} from "vue";
+import {CategoryValues} from "~/schemas/expense";
 
 definePageMeta({
   title: 'budget.expenses',
@@ -11,7 +12,6 @@ const {t} = useI18n();
 const toast = useToast();
 const route = useRoute();
 const tripId = ref(route.params.tripId);
-const router = useRouter();
 
 const expenses = ref<Expense[]>([]);
 const expensesResponse = await useApiFetch<Expense[]>(`/trips/${tripId.value}/budget/expenses`);
@@ -55,7 +55,7 @@ const anySelected = computed(() => selected.value?.length >= 1);
 
 const deleteExpense = async (expenseId: number) => {
 
-  const { status } = await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
+  const {status} = await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
     method: 'DELETE'
   });
 
@@ -79,6 +79,26 @@ const deleteExpense = async (expenseId: number) => {
   }
 };
 
+// Filter
+const categoryOptions = computed(() => [
+  { label: t('misc.all'), value: '' },
+  ...Object.values(CategoryValues).map(value => ({
+    label: getCategoryLabel(value),
+    value: value,
+  }))
+]);
+const selectedCategory = reactive({value: ''});
+const filteredExpenses = computed(() => {
+  if (!selectedCategory.value) return expenses.value;
+  else {
+    return expenses.value.filter(expense => expense.category === selectedCategory.value);
+  }
+});
+const selectMenuClass = computed(() => {
+  return selectedCategory.value ? 'primary' : '';
+});
+
+// Delete all selected
 const deleteAllSelected = async () => {
   selected.value?.forEach((expense: Expense) => {
     deleteExpense(expense.expense_id);
@@ -89,30 +109,20 @@ const deleteAllSelected = async () => {
 </script>
 
 <template>
-  <PageTitle :name="t('budget.expenses')" />
+  <PageTitle :name="t('budget.expenses')"/>
 
   <div class="flex justify-between mb-10">
-    <UButton
-        :disabled="!anySelected"
-        :label="t('expense.delete-selected')"
-        :title="t('expense.delete-many-tooltip')"
-        color="red"
-        icon="material-symbols:delete"
-        size="xs"
-        variant="solid"
-        @click="deleteAllSelected"
-    />
-
     <div class="flex w-1/2 space-x-5 px-5">
       <UButton
-          :label="t('expense.add-expense-group')"
-          class="w-1/2 justify-center"
-          color="primary"
-          icon="material-symbols:cards-star-outline"
+          :disabled="!anySelected"
+          :label="t('expense.delete-selected')"
+          :title="t('expense.delete-many-tooltip')"
+          color="red"
+          icon="material-symbols:delete"
           size="xs"
-          square
           variant="solid"
-          @click=""/>
+          @click="deleteAllSelected"
+      />
       <UButton
           :label="t('budget.add-expense')"
           class="w-1/2 justify-center"
@@ -123,15 +133,25 @@ const deleteAllSelected = async () => {
           variant="solid"
           @click="$router.push(`/home/trips/${tripId}/budget/expenses/create`)"/>
     </div>
+    <UFormGroup>
+        <USelectMenu
+            icon="fa6-solid:filter"
+            :color="selectedCategory.value ? 'primary' : 'gray'"
+            v-model="selectedCategory.value"
+            :options="categoryOptions"
+            value-attribute="value"
+            :placeholder="t('expense.placeholders.filter-by-category')"
+        />
+    </UFormGroup>
   </div>
 
   <UTable
       v-model="selected"
       :columns="columns"
-      :rows="expenses"
+      :rows="filteredExpenses"
   >
     <template #name-data="{ row }">
-      <UTooltip >
+      <UTooltip>
         <span class="font-semibold underline text-left">{{ row.name }}</span>
 
         <template #text>
@@ -143,12 +163,16 @@ const deleteAllSelected = async () => {
     </template>
 
     <template #planned_amount-data="{ row }">
-      <span v-if="row.planned_amount">{{ row.planned_amount?.toLocaleString(undefined, { minimumFractionDigits: 2 }) }} €</span>
+      <span v-if="row.planned_amount">{{
+          row.planned_amount?.toLocaleString(undefined, {minimumFractionDigits: 2})
+        }} €</span>
       <span v-else>-</span>
     </template>
 
     <template #actual_amount-data="{ row }">
-      <span v-if="row.actual_amount">{{ row.actual_amount?.toLocaleString(undefined, { minimumFractionDigits: 2 }) }} €</span>
+      <span v-if="row.actual_amount">{{
+          row.actual_amount?.toLocaleString(undefined, {minimumFractionDigits: 2})
+        }} €</span>
       <span v-else>-</span>
     </template>
 
