@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from budget.models import Expense
 from trips.models import TripParticipation
 from .models import Notification
 
@@ -64,6 +65,36 @@ def notify_budget_initialization(sender, instance, created, **kwargs):
         notification.save()
     print(
         f"Notified user {instance.user.user_id} about budget initialization for Trip Participation: {instance.trip_participation_id}")
+
+@receiver(post_save, sender=Expense)
+def notify_expenses_exceed_budget(sender, instance, created, **kwargs):
+    if created:
+
+        total_expenses = sum(
+            expense.actual_amount for expense in Expense.objects.filter(trip_participation=instance.trip_participation))
+
+        declared_budget = instance.trip_participation.declared_budget
+        if total_expenses > declared_budget:
+            content = NotificationContent(
+                message="notifications.content.expenses-exceed-budget",
+                data={
+                    "tripName":instance.trip_participation.trip.trip_name,
+                    "totalExpenses": float(total_expenses),
+                    "budget": float(declared_budget),
+                    "tripId": instance.trip_participation.trip.trip_id
+                }
+            )
+
+            notification = Notification.objects.create(
+                user=instance.trip_participation.user,
+                type="Budget",
+                content=str(content),
+                is_read=False,
+                created_at=timezone.now()
+            )
+            notification.save()
+    print(f"Notified user {instance.trip_participation.user} about expenses exceeding budget for "
+          f"trip {instance.trip_participation.trip.trip_name} after adding Expense: {instance.expense_id}")
 
 ########################################################################################################################
 

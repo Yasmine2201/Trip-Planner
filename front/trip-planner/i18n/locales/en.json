@@ -119,7 +119,8 @@
       "enter-name": "My expense name",
       "enter-planned-amount": "100",
       "select-category": "Food, accommodation, transport, activity, others",
-      "select-expense-group": "My expense group"
+      "select-expense-group": "My expense group",
+      "filter-by-category": "Filter by category"
     },
     "planned-amount": "Planned Amount",
     "planned-amount-short": "Planned",
@@ -192,7 +193,8 @@
     "search": "Search...",
     "see": "See",
     "select-value": "Select values",
-    "success": "Operation succeeded"
+    "success": "Operation succeeded",
+    "all": "All"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -215,7 +217,8 @@
   "notifications": {
     "content": {
       "added-to-trip": "You have been added to trip '{tripName}'",
-      "budget-changed": "Budget for trip '{tripName}' has been changed to {budget}"
+      "budget-changed": "Budget for trip '{tripName}' has been changed to {budget}",
+      "expenses-exceed-budget": "Expenses for the trip amount to 'totalExpenses'€ and exceed the declared budget of '{budget}'€"
     },
     "deleted": "Notification deleted",
     "mark-as-read": "Mark as read",
