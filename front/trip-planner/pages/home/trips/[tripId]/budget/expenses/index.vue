@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type {Expense} from "~/types/expense";
-import {computed, ref} from "vue";
 import {CategoryValues} from "~/schemas/expense";
 
 definePageMeta({
@@ -57,7 +56,7 @@ const anySelected = computed(() => selected.value?.length >= 1);
 
 const deleteExpense = async (expenseId: number) => {
 
-  const {status} = await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
+  const { status } = await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
     method: 'DELETE'
   });
 

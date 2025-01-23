@@ -117,10 +117,10 @@
     "no": "Not shared",
     "no-expenses": "No expenses yet. Please add some to see the expense chart",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101",
       "enter-description": "My expense description",
       "enter-name": "My expense name",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100",
       "select-category": "Food, accommodation, transport, activity, others",
       "select-expense-group": "My expense group",
       "filter-by-category": "Filter by category"
