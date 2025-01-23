@@ -1,4 +1,3 @@
-from django.core.paginator import Paginator
 from django.db.models import Min, Max, Q
 from rest_framework.exceptions import ValidationError
 
@@ -52,19 +51,13 @@ class VisitService:
 
 
 class LocationService:
-    PAGE_SIZE = 50
-    # @staticmethod
-    # def create_location(location_data: dict):
-    #     location = Location.objects.create(**location_data)
-    #     location.save()
-    #     return location
 
     @staticmethod
-    def get_all_locations(page: int) -> list[Location]:
-        return Paginator(Location.objects.all().order_by('location_id'), LocationService.PAGE_SIZE).get_page(page)
+    def get_all_locations() -> list[Location]:
+        return Location.objects.all().order_by('location_id')
 
     @staticmethod
-    def get_filtered_locations(query_params: dict, page: int) -> list[Location]:
+    def get_filtered_locations(query_params: dict) -> list[Location]:
         params_serializer = LocationQueryParamsSerializer(data=query_params)
         params_serializer.is_valid(raise_exception=True)
         params: dict = params_serializer.validated_data
@@ -73,11 +66,16 @@ class LocationService:
         lat: float | None = params.get('lat', None)
         lon: float | None = params.get('lon', None)
         radius: float | None = params.get('radius', None)
-        min_price: float | None = params.get('minPrice')
-        max_price: float | None = params.get('maxPrice')
+        min_lat: float | None = params.get('min_lat')
+        max_lat: float | None = params.get('max_lat')
+        min_lon: float | None = params.get('min_lon')
+        max_lon: float | None = params.get('max_lon')
+        min_price: float | None = params.get('min_price')
+        max_price: float | None = params.get('max_price')
         search: str | None = params.get('search', None)
         sort_by: str = params.get('sort_by', 'location_id')
         sort_order: str = params.get('sort_order', 'asc')
+        is_viewport: bool = params.get('is_viewport', False)
 
         if sort_by and sort_order:
             if sort_order == 'desc':
@@ -104,8 +102,8 @@ class LocationService:
             )
             filters &= Q(max_price__lte=max_price)
 
-        # 3. Add geographical filter (Haversine formula or GeoDjango)
-        if lat and lon and radius:
+        # 3. Add geographical filter (Haversine formula or viewport)
+        if lat and lon and radius and not is_viewport:
             try:
                 valid_ids = [
                     loc.location_id for loc in queryset
@@ -115,12 +113,15 @@ class LocationService:
             except ValueError:
                 raise ValidationError("Invalid latitude, longitude, or radius.")
 
+        elif is_viewport:
+            filters &= Q(latitude__gte=min_lat, latitude__lte=max_lat, longitude__gte=min_lon, longitude__lte=max_lon)
+
         # Apply filters to the queryset
         queryset = queryset.filter(filters)
         if sort_by:
             queryset = queryset.order_by(sort_by)
 
-        return Paginator(queryset, LocationService.PAGE_SIZE).get_page(page)
+        return queryset
 
     @staticmethod
     def get_location_by_id(location_id):

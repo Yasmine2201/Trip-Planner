@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from authentication.utils import ProtectableAPIView
 from trips.models import Trip
@@ -54,7 +55,7 @@ class VisitView(ProtectableAPIView):
             return Response({"error": str(e)}, status=403)
 
 
-class LocationView(ProtectableAPIView):
+class LocationView(APIView):
     DEFAULT_PAGE_SIZE = 10
 
     @staticmethod
@@ -65,11 +66,11 @@ class LocationView(ProtectableAPIView):
 
         params = {k: v for k, v in request.query_params.items()}
         page_index: int = params.get('page', 1)
-        page_size: int = LocationView.DEFAULT_PAGE_SIZE
+        page_size: int = params.get('pageSize', LocationView.DEFAULT_PAGE_SIZE)
         if 'page' in params:
             del params['page']
-        if 'page_size' in params:
-            del params['page_size']
+        if 'pageSize' in params:
+            del params['pageSize']
 
         if len(request.query_params) > 0:
             locations = LocationService.get_filtered_locations(request.query_params)
@@ -80,7 +81,7 @@ class LocationView(ProtectableAPIView):
 
         serializer = LocationSerializer(page.get_page(page_index), many=True)
         response = {
-            "locations": serializer.data,
+            "data": serializer.data,
             "current_page": page_index,
             "total_pages": page.num_pages,
             "total_elements": page.count,
