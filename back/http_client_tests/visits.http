@@ -1,4 +1,4 @@
-###
+### Login
 POST http://localhost:8000/api/auth/login
 Content-Type: application/json
 
@@ -23,7 +23,10 @@ Content-Type: application/json
 GET http://localhost:8000/api/trips/1/visits
 
 ### GET all locations
-GET http://localhost:8000/api/locations&page=5
+GET http://localhost:8000/api/locations?page=5
 
 ### GET filtered locations
-GET http://localhost:8000/api/locations?lat=47.61276&lon=5.27333&radius=1&search=chateau
+GET http://localhost:8000/api/locations?lat=48.3&lon=7.5&radius=5&page=1
+
+### GET sorted filtered locations
+GET http://localhost:8000/api/locations?lat=48.3&lon=7.5&radius=5&sort_by=name&sort_order=desc&page=1
