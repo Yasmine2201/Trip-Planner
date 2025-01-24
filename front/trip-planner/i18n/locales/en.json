@@ -47,6 +47,7 @@
     "remaining-budget": "Remaining budget",
     "title": "Budget",
     "transport": "Transport",
+    "declare-budget": "Declare my budget",
     "visit": "Visit",
     "shopping": "Shopping"
   },
@@ -94,7 +95,7 @@
     "start-date-before-end-date": "Start date must be before end date",
     "trip-name-required": "Trip name is required",
     "unknown-error": "Please retry later.",
-    "budget-positive": "Budget must be a positive number",
+    "budget-positive": "Budget must be a positive number"
   },
   "expense": {
     "actual-amount": "Actual Amount",
@@ -140,7 +141,9 @@
     "visit_end_date": "End date",
     "visit_modify_button": "Update the visit",
     "visit_name": "Visit name",
-    "visit_start_date": "Start date"
+    "visit_start_date": "Start date",
+    "change_location": "Change location",
+    "location": "Location"
   },
   "language": {
     "af": "Afrikaans",
@@ -193,17 +196,6 @@
     "ur": "Urdu",
     "vi": "Vietnamese",
     "zh": "Chinese"
-  },
-  "locations": {
-    "popup": {
-      "too-many-locations": "Too many locations. Please filter or zoom in."
-    },
-    "price_range": {
-      "unknown": "Price unknown"
-    },
-    "titles": {
-      "select-location": "Places to visit"
-    }
   },
   "misc": {
     "all": "All",
@@ -304,6 +296,23 @@
     },
     "title": {
       "finalize": "Finalize creation"
+    }
+  },
+  "locations": {
+    "titles": {
+      "select-location": "Places to visit"
+    },
+    "price_range": {
+      "unknown": "Price unknown"
+    },
+    "popup": {
+      "too-many-locations": "Too many locations. Please filter or zoom in."
+    },
+    "labels": {
+      "only-prices": "Hide unkown prices",
+      "radius": "Radius",
+      "min-budget": "Min. price",
+      "max-budget": "Max. price"
     }
   }
 }

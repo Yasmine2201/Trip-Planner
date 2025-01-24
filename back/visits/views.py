@@ -109,7 +109,6 @@ class VisitView(ProtectableAPIView):
             return Response({"error": str(e)}, status=403)
 
 
-
 class LocationView(APIView):
     DEFAULT_PAGE_SIZE = 10
 

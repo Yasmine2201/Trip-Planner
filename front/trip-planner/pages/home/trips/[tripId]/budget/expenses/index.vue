@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type {Expense} from "~/types/expense";
-import {computed, ref} from "vue";
 import {CategoryValues} from "~/schemas/expense";
 
 definePageMeta({

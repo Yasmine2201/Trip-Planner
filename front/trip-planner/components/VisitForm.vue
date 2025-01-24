@@ -1,13 +1,17 @@
 <script setup lang="ts">
 
-import type {Location, Trip, Visit} from "~/types";
+import type {Visit} from "~/types";
 import {createVisitSchema} from "~/schemas";
 
 const props = defineProps<{
   mode: string, // "create" ou "modify"
   visitData: Partial<Visit>, // Données de la visite
 }>();
-console.log("props.visitData:", props.visitData);
+
+defineEmits<{
+  changeLocation: () => void
+}>();
+
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 
@@ -25,8 +29,6 @@ const state = reactive({
   trip_id: props.visitData.trip_id || null,
   location_id: props.visitData.location?.location_id || null,
 });
-
-console.log("state:", state);
 
 const verify_map_has_place = () => {
   return props.mode != "modify" || props.visitData.location?.location_id !== null;
@@ -60,10 +62,12 @@ const onSubmit = async ({ data }: any) => {
   }
   submitting.value = false;
 };
+
+
 </script>
 
 <template>
-  <UForm  :schema="createVisitSchema" class="space-y-5" :state="state" @submit="onSubmit" ref="form"> <!-- :schema="createVisitSchema" -->
+  <UForm :schema="createVisitSchema" class="space-y-5" :state="state" @submit="onSubmit" ref="form"> <!-- :schema="createVisitSchema" -->
     <UFormGroup :label="t('form_visit.visit_name')" name="name" required>
       <UInput v-model="state.name" placeholder="Visit Name" />
       <template #error="{ error }">
@@ -84,6 +88,13 @@ const onSubmit = async ({ data }: any) => {
         <span>{{ t(error) }}</span>
       </template>
     </UFormGroup>
+
+    <div class="w-full flex flex-row items-center justify-between">
+      <span class="font-semibold text-xl">{{ t('form_visit.location') }}</span>
+      <UButton @click="$emit('changeLocation')">
+        {{ t('form_visit.change_location') }}
+      </UButton>
+    </div>
 
     <MapViewer v-if="verify_map_has_place()" :lat="visitData.location?.latitude ?? 0" :lon="visitData.location?.longitude ?? 0"/>
 

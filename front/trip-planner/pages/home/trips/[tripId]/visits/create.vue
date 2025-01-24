@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import VisitForm from "~/components/VisitForm.vue";
-import type {Visit} from "~/types";
+import type {Location, Visit} from "~/types";
 
 definePageMeta({
   title: 'navigation.create_visit',
@@ -13,9 +13,9 @@ const {t} = useI18n();
 const route = useRoute();
 const router = useRouter();
 const tripId = Number(route.params.tripId);
-const visit: Partial<Visit> = {
-  trip_id: tripId ?? null
-}
+const visit = {
+  trip_id: tripId
+} as Partial<Visit>
 
 onBeforeMount(() => {
   if (!tripId) {
@@ -33,17 +33,22 @@ const locationSelected = (location: Location) => {
   step.value = 2;
 }
 
-
+const goBack = () => {
+  if (step.value === 1) {
+    router.back();
+  } else {
+    step.value = 1;
+  }
+}
 </script>
 
 <template>
   <PageTitle :name="pageTitle">
     <template v-slot:actions>
       <UButton :title="t('misc.back')" class="mr-2" color="gray" icon="i-heroicons-arrow-uturn-left"
-               @click="router.back()"/>
+               @click="goBack()"/>
     </template>
   </PageTitle>
-  <VisitLocationSelector v-if="step === 1" :tripId="tripId" @onLocationSelected="locationSelected" :selectedLocation="visit?.location"/>
-  <UButton v-if="step === 2" @click="step = 1" class="mr-2 mb-4" color="orange" icon="i-heroicons-arrow-uturn-left"> {{ t('modify_visit.return_to_step1') }} </UButton>
-  <VisitForm v-if="step === 2" mode="create" :visit-data="visit"/>
+  <VisitLocationSelector v-if="step === 1" :tripId="tripId" @onLocationSelected="locationSelected"/>
+  <VisitForm v-if="step === 2" mode="create" :visit-data="visit" @changeLocation="step = 1" />
 </template>
