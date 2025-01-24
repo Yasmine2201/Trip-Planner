@@ -14,6 +14,7 @@ import type {Expense} from "~/types/expense";
 import {CategoryValues} from "~/schemas/expense";
 
 const route = useRoute();
+const router = useRouter();
 const tripId = ref(route.params.tripId);
 const {t} = useI18n();
 
@@ -77,6 +78,7 @@ const chartData: ComputedRef<ChartDataset<"doughnut", number[]>> = computed(() =
       data: groupedExpenses.value.map((expense) => expense.total),
       backgroundColor: groupedExpenses.value.map((expense) => expense.backgroundColor),
       hoverOffset: 15, // Makes segments expand on hover
+
     },
   ],
 }));
@@ -100,6 +102,12 @@ const chartOptions: ComputedRef<ChartOptions<"doughnut">> = computed(() => ({
       position: 'top',
     },
   },
+  onClick: (event, elements) => {
+    if (elements.length > 0) {
+      const category = groupedExpenses.value[elements[0].index].category;
+      router.push(`/home/trips/${tripId.value}/budget/expenses?category=${category}`);
+    }
+  }
 }));
 
 onMounted(() => {

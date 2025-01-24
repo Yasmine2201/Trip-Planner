@@ -1,3 +1,5 @@
+import type {Image} from "~/types/core";
+
 export type Visit = {
   visit_id: number;
   name: string;
@@ -14,6 +16,7 @@ export type Location = {
   longitude: number;
   description: string;
   prices: LocationPrice[];
+  pictures: Image[];
 }
 
 export type LocationPrice = {

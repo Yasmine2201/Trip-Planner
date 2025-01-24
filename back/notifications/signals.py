@@ -66,19 +66,22 @@ def notify_budget_initialization(sender, instance, created, **kwargs):
     print(
         f"Notified user {instance.user.user_id} about budget initialization for Trip Participation: {instance.trip_participation_id}")
 
+
 @receiver(post_save, sender=Expense)
 def notify_expenses_exceed_budget(sender, instance, created, **kwargs):
     if created:
 
         total_expenses = sum(
-            expense.actual_amount for expense in Expense.objects.filter(trip_participation=instance.trip_participation))
+            expense.actual_amount if expense.actual_amount else 0
+            for expense in Expense.objects.filter(trip_participation=instance.trip_participation)
+        )
 
         declared_budget = instance.trip_participation.declared_budget
         if total_expenses > declared_budget:
             content = NotificationContent(
                 message="notifications.content.expenses-exceed-budget",
                 data={
-                    "tripName":instance.trip_participation.trip.trip_name,
+                    "tripName": instance.trip_participation.trip.trip_name,
                     "totalExpenses": float(total_expenses),
                     "budget": float(declared_budget),
                     "tripId": instance.trip_participation.trip.trip_id
