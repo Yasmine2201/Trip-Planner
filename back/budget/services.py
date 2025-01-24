@@ -1,7 +1,7 @@
-from budget.models import ExpenseGroup, Expense, ExpenseShare, ExpenseCategory
-from budget.serializers import ExpenseInputSerializer, ExpenseGroupInputSerializer, RefundInputSerializer, \
-    DebtInputSerializer
+from budget.models import Expense, ExpenseShare, ExpenseCategory
+from budget.serializers import ExpenseInputSerializer, DebtInputSerializer, RefundInputSerializer
 from trips.models import TripParticipation
+from visits.models import Visit, VisitParticipation
 
 
 class BudgetService:
@@ -21,71 +21,20 @@ class BudgetService:
 
 
 ############################################################################################################
-
-class ExpenseGroupService:
-    @staticmethod
-    def declare_expense_group(user_id: str, trip_id: str, expense_group_data: dict):
-        """
-        Create a new expense group for a user in a trip and visit.
-        """
-        # Validate the data
-        expense_group_serializer = ExpenseGroupInputSerializer(data=expense_group_data)
-        expense_group_serializer.is_valid(raise_exception=True)
-        # Deserialize the data
-        expense_group_object = expense_group_serializer.validated_data
-
-        # Check if the visit belongs to the trip
-        visit = expense_group_object.get('visit')
-        if visit.trip.trip_id != trip_id:
-            raise ValueError(f"Visit {visit} belongs to trip {visit.trip} and not to trip {trip_id}")
-
-        # Retrieve the trip participation associated with the user and trip
-        trip_participation = TripParticipation.objects.get(user=user_id, is_owner=True, trip=trip_id)
-
-        expense_group = ExpenseGroup.objects.create(trip_participation=trip_participation, **expense_group_object)
-        return expense_group
-
-    @staticmethod
-    def get_all_expense_groups(user_id: str, trip_id: str):
-        """
-        Get all expense groups for a user in a trip.
-
-        """
-        return ExpenseGroup.objects.filter(trip_participation__user=user_id, trip_participation__trip=trip_id)
-
-    @staticmethod
-    def get_expense_group_by_id(user_id: str, trip_id: str, expense_group_id: str):
-        """
-        Get a specific expense group for a user in a trip.
-        """
-        expense_gr = ExpenseGroup.objects.get(expense_group_id=expense_group_id)
-        if expense_gr.trip_participation.user.user_id != user_id or expense_gr.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(
-                f"Mismatch between the url arguments and the attributes of the expense group {expense_group_id}")
-        return expense_gr
-
-    @staticmethod
-    def delete_expense_group(user_id: str, trip_id: str, expense_group_id: str):
-        """
-        Delete an expense group for a user in a trip.
-        """
-        expense_group = ExpenseGroup.objects.get(expense_group_id=expense_group_id)
-        if expense_group.trip_participation.user.user_id != user_id or expense_group.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(
-                f"Mismatch between the url arguments and the attributes of the expense group {expense_group_id}")
-
-        expenses = Expense.objects.filter(expense_group=expense_group)
-        for expense in expenses:
-            expense.expense_group = None
-            expense.save()
-
-        expense_group.delete()
-        return expense_group
-
-
-############################################################################################################
-
 class ExpenseService:
+
+    @staticmethod
+    def __check_visit_of_expense(user_id: str, trip_id: str, expense_data: dict):
+        visit = expense_data.get('visit')
+        if visit is not None:
+            visit = Visit.objects.get(visit_id=visit.visit_id)
+            print("visit", visit, type(visit))
+            if visit.trip.trip_id != trip_id:
+                raise ValueError(f"Visit {visit.name} does not belong to trip {trip_id}")
+
+            if not VisitParticipation.objects.filter(visit=visit, user=user_id).exists():
+                raise ValueError(f"User {user_id} is not a participant of visit {visit.name}")
+
     @staticmethod
     def declare_expense(user_id: str, trip_id: str, expense_data: dict):
         """
@@ -101,6 +50,8 @@ class ExpenseService:
         # Retrieve the trip participation associated with the user and trip
         trip_participation = TripParticipation.objects.get(user=user_id, is_owner=True, trip=trip_id)
 
+        ExpenseService.__check_visit_of_expense(user_id, trip_id, expense_data_object)
+
         expense = Expense.objects.create(trip_participation=trip_participation, **expense_data_object)
         expense.save()
 
@@ -113,9 +64,10 @@ class ExpenseService:
         """
 
         expense = Expense.objects.get(expense_id=expense_id)
-
         if expense.trip_participation.user.user_id != user_id or expense.trip_participation.trip.trip_id != trip_id:
             raise ValueError(f"Expense {expense_id} does not belong to user {user_id} in trip {trip_id}")
+
+        ExpenseService.__check_visit_of_expense(user_id, trip_id, expense_data)
 
         expense_serializer = ExpenseInputSerializer(data=expense_data)
         expense_serializer.is_valid(raise_exception=True)
@@ -149,6 +101,7 @@ class ExpenseService:
             raise ValueError(f"Expense {expense_id} does not belong to user {user_id} in trip {trip_id}")
         expense.delete()
         return expense
+
 
 ############################################################################################################
 class ExpenseShareService:

@@ -33,13 +33,16 @@ const totalExpenses = computed(() => expenses.value.reduce((acc, expense) => acc
 const remainingBudget = computed(() => declaredBudget.value - totalExpenses.value);
 const ratio = computed(() => (remainingBudget.value / declaredBudget.value) * 100);
 const allCategories = Object.values(CategoryValues).sort();
+console.log("all categories", allCategories);
 const groupedExpenses = computed(() => {
   const colors = [
     'rgba(54, 162, 235, 0.8)', //Accommodation
-    'rgba(255, 99, 132, 0.8)', //Activities
-    'rgba(255, 206, 86, 0.8)', //Food
+    'rgba(165, 42, 42, 0.8)', //Activities
+    'rgba(255, 0, 0, 0.8)', //Food
     'rgba(201, 203, 207, 0.8)', //Others
+    'rgba(150, 20, 90, 0.8)', //Shopping
     'rgba(75, 192, 192, 0.8)', //Transport
+    'rgba(255, 165, 0, 0.8)' //Visit
   ];
 
   return allCategories.map((category: string, index: number) => {
@@ -49,6 +52,7 @@ const groupedExpenses = computed(() => {
     return {category, total, backgroundColor: colors[index % colors.length]};
   });
 });
+console.log("grouped expenses", groupedExpenses.value);
 
 const color = computed(() => {
   switch (true) {

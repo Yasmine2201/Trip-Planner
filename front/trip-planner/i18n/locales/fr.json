@@ -46,7 +46,9 @@
     "others": "Autres",
     "remaining-budget": "Budget restant",
     "title": "Budget",
-    "transport": "Transport"
+    "transport": "Transport",
+    "visit": "Visite",
+    "shopping": "Shopping"
   },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
@@ -98,33 +100,36 @@
     "actual-amount": "Montant réel",
     "actual-amount-short": "Réel",
     "add-expense": "Ajouter une dépense",
-    "add-expense-group": "Ajouter un groupe de dépenses",
+    "add-visit": "Ajouter une visite",
     "categories": {
       "accommodation": "Hébergement",
       "activity": "Activités",
       "food": "Nourriture",
       "others": "Autres",
-      "transport": "Transport"
+      "shopping": "Shopping",
+      "transport": "Transport",
+      "visit": "Visite"
     },
     "category": "Catégorie",
     "delete-many-tooltip": "Sélectionnez plus d'une dépense pour les supprimer",
+    "visit-tooltip": "Aller voir la visite",
     "delete-selected": "Supprimer les dépenses",
     "description": "Description",
     "edit-expense": "Modifier une dépense",
-    "expense-group": "Groupe",
+    "visit": "Visite",
     "expense-id": "ID",
     "is-shared": "Partagée ?",
     "name": "Nom",
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101",
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100",
       "filter-by-category": "Filtrer par catégorie",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
-      "select-expense-group": "Mon groupe de dépenses"
+      "select-visit": "Ma visite"
     },
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
