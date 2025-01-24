@@ -36,7 +36,6 @@
     "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
-    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
@@ -46,7 +45,8 @@
     "others": "Autres",
     "remaining-budget": "Budget restant",
     "title": "Budget",
-    "transport": "Transport"
+    "transport": "Transport",
+    "declare-budget": "Déclarer mon budget"
   },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
@@ -117,10 +117,10 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": "101",
+      "enter-actual-amount": 101,
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": "100",
+      "enter-planned-amount": 100,
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-expense-group": "Mon groupe de dépenses"
     },
@@ -202,7 +202,8 @@
     "search": "Rechercher...",
     "see": "Voir",
     "select-value": "Sélectionnez des valeurs",
-    "success": "Succès de l'opération"
+    "success": "Succès de l'opération",
+    "select": "Sélectionner"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -276,6 +277,20 @@
     "list": {
       "add": "Ajouter une visite",
       "title": "Mes visites"
+    },
+    "title": {
+      "finalize": "Finaliser la création"
+    }
+  },
+  "locations": {
+    "titles": {
+      "select-location": "Lieux à visiter"
+    },
+    "price_range": {
+      "unknown": "Prix inconnu"
+    },
+    "popup": {
+      "too-many-locations": "Trop de lieux. Veuillez filtrer ou zoomer."
     }
   }
 }

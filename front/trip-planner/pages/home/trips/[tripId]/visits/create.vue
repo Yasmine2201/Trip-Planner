@@ -1,5 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import VisitForm from "~/components/VisitForm.vue";
+import type {Visit} from "~/types";
 
 definePageMeta({
   title: 'navigation.create_visit',
@@ -7,18 +8,41 @@ definePageMeta({
   requiresAuth: true,
 });
 
-const { t } = useI18n();
+const {t} = useI18n();
 
 const route = useRoute();
 const router = useRouter();
-const tripId = route.params.tripId;
+const tripId = route.params.tripId?.toString() as string | undefined | null;
+const visit: Partial<Visit> = {
+  trip_id: tripId ?? ""
+}
+
+onBeforeMount(() => {
+  if (!tripId) {
+    router.push('/home');
+  }
+});
+
+const step = ref(1);
+const pageTitle = computed(() => {
+  return `${t('navigation.create_visit')} (${step.value}) : ${step.value === 1 ? t('locations.titles.select-location') : t('visits.title.finalize')}`;
+});
+
+const locationSelected = (location: Location) => {
+  visit.location = location;
+  step.value = 2;
+}
+
+
 </script>
 
 <template>
-  <PageTitle :name="t('navigation.create_visit')">
+  <PageTitle :name="pageTitle">
     <template v-slot:actions>
-      <UButton @click="router.back()" icon="i-heroicons-arrow-uturn-left" class="mr-2" :title="t('misc.back')" color="gray" />
+      <UButton :title="t('misc.back')" class="mr-2" color="gray" icon="i-heroicons-arrow-uturn-left"
+               @click="router.back()"/>
     </template>
   </PageTitle>
-  <VisitForm :trip_id=tripId mode="create" />
+  <VisitLocationSelector v-if="step === 1" :tripId="tripId ?? ''" @onLocationSelected="locationSelected"/>
+  <VisitForm v-if="step === 2" mode="create" :visit-data="visit"/>
 </template>
