@@ -12,7 +12,8 @@ definePageMeta({
 
 const route = useRoute();
 const router = useRouter();
-const visitId = route.params.visitId;
+const visitId = Number(route.params.visitId);
+const tripId = Number(route.params.tripId);
 
 // Charge les données de la visite depuis l'API
 const { data: row, status, error } = await useApiFetch<Visit>(`/visits/${visitId}`);
@@ -28,5 +29,5 @@ const visitData = Object.assign({}, row.value ?? {});
       <UButton @click="router.back()" icon="i-heroicons-arrow-uturn-left" class="mr-2" :title="t('misc.back')" color="gray" />
     </template>
   </PageTitle>
-  <VisitForm mode="modify" :visitData="visitData" />
+  <VisitForm mode="modify" :visitData="visitData" :trip_id="tripId" />
 </template>

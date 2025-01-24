@@ -7,7 +7,7 @@ import { type Location } from "~/types";
 const { t } = useI18n();
 
 const props = defineProps<{
-  placeData: Location | null,
+  placeId: Number | null,
   filterData: { latitude: number, longitude: number, radius: number }
 }>();
 
@@ -22,7 +22,7 @@ const places: Location[] = [
   { location_id: 5, name: "Montmartre", latitude: 48.8867, longitude: 2.3431, description:"", prices:[]},
 ];
 
-const selectedPlace = ref<Location | null>(null);
+const selectedPlaceId = ref<Number | null>(props.placeId || null);
 const mapContainer = ref<HTMLElement | null>(null);
 let map: L.Map | null = null;
 let markers: L.Marker[] = [];
@@ -46,7 +46,6 @@ const updateMarkers = () => {
   markers.forEach((marker) => marker.remove());
   markers = [];
 
-  console.log("filteredPlaces:", filteredPlaces.value);
   // Ajouter les nouveaux marqueurs
   markers = filteredPlaces.value.map((place: Location) => {
     return L.marker([place.latitude, place.longitude])
@@ -69,7 +68,8 @@ const updateCircle = () => {
 };
 
 const selectPlace = (place: Location) => {
-  selectedPlace.value = place;
+  console.log("Place selected:", place);
+  selectedPlaceId.value = place.location_id;
 };
 
 onMounted(() => {
@@ -103,7 +103,7 @@ watch(() => props.filterData.radius, () => {
 });
 
 defineExpose({
-  selectedPlace,
+  selectedPlaceId,
 });
 </script>
 
@@ -117,7 +117,7 @@ defineExpose({
           :key="place.location_id"
           @click="selectPlace(place)"
           class="place-item"
-          :class="{ selected: selectedPlace && selectedPlace.location_id === place.location_id }"
+          :class="{ selected: selectedPlaceId && selectedPlaceId === place.location_id }"
       >
         {{ place.name }}
       </li>

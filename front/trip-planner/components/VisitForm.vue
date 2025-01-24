@@ -7,7 +7,7 @@ import {createVisitSchema} from "~/schemas";
 const props = defineProps({
   mode: { type: String, required: true }, // "create" ou "modify"
   visitData: { type: Object, default: () => ({}) }, // Données de la visite en mode "modify"
-  trip_id: { type: String, required: true },
+  trip_id: { type: Number, required: true },
 });
 console.log("tripId:", props.trip_id);
 const { t } = useI18n();
@@ -17,7 +17,7 @@ const state = reactive({
   name: props.visitData.name || '',
   start_date: props.visitData.start_date || '',
   end_date: props.visitData.end_date || '',
-  place: props.visitData.place || null,
+  location_id: props.visitData.place || null,
   trip_id: props.trip_id || null,
 });
 
@@ -44,10 +44,12 @@ const formError = ref('');
 const submitting = ref(false);
 
 const updatePlace = () => {
-  state.place = placeSelector.value?.selectedPlace || state.place;
+  state.location_id = placeSelector.value?.selectedPlaceId || state.location_id;
 };
 
 const onSubmit = async ({ data }: any) => {
+  try {
+  console.log("onSubmit state:", state);
   updatePlace();
   Object.assign(data, state);
   console.log("data submitted:", data);
@@ -61,7 +63,6 @@ const onSubmit = async ({ data }: any) => {
     data.visit_id = props.visitData.visit_id;
   }
 
-  try {
     await $api(endpoint, {
       method,
       body: JSON.stringify(data),
@@ -97,7 +98,7 @@ const onSubmit = async ({ data }: any) => {
       </template>
     </UFormGroup>
 
-    <PlaceSelector ref="placeSelector" class="w-full" :placeData="state.place" :filterData="getTripLocation()"/>
+    <PlaceSelector ref="placeSelector" class="w-full" :placeId="state.location_id" :filterData="getTripLocation()"/>
 
     <UAlert
         v-if="formError !== ''"

@@ -11,7 +11,7 @@ const { t } = useI18n();
 
 const route = useRoute();
 const router = useRouter();
-const tripId = route.params.tripId;
+const tripId = Number(route.params.tripId);
 </script>
 
 <template>
