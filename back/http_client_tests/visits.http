@@ -30,3 +30,6 @@ GET http://localhost:8000/api/locations?lat=48.3&lon=7.5&radius=5&page=1
 
 ### GET sorted filtered locations
 GET http://localhost:8000/api/locations?lat=48.3&lon=7.5&radius=5&sort_by=name&sort_order=desc&page=1
+
+### GET viewport locations
+GET localhost:8000//api/locations?min_price=0&max_price=1000&search&page=1&pageSize=100&only_prices=false&min_lat=48.19607397283394&max_lat=48.33046303150273&min_lon=7.4154278097097945&max_lon=7.6090618429129195

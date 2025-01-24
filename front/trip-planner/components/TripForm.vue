@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import LocationSelector from "~/components/LocationSelector.vue";
-import type { FormSubmitEvent } from "#ui/types";
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
 import {createTripSchema} from "~/schemas";
@@ -97,7 +95,7 @@ const onSubmit = async ({ data }: any) => {
       </template>
     </UFormGroup>
 
-    <LocationSelector ref="locationSelector" class="w-full h-96" :locationData="getLocation()" />
+    <TripLocationSelector ref="locationSelector" class="w-full h-96" :locationData="getLocation()" />
 
     <UAlert
         v-if="formError !== ''"
