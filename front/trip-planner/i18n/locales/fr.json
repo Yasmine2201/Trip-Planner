@@ -128,7 +128,6 @@
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
     "yes": "Partagé"
-
   },
   "form_visit": {
     "visit_create_button": "Créer la visite",
@@ -205,8 +204,8 @@
     "see": "Voir",
     "select-value": "Sélectionnez des valeurs",
     "success": "Succès de l'opération",
-    "select": "Sélectionner",
-    "all": "Tout"
+    "all": "Tout",
+    "select": "Sélectionner"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -295,6 +294,12 @@
     },
     "popup": {
       "too-many-locations": "Trop de lieux. Veuillez filtrer ou zoomer."
+    },
+    "labels": {
+      "only-prices": "Masquer prix inconnus",
+      "radius": "Rayon",
+      "min-budget": "Prix min.",
+      "max-budget": "Prix max."
     }
   }
 }

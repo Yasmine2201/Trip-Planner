@@ -91,20 +91,23 @@ class LocationService:
             filters &= Q(name__icontains=search)
 
         # 2. Add price range filter
+        price_filters = Q()
         if min_price and min_price > 0:
             queryset = queryset.annotate(
                 min_price=Min('prices__price'),
             )
-            filters &= Q(min_price__gte=min_price)
+            price_filters &= Q(min_price__gte=min_price)
 
         if max_price:
             queryset = queryset.annotate(
                 max_price=Max('prices__price')
             )
-            filters &= Q(max_price__lte=max_price)
+            price_filters &= Q(max_price__lte=max_price)
 
         if not only_prices:
-            filters |= Q(prices__isnull=True)
+            price_filters |= Q(prices__isnull=True)
+
+        filters &= price_filters
 
         # 3. Add geographical filter (Haversine formula or viewport)
         if lat and lon and radius:
@@ -117,7 +120,7 @@ class LocationService:
             except ValueError:
                 raise ValidationError("Invalid latitude, longitude, or radius.")
 
-        elif is_viewport:
+        if is_viewport:
             filters &= Q(latitude__gte=min_lat, latitude__lte=max_lat, longitude__gte=min_lon, longitude__lte=max_lon)
 
         # Apply filters to the queryset
@@ -125,7 +128,7 @@ class LocationService:
         if sort_by:
             queryset = queryset.order_by(sort_by)
 
-        return queryset
+        return queryset.distinct()
 
     @staticmethod
     def get_location_by_id(location_id):

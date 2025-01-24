@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import VisitForm from "~/components/VisitForm.vue";
-import type {Visit} from "~/types";
+import type {Location, Visit} from "~/types";
 
 definePageMeta({
   title: 'navigation.create_visit',
@@ -13,9 +13,9 @@ const {t} = useI18n();
 const route = useRoute();
 const router = useRouter();
 const tripId = route.params.tripId?.toString() as string | undefined | null;
-const visit: Partial<Visit> = {
-  trip_id: tripId ?? ""
-}
+const visit = {
+  trip_id: tripId ?? "",
+} as Partial<Visit>;
 
 onBeforeMount(() => {
   if (!tripId) {
@@ -33,6 +33,14 @@ const locationSelected = (location: Location) => {
   step.value = 2;
 }
 
+const goBack = () => {
+  if (step.value === 1) {
+    router.back();
+  } else {
+    step.value = 1;
+  }
+}
+
 
 </script>
 
@@ -40,7 +48,7 @@ const locationSelected = (location: Location) => {
   <PageTitle :name="pageTitle">
     <template v-slot:actions>
       <UButton :title="t('misc.back')" class="mr-2" color="gray" icon="i-heroicons-arrow-uturn-left"
-               @click="router.back()"/>
+               @click="goBack()"/>
     </template>
   </PageTitle>
   <VisitLocationSelector v-if="step === 1" :tripId="tripId ?? ''" @onLocationSelected="locationSelected"/>

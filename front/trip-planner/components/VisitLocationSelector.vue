@@ -18,6 +18,7 @@ class LocationsMap {
   private readonly locationsLayer: L.LayerGroup;
   private isPopupDisplayed: boolean = false;
   private locationLayerMap: Map<number, L.CircleMarker> = new Map();
+  private blockUpdate: boolean = false;
 
   constructor() {
     this.map = L.map("map").setView([trip.value.latitude, trip.value.longitude], 10);
@@ -43,8 +44,6 @@ class LocationsMap {
 
   setRadius(radius: number) {
     this.circle.setRadius(radius * 1000);
-    this.viewPort = this.circle.getBounds();
-    this.map.flyToBounds(this.viewPort);
   }
 
   getViewPort() {
@@ -69,6 +68,11 @@ class LocationsMap {
   }
 
   async updateLocations() {
+    if (this.blockUpdate) {
+      this.blockUpdate = false;
+      return;
+    }
+
     this.viewPort = this.map.getBounds();
     fetchLocations(1, true).then(data => {
       this.locationsLayer.clearLayers();
@@ -96,12 +100,26 @@ class LocationsMap {
   }
 
   highlightLocation(location: Location, highlight: boolean) {
-    if (selectedLocation.value?.location_id === location.location_id) {
-      highlight = true;
+    if (this.isPopupDisplayed) {
+      this.locationsLayer.clearLayers();
+      if (highlight) {
+        L.circleMarker([location.latitude, location.longitude], {
+          radius: 5,
+          color: 'blue',
+          fillOpacity: 1
+        }).addTo(this.locationsLayer);
+        this.moveMapToLocation(location);
+      }
+      return;
     }
-    this.locationLayerMap.get(location.location_id)?.setStyle({
+
+    const marker = this.locationLayerMap.get(location.location_id);
+    marker?.setStyle({
       color: highlight ? 'blue' : 'orange'
     });
+    if (highlight) {
+      marker?.bringToFront();
+    }
   }
 
   unhighlightAllLocations() {
@@ -128,7 +146,6 @@ const viewPageSize = 100;
 const locations = await fetchLocations();
 
 let map: LocationsMap;
-const selectedLocation = ref(null) as Ref<Location | null>;
 
 async function fetchLocations(page: number = 1, useViewPort: boolean = false) {
   const params = {
@@ -151,11 +168,18 @@ async function fetchLocations(page: number = 1, useViewPort: boolean = false) {
     params.pageSize = viewPageSize;
   }
 
-  const {data: locations}: AsyncData<Page<Location>, any> = await useApiFetch<Location[]>(`/locations`, {
+  const {data: locations}: AsyncData<Page<Location>, any> = await useApiFetch(`/locations`, {
     params: params
   });
 
   return locations;
+}
+
+function updateLocations() {
+  fetchLocations(page.value).then(data => {
+    locations.value = data.value;
+    map.updateLocations();
+  });
 }
 
 watch(page, async () => {
@@ -167,14 +191,28 @@ watch(page, async () => {
 watch(radius, async () => {
   if (map) {
     map.setRadius(radius.value);
+    updateLocations();
   }
 });
 
-watch(selectedLocation, () => {
-  if (selectedLocation.value) {
-    map.unhighlightAllLocations();
-    map.highlightLocation(selectedLocation.value, true);
-  }
+watch(minBudget, async () => {
+  updateLocations();
+});
+
+watch(maxBudget, async () => {
+  updateLocations();
+});
+
+watch(onlyPrices, async () => {
+  updateLocations();
+});
+
+watch(textSearch, async (text) => {
+  setTimeout(() => {
+    if (text === textSearch.value) {
+      updateLocations();
+    }
+  }, 500);
 });
 
 onMounted(() => {
@@ -196,18 +234,39 @@ defineEmits<{
 <template>
 
   <div id="wrapper">
-    <div id="line0" class="flex flex-row">
+    <div id="filters" class="w-full mb-6">
+      <UInput v-model="textSearch" placeholder="Search..." trailing-icon="i-heroicons-magnifying-glass"/>
+      <div class="flex flex-row gap-4 mt-2">
+        <div class="flex-1">
+          <label for="radius">{{ t('locations.labels.radius') }}</label>
+          <UInput id="radius" v-model="radius" placeholder="Radius" type="number"/>
+        </div>
+        <div class="flex-1">
+          <label for="minBudget">{{ t('locations.labels.min-budget') }}</label>
+          <UInput v-model="minBudget" placeholder="Min budget" type="number"/>
+        </div>
+        <div class="flex-1">
+          <label for="maxBudget">{{ t('locations.labels.max-budget') }}</label>
+          <UInput v-model="maxBudget" placeholder="Max budget" type="number"/>
+        </div>
+        <div class="flex-1">
+          <label for="onlyPrices">{{ t('locations.labels.only-prices') }}</label><br>
+          <UToggle id="onlyPrices" v-model="onlyPrices" class="mt-2"/>
+        </div>
+      </div>
+    </div>
+    <div id="line0" class="flex flex-row min-h-48">
       <div id="locations-list" class="w-2/5 mr-5">
         <div id="locations-list-header">
           <h1 class="text-primary font-semibold text-xl">{{ t('locations.titles.select-location') }}</h1>
         </div>
-        <div id="list">
+        <div id="list" class="min-h-524px">
           <ul>
             <li v-for="location in locations.data" :key="location.id">
-              <LocationCard :location :selected="selectedLocation?.location_id === location.location_id" class="my-2"
+              <LocationCard :location class="my-2"
                             @mouseenter="map.highlightLocation(location, true)"
                             @mouseleave="map.highlightLocation(location, false)"
-                            @onSelect="(l) => selectedLocation = l"
+                            @onSelect="(l) => $emit('onLocationSelected', l)"
               />
             </li>
           </ul>
@@ -219,15 +278,12 @@ defineEmits<{
       <div id="map" class="w-3/5 rounded-3xl z-0">
       </div>
     </div>
-    <div class="w-full mt-8 flex justify-end">
-      <UButton :disabled="selectedLocation === null" color="primary" size="xl"
-               @click="$emit('onLocationSelected', selectedLocation)">{{ t('form_visit.visit_create_button') }}
-      </UButton>
-    </div>
   </div>
 </template>
 
 <style scoped>
-
+.min-h-524px {
+  min-height: 524px;
+}
 
 </style>
