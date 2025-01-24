@@ -40,6 +40,7 @@ const deleteNotification = (id: number) => {
         <NotificationCard
             v-if="notifications && notifications.length > 0"
             v-for="(notification, index) in notifications"
+            :key="notification.notification_id"
             v-model="notifications[index]"
             @delete="deleteNotification"
             :id="`notification-${notification.notification_id}`"
@@ -54,4 +55,11 @@ const deleteNotification = (id: number) => {
   </USlideover>
 </template>
 <style scoped>
+.notification-enter-active, .notification-leave-active {
+  transition: all 0.5s ease;
+}
+.notification-enter, .notification-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
 </style>
