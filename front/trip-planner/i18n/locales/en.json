@@ -36,6 +36,7 @@
     "add-expense": "Add expense",
     "debts-and-credits": "Debts and credits",
     "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
+    "declared-budget": "Declared my budget",
     "edit-budget": "Edit budget",
     "expenses": "Expenses",
     "expenses-description": "Here you can see all the expenses of the trip",
@@ -46,7 +47,9 @@
     "remaining-budget": "Remaining budget",
     "title": "Budget",
     "transport": "Transport",
-    "declare-budget": "Déclare my budget"
+    "declare-budget": "Declare my budget",
+    "visit": "Visit",
+    "shopping": "Shopping"
   },
   "create_trip": {
     "trip_create_button": "Create a trip",
@@ -91,39 +94,43 @@
     "sent-invalid-data": "Sent invalid data",
     "start-date-before-end-date": "Start date must be before end date",
     "trip-name-required": "Trip name is required",
-    "unknown-error": "Please retry later."
+    "unknown-error": "Please retry later.",
+    "budget-positive": "Budget must be a positive number"
   },
   "expense": {
     "actual-amount": "Actual Amount",
     "actual-amount-short": "Actual",
     "add-expense": "Add expense",
-    "add-expense-group": "Add expense group",
+    "add-visit": "Add visit",
     "categories": {
       "accommodation": "Accommodation",
       "activity": "Activity",
       "food": "Food",
       "others": "Others",
-      "transport": "Transport"
+      "shopping": "Shopping",
+      "transport": "Transport",
+      "visit": "Visit"
     },
     "category": "Category",
     "delete-many-tooltip": "Select more than one expense to delete them",
+    "visit-tooltip": "Go see the visit",
     "delete-selected": "Delete expenses",
     "description": "Description",
     "edit-expense": "Edit expense",
-    "expense-group": "Group",
+    "visit": "Visit",
     "expense-id": "ID",
     "is-shared": "Shared ?",
     "name": "Name",
     "no": "Not shared",
     "no-expenses": "No expenses yet. Please add some to see the expense chart",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101",
       "enter-description": "My expense description",
       "enter-name": "My expense name",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100",
+      "filter-by-category": "Filter by category",
       "select-category": "Food, accommodation, transport, activity, others",
-      "select-expense-group": "My expense group",
-      "filter-by-category": "Filter by category"
+      "select-visit": "My visit"
     },
     "planned-amount": "Planned Amount",
     "planned-amount-short": "Planned",
@@ -235,8 +242,8 @@
   "notifications": {
     "content": {
       "added-to-trip": "You have been added to trip '{tripName}'",
-      "budget-changed": "Budget for trip '{tripName}' has been changed to {budget}",
-      "expenses-exceed-budget": "Expenses for the trip amount to 'totalExpenses'€ and exceed the declared budget of '{budget}'€"
+      "budget-changed": "Budget for trip '{tripName}' has been changed to {budget} €",
+      "expenses-exceed-budget": "Expenses for the trip amount to {totalExpenses} € and exceed the declared budget of {budget} €"
     },
     "deleted": "Notification deleted",
     "mark-as-read": "Mark as read",

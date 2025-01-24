@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-title: 'budget.edit-budget',
+title: 'budget.edit-expense',
 requiresAuth: true,
 layout: 'navigation'
 });

@@ -23,6 +23,16 @@ const categoryOptions = computed(() => Object.values(CategoryValues).map(value =
     }))
 );
 
+const visitOptions = computed(() => {
+  return useApiFetch(`/trips/${tripId.value}/visits`).then(({ data: visitsResponse }) => {
+    const visits = visitsResponse.value ?? [];
+    return visits.map((visit) => ({
+      label: visit.name,
+      value: visit.visit_id,
+    }));
+  });
+});
+
 const default_state = {
   category: props.expenseData.category || undefined,
   name: props.expenseData.name || undefined,
@@ -30,7 +40,7 @@ const default_state = {
   planned_amount: props.expenseData.planned_amount || undefined,
   actual_amount: props.expenseData.actual_amount || undefined,
   is_shared: props.expenseData.is_shared || false,
-  expense_group: props.expenseData.expense_group || undefined,
+  visit: props.expenseData.visit || undefined,
 };
 
 const state = reactive(Object.assign({}, default_state));
@@ -47,7 +57,7 @@ const onSubmit = async ({data}: FormSubmitEvent<ExpenseDto>) => {
           planned_amount: data.planned_amount,
           actual_amount: data.actual_amount,
           is_shared: data.is_shared,
-          expense_group: data.expense_group,
+          visit: data.visit,
         }
     )
     if (props.mode === 'edit') {
@@ -101,7 +111,8 @@ async function resetForm() {
     </div>
 
     <UFormGroup :label="t('expense.description')" name="description">
-      <UTextarea v-model="state.description" :placeholder="t('expense.placeholders.enter-description')" resize rows="10"/>
+      <UTextarea v-model="state.description" :placeholder="t('expense.placeholders.enter-description')" resize
+                 rows="10"/>
       <template #error="{ error }">
         <span>{{ t(error) }}</span>
       </template>
@@ -140,8 +151,9 @@ async function resetForm() {
       </UFormGroup>
     </div>
 
-    <UFormGroup :label="t('expense.expense-group')" name="expense_group">
-      <UInput v-model="state.expense_group" :placeholder="t('expense.placeholders.select-expense-group')"/>
+    <UFormGroup :label="t('expense.visit')" name="visit">
+      <UInputMenu v-model="state.visit" :options="visitOptions" :placeholder="t('expense.placeholders.select-visit')"
+                  value-attribute="value"/>
       <template #error="{ error }">
         <span>{{ t(error) }}</span>
       </template>

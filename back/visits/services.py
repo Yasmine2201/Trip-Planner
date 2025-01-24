@@ -2,7 +2,7 @@ from django.db.models import Min, Max, Q
 from rest_framework.exceptions import ValidationError
 
 from core.models import User
-from trips.models import Trip
+from trips.models import Trip, TripInvitation
 from trips.services import TripService
 from utils import ForbiddenActionError, haversine
 from visits.models import Visit, Location, VisitParticipation
@@ -41,13 +41,19 @@ class VisitService:
         return visit
 
     @staticmethod
+    def check_visit_participation(visit: Visit, user: User):
+        """
+        Check if a user is part of a visit.
+        """
+        return VisitParticipation.objects.filter(visit=visit, user=user, status=TripInvitation.TripInvitationStatus.ACCEPTED ).exists()
+
+    @staticmethod
     def get_all_visits(user: User, trip_id: int):
         """
         Get all visits for a trip.
         """
         trip = TripService.get_user_trip_by_id(user, trip_id)
-
-        return Visit.objects.filter(trip=trip)
+        return Visit.objects.filter(trip = trip, visitparticipation__user=user, visitparticipation__status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
 
     @staticmethod
     def get_visit_by_id(user: User, trip_id: int, visit_id: int):
@@ -59,7 +65,8 @@ class VisitService:
             raise ValueError(f" Visit {visit_id} does not belong to trip {trip_id}")
         if not TripService.check_participation(visit.trip, user):
             raise ForbiddenActionError(f"User {user} is not part of the trip")
-
+        if not VisitService.check_visit_participation(visit, user):
+            raise ForbiddenActionError(f"User {user} is not part of the visit")
         return visit
 
     @staticmethod

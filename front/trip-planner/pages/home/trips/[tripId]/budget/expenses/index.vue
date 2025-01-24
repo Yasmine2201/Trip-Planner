@@ -43,8 +43,8 @@ const columns = computed(() => [
     sortable: true
   },
   {
-    key: 'expense_group',
-    label: t('expense.expense-group'),
+    key: 'visit',
+    label: t('expense.visit'),
   },
   {key: 'actions'}
 ]);
@@ -56,7 +56,7 @@ const anySelected = computed(() => selected.value?.length >= 1);
 
 const deleteExpense = async (expenseId: number) => {
 
-  const { status } = await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
+  const {status} = await useApiFetch(`/trips/${tripId.value}/budget/expenses/${expenseId}`, {
     method: 'DELETE'
   });
 
@@ -189,8 +189,16 @@ const deleteAllSelected = async () => {
       <span>{{ getCategoryLabel(row.category) }}</span>
     </template>
 
-    <template #expense_group-data="{ row }">
-      <p v-if="row.expense_group == null"> {{ t('misc.not-defined') }} </p>
+    <template #visit-data="{ row }">
+      <p v-if="row.visit == null"> {{ t('misc.not-defined') }} </p>
+      <p v-else>
+        <UTooltip>
+          <a :href="`/home/trips/${tripId}/visits`" class="underline">{{ row.visit.name }}</a>
+          <template #text>
+            <span>{{ t('expense.visit-tooltip') }}</span>
+          </template>
+        </UTooltip>
+      </p>
     </template>
 
     <template #actions-data="{ row }">
