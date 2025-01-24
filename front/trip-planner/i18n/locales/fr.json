@@ -122,11 +122,13 @@
       "enter-name": "Nom de la dépense",
       "enter-planned-amount": 100,
       "select-category": "Nourriture, hébergement, transport, activités, autres",
-      "select-expense-group": "Mon groupe de dépenses"
+      "select-expense-group": "Mon groupe de dépenses",
+      "filter-by-category": "Filtrer par catégorie"
     },
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
-    "yes": "Partagé"
+    "yes": "Partagé",
+
   },
   "form_visit": {
     "visit_create_button": "Créer la visite",
@@ -203,7 +205,8 @@
     "see": "Voir",
     "select-value": "Sélectionnez des valeurs",
     "success": "Succès de l'opération",
-    "select": "Sélectionner"
+    "select": "Sélectionner",
+    "all": "Tout"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -227,7 +230,8 @@
   "notifications": {
     "content": {
       "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
-      "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget}"
+      "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget}",
+      "expenses-exceed-budget": "Les dépenses du voyage '{tripName}' s'élèvent à '{totalExpenses}'€ et dépassent le budget déclaré de '{budget}'€"
     },
     "deleted": "Notification supprimée",
     "mark-as-read": "Marquer comme lu",
