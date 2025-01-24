@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {useI18n} from 'vue-i18n';
 import type {Trip} from '~/types';
+import MapViewer from "~/components/MapViewer.vue";
 
 definePageMeta({
   title: 'trip_home.trip_details',
@@ -150,11 +151,11 @@ const deleteTrip = async (tripId: number) => {
           {{ t('create_trip.trip_map') }}
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
-          <TripMap
+          <MapViewer
               v-if="trip?.latitude && trip?.longitude && trip?.radius"
               :lat="trip.latitude"
               :lon="trip.longitude"
-          ></TripMap>
+          ></MapViewer>
         </td>
       </tr>
       </tbody>

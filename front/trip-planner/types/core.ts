@@ -19,3 +19,11 @@ export type Error = {
   error_code: string;
   message: string;
 }
+
+export type Page<T> = {
+  data: T[];
+  current_page: number;
+  total_pages: number;
+  total_elements: number;
+  elements_per_page: number;
+}

@@ -1,5 +1,7 @@
+from django.core.paginator import Paginator
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from authentication.utils import ProtectableAPIView
 from trips.models import Trip
@@ -53,7 +55,8 @@ class VisitView(ProtectableAPIView):
             return Response({"error": str(e)}, status=403)
 
 
-class LocationView(ProtectableAPIView):
+class LocationView(APIView):
+    DEFAULT_PAGE_SIZE = 10
 
     @staticmethod
     def get(request: Request) -> Response:
@@ -62,14 +65,26 @@ class LocationView(ProtectableAPIView):
         """
 
         params = {k: v for k, v in request.query_params.items()}
-        page: int = params.get('page', 1)
+        page_index: int = params.get('page', 1)
+        page_size: int = params.get('pageSize', LocationView.DEFAULT_PAGE_SIZE)
         if 'page' in params:
             del params['page']
+        if 'pageSize' in params:
+            del params['pageSize']
 
         if len(request.query_params) > 0:
-            locations = LocationService.get_filtered_locations(request.query_params, page)
+            locations = LocationService.get_filtered_locations(request.query_params)
         else:
-            locations = LocationService.get_all_locations(page)
+            locations = LocationService.get_all_locations()
 
-        serializer = LocationSerializer(locations, many=True)
-        return Response(serializer.data, status=200)
+        page = Paginator(locations, page_size)
+
+        serializer = LocationSerializer(page.get_page(page_index), many=True)
+        response = {
+            "data": serializer.data,
+            "current_page": page_index,
+            "total_pages": page.num_pages,
+            "total_elements": page.count,
+            "elements_per_page": page_size
+        }
+        return Response(response, status=200)
