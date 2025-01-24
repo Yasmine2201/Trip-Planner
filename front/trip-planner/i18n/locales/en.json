@@ -222,6 +222,9 @@
     "title": "Trip edition",
     "trip_modify_button": "Modify the trip"
   },
+  "modify_visit": {
+    "return_to_step1": "Return to the place selection"
+  },
   "navigation": {
     "about": "About",
     "create_trip": "Create a trip",

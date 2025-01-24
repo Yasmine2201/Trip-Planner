@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import type { Trip } from '~/types';
+import type {Trip, Visit} from '~/types';
 import type {AsyncData} from "#app";
 
 definePageMeta({

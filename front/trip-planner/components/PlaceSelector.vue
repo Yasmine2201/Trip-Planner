@@ -110,7 +110,7 @@ defineExpose({
 <template>
   <div class="place-selector">
     <h1 id="title">{{ t('PlaceSelect.title') }}</h1>
-    <div ref="mapContainer" id="map" class="map-container"></div>
+    <div ref="mapContainer" id="map" class="map-container-mapviewer"></div>
     <ul class="places-list">
       <li
           v-for="place in filteredPlaces"
@@ -126,7 +126,7 @@ defineExpose({
 </template>
 
 <style scoped>
-.map-container {
+.map-container-mapviewer {
   height: 400px;
   width: 100%;
   border: 1px solid #ccc;

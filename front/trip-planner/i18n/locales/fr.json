@@ -222,6 +222,9 @@
     "title": "Modification du voyage",
     "trip_modify_button": "Modifier le voyage"
   },
+  "modify_visit": {
+    "return_to_step1": "Retour au choix de l'endroit"
+  },
   "navigation": {
     "about": "À propos",
     "create_trip": "Créer un voyage",

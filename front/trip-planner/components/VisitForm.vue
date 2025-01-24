@@ -2,23 +2,35 @@
 
 import type {Location, Trip, Visit} from "~/types";
 import {createVisitSchema} from "~/schemas";
-import type {AsyncData} from "#app";
 
 const props = defineProps<{
   mode: string, // "create" ou "modify"
   visitData: Partial<Visit>, // Données de la visite
 }>();
-
+console.log("props.visitData:", props.visitData);
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 
+// Fonction pour convertir une date timestampz en format YYYY-MM-DDTHH:MM
+const formatDateForInput = (dateString: string | undefined): string => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toISOString().slice(0, 16); // Format YYYY-MM-DDTHH:MM
+};
+
 const state = reactive({
   name: props.visitData.name || '',
-  start_date: props.visitData.start_date || '',
-  end_date: props.visitData.end_date || '',
+  start_date: formatDateForInput(props.visitData.start_date) || '',
+  end_date: formatDateForInput(props.visitData.end_date) || '',
   trip_id: props.visitData.trip_id || null,
   location_id: props.visitData.location?.location_id || null,
 });
+
+console.log("state:", state);
+
+const verify_map_has_place = () => {
+  return props.mode != "modify" || props.visitData.location?.location_id !== null;
+}
 
 const form = ref();
 const formError = ref('');
@@ -73,7 +85,7 @@ const onSubmit = async ({ data }: any) => {
       </template>
     </UFormGroup>
 
-    <MapViewer :lat="visitData.location?.latitude ?? 0" :lon="visitData.location?.longitude ?? 0"/>
+    <MapViewer v-if="verify_map_has_place()" :lat="visitData.location?.latitude ?? 0" :lon="visitData.location?.longitude ?? 0"/>
 
     <UAlert
         v-if="formError !== ''"

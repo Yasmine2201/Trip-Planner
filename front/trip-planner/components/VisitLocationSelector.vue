@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import {useI18n} from "vue-i18n";
-import {type Location, type Page, type Trip} from "~/types";
-import type {AsyncData} from "#app";
+import { useI18n } from "vue-i18n";
+import { type Location, type Page, type Trip } from "~/types";
+import type { AsyncData } from "#app";
 import LocationCard from "~/components/LocationCard.vue";
 import L from "leaflet";
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 const props = defineProps<{
   tripId: Number;
+  selectedLocation?: Location | null; // Nouvelle prop pour la location sélectionnée par défaut
 }>();
 
 class LocationsMap {
@@ -23,7 +24,7 @@ class LocationsMap {
     this.map = L.map("map").setView([trip.value.latitude, trip.value.longitude], 10);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
     this.locationsLayer = L.layerGroup().addTo(this.map);
@@ -113,8 +114,7 @@ class LocationsMap {
   }
 }
 
-
-const {data: trip}: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${props.tripId}`, {}, true);
+const { data: trip }: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${props.tripId}`, {}, true);
 
 const radius = ref(trip.value.radius);
 const minBudget = ref(0);
@@ -128,7 +128,7 @@ const viewPageSize = 100;
 const locations = await fetchLocations();
 
 let map: LocationsMap;
-const selectedLocation = ref(null) as Ref<Location | null>;
+const selectedLocation = ref<Location | null>(props.selectedLocation || null); // Initialiser avec la prop
 
 async function fetchLocations(page: number = 1, useViewPort: boolean = false) {
   const params = {
@@ -151,7 +151,7 @@ async function fetchLocations(page: number = 1, useViewPort: boolean = false) {
     params.pageSize = viewPageSize;
   }
 
-  const {data: locations}: AsyncData<Page<Location>, any> = await useApiFetch<Location[]>(`/locations`, {
+  const { data: locations }: AsyncData<Page<Location>, any> = await useApiFetch<Location[]>(`/locations`, {
     params: params
   });
 
@@ -185,16 +185,20 @@ onMounted(() => {
     map.hidePopup();
     map.updateLocations();
   }
+
+  // Mettre en évidence la location sélectionnée par défaut
+  if (props.selectedLocation) {
+    selectedLocation.value = props.selectedLocation;
+    map.highlightLocation(props.selectedLocation, true);
+  }
 });
 
 defineEmits<{
   onLocationSelected: (location: Location) => any
 }>();
-
 </script>
 
 <template>
-
   <div id="wrapper">
     <div id="line0" class="flex flex-row">
       <div id="locations-list" class="w-2/5 mr-5">
@@ -214,7 +218,6 @@ defineEmits<{
         </div>
         <UPagination v-model="page" :page-count="locations.elements_per_page" :total="locations.total_elements"
                      show-first show-last/>
-
       </div>
       <div id="map" class="w-3/5 rounded-3xl z-0">
       </div>
@@ -228,6 +231,4 @@ defineEmits<{
 </template>
 
 <style scoped>
-
-
 </style>
