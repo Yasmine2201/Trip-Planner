@@ -1,34 +1,24 @@
 from rest_framework import serializers
 
-from budget.models import Expense, ExpenseGroup, ExpenseShare, ExpenseCategory
-
-
-class ExpenseGroupInputSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExpenseGroup
-        fields = ['visit', 'name', 'description']
-
-
-class ExpenseGroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ExpenseGroup
-        fields = '__all__'
+from budget.models import Expense, ExpenseShare, ExpenseCategory
+from visits.serializers import VisitSerializer
 
 
 class ExpenseInputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Expense
-        fields = ['category', 'name', 'description', 'planned_amount', 'actual_amount', 'is_shared', 'expense_group']
+        fields = ['category', 'name', 'description', 'planned_amount', 'actual_amount', 'is_shared', 'visit']
         extra_kwargs = {
-            'expense_group': {'required': False},
+            'visit': {'required': False},
             'planned_amount': {'required': False},
         }
 
 
 class ExpenseSerializer(serializers.ModelSerializer):
+    visit = VisitSerializer()
     class Meta:
         model = Expense
-        fields = ['expense_id', 'category', 'name', 'description', 'planned_amount', 'actual_amount', 'is_shared', 'expense_group']
+        fields = ['expense_id', 'category', 'name', 'description', 'planned_amount', 'actual_amount', 'is_shared', 'visit']
 
 
 class DebtInputSerializer(serializers.ModelSerializer):

@@ -18,6 +18,8 @@ class ExpenseCategory(models.Model):
         ('Transport', 'Transport'),
         ('Accommodation', 'Accommodation'),
         ('Activity', 'Activity'),
+        ('Shopping', 'Shopping'),
+        ('Visit', 'Visit'),
         ('Others', 'Others'),
     ]
     name = models.CharField(max_length=255, primary_key=True, choices=CATEGORY_CHOICES, default='Others',
@@ -31,16 +33,6 @@ class ExpenseCategory(models.Model):
         return f'Category {self.name}'
 
 
-class ExpenseGroup(models.Model):
-    expense_group_id = models.AutoField(primary_key=True)
-    visit = models.ForeignKey(Visit, on_delete=models.CASCADE, null=True)
-    trip_participation = models.ForeignKey(TripParticipation, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-
-    def __str__(self):
-        return f'Expense Group {self.name} - {self.visit} - {self.trip_participation}'
-
 
 class Expense(models.Model):
     expense_id = models.AutoField(primary_key=True)
@@ -51,7 +43,7 @@ class Expense(models.Model):
     planned_amount = models.FloatField(null=True, blank=True)
     actual_amount = models.FloatField(null=True, blank=True)
     is_shared = models.BooleanField(default=False)
-    expense_group = models.ForeignKey(ExpenseGroup, on_delete=models.CASCADE, null=True)
+    visit = models.ForeignKey(Visit, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f' Expense{self.name} - {self.planned_amount} - {self.actual_amount}'

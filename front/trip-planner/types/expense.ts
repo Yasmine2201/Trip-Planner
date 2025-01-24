@@ -6,5 +6,5 @@ export type Expense = {
     "actual_amount": number,
     "is_shared": boolean,
     "category": string,
-    "expense_group": object,
+    "visit": Object
 }

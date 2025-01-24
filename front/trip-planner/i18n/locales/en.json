@@ -46,7 +46,9 @@
     "others": "Others",
     "remaining-budget": "Remaining budget",
     "title": "Budget",
-    "transport": "Transport"
+    "transport": "Transport",
+    "visit": "Visit",
+    "shopping": "Shopping"
   },
   "create_trip": {
     "trip_create_button": "Create a trip",
@@ -98,33 +100,36 @@
     "actual-amount": "Actual Amount",
     "actual-amount-short": "Actual",
     "add-expense": "Add expense",
-    "add-expense-group": "Add expense group",
+    "add-visit": "Add visit",
     "categories": {
       "accommodation": "Accommodation",
       "activity": "Activity",
       "food": "Food",
       "others": "Others",
-      "transport": "Transport"
+      "shopping": "Shopping",
+      "transport": "Transport",
+      "visit": "Visit"
     },
     "category": "Category",
     "delete-many-tooltip": "Select more than one expense to delete them",
+    "visit-tooltip": "Go see the visit",
     "delete-selected": "Delete expenses",
     "description": "Description",
     "edit-expense": "Edit expense",
-    "expense-group": "Group",
+    "visit": "Visit",
     "expense-id": "ID",
     "is-shared": "Shared ?",
     "name": "Name",
     "no": "Not shared",
     "no-expenses": "No expenses yet. Please add some to see the expense chart",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101",
       "enter-description": "My expense description",
       "enter-name": "My expense name",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100",
       "filter-by-category": "Filter by category",
       "select-category": "Food, accommodation, transport, activity, others",
-      "select-expense-group": "My expense group"
+      "select-visit": "My visit"
     },
     "planned-amount": "Planned Amount",
     "planned-amount-short": "Planned",
