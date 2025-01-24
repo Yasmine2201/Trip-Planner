@@ -14,7 +14,7 @@ const route = useRoute();
 const router = useRouter();
 const tripId = Number(route.params.tripId);
 const visit = {
-  trip_id: tripId ?? undefined
+  trip_id: tripId
 } as Partial<Visit>
 
 onBeforeMount(() => {
@@ -40,8 +40,6 @@ const goBack = () => {
     step.value = 1;
   }
 }
-
-
 </script>
 
 <template>
@@ -51,6 +49,6 @@ const goBack = () => {
                @click="goBack()"/>
     </template>
   </PageTitle>
-  <VisitLocationSelector v-if="step === 1" :tripId="tripId ?? ''" @onLocationSelected="locationSelected"/>
-  <VisitForm v-if="step === 2" mode="create" :visit-data="visit"/>
+  <VisitLocationSelector v-if="step === 1" :tripId="tripId" @onLocationSelected="locationSelected"/>
+  <VisitForm v-if="step === 2" mode="create" :visit-data="visit" @changeLocation="step = 1" />
 </template>

@@ -36,7 +36,6 @@
     "add-expense": "Add expense",
     "debts-and-credits": "Debts and credits",
     "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
-    "declared-budget": "Declared my budget",
     "edit-budget": "Edit budget",
     "expenses": "Expenses",
     "expenses-description": "Here you can see all the expenses of the trip",
@@ -46,7 +45,8 @@
     "others": "Others",
     "remaining-budget": "Remaining budget",
     "title": "Budget",
-    "transport": "Transport"
+    "transport": "Transport",
+    "declare-budget": "Déclare my budget"
   },
   "create_trip": {
     "trip_create_button": "Create a trip",
@@ -117,10 +117,10 @@
     "no": "Not shared",
     "no-expenses": "No expenses yet. Please add some to see the expense chart",
     "placeholders": {
-      "enter-actual-amount": "101",
+      "enter-actual-amount": 101,
       "enter-description": "My expense description",
       "enter-name": "My expense name",
-      "enter-planned-amount": "100",
+      "enter-planned-amount": 100,
       "select-category": "Food, accommodation, transport, activity, others",
       "select-expense-group": "My expense group",
       "filter-by-category": "Filter by category"
@@ -134,7 +134,9 @@
     "visit_end_date": "End date",
     "visit_modify_button": "Update the visit",
     "visit_name": "Visit name",
-    "visit_start_date": "Start date"
+    "visit_start_date": "Start date",
+    "change_location": "Change location",
+    "location": "Location"
   },
   "language": {
     "af": "Afrikaans",
