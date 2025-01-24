@@ -49,6 +49,52 @@ class VisitService:
 
         return Visit.objects.filter(trip=trip)
 
+    @staticmethod
+    def get_visit_by_id(user: User, trip_id: int, visit_id: int):
+        """
+        Get a visit by its ID.
+        """
+        visit = Visit.objects.get(visit_id=visit_id)
+        if visit.trip.trip_id != trip_id:
+            raise ValueError(f" Visit {visit_id} does not belong to trip {trip_id}")
+        if not TripService.check_participation(visit.trip, user):
+            raise ForbiddenActionError(f"User {user} is not part of the trip")
+
+        return visit
+
+    @staticmethod
+    def update_visit(user: User, trip_id: int, visit_id: int, visit_data: dict):
+        """
+        Update a visit by its ID.
+        """
+        visit = VisitService.get_visit_by_id(user, trip_id, visit_id)
+
+        if visit_data.get('visit_id') and visit_data['visit_id'] != visit.visit_id:
+            raise ValueError("Trying to update visit_id which is generated automatically")
+        if visit_data['trip_id'] != trip_id:
+            raise ValueError("Mismatch between trip_id in URL and trip_id in request body")
+
+        if not TripService.check_participation(visit.trip, user, is_owner=True):
+            raise ForbiddenActionError("User cannot update this visit because they are not the owner of the trip")
+
+        visit_serializer = VisitInputSerializer(visit, data=visit_data)
+        visit_serializer.is_valid(raise_exception=True)
+        visit_serializer.save()
+
+        return visit
+
+    @staticmethod
+    def delete_visit(user: User, trip_id: int, visit_id: int):
+        """
+        Delete a visit by its ID.
+        """
+        visit = VisitService.get_visit_by_id(user, trip_id, visit_id)
+
+        if not TripService.check_participation(visit.trip, user, is_owner=True):
+            raise ForbiddenActionError("User cannot delete this visit because they are not the owner of the trip")
+
+        visit.delete()
+        return visit
 
 class LocationService:
 
