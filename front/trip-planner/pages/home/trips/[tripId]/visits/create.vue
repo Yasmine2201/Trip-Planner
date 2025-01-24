@@ -12,9 +12,9 @@ const {t} = useI18n();
 
 const route = useRoute();
 const router = useRouter();
-const tripId = route.params.tripId?.toString() as string | undefined | null;
+const tripId = Number(route.params.tripId);
 const visit: Partial<Visit> = {
-  trip_id: tripId ?? ""
+  trip_id: tripId ?? null
 }
 
 onBeforeMount(() => {
@@ -43,6 +43,6 @@ const locationSelected = (location: Location) => {
                @click="router.back()"/>
     </template>
   </PageTitle>
-  <VisitLocationSelector v-if="step === 1" :tripId="tripId ?? ''" @onLocationSelected="locationSelected"/>
+  <VisitLocationSelector v-if="step === 1" :tripId="tripId" @onLocationSelected="locationSelected"/>
   <VisitForm v-if="step === 2" mode="create" :visit-data="visit"/>
 </template>

@@ -8,7 +8,7 @@ import L from "leaflet";
 const {t} = useI18n();
 
 const props = defineProps<{
-  tripId: string;
+  tripId: Number;
 }>();
 
 class LocationsMap {

@@ -9,7 +9,6 @@ const props = defineProps<{
   visitData: Partial<Visit>, // Données de la visite
 }>();
 
-console.log("tripId:", props.trip_id);
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 
@@ -26,14 +25,13 @@ const formError = ref('');
 const submitting = ref(false);
 
 const onSubmit = async ({ data }: any) => {
-  updatePlace();
   Object.assign(data, state);
   console.log("data submitted:", data);
 
   submitting.value = true;
   formError.value = '';
 
-  const endpoint = props.mode === "create" ? '/visits' : `/visits/${props.visitData.visit_id}`;
+  const endpoint = `trips/${data.trip_id}` + (props.mode === "create" ? '/visits' : `/visits/${props.visitData.visit_id}`);
   const method = props.mode === "create" ? 'POST' : 'PUT';
   if (props.mode === "modify") {
     data.visit_id = props.visitData.visit_id;
@@ -53,7 +51,7 @@ const onSubmit = async ({ data }: any) => {
 </script>
 
 <template>
-  <UForm :schema="createVisitSchema" class="space-y-5" :state="state" @submit="onSubmit" ref="form">
+  <UForm  class="space-y-5" :state="state" @submit="onSubmit" ref="form"> <!-- :schema="createVisitSchema" -->
     <UFormGroup :label="t('form_visit.visit_name')" name="name" required>
       <UInput v-model="state.name" placeholder="Visit Name" />
       <template #error="{ error }">

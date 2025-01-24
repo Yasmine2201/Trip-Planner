@@ -1,7 +1,8 @@
-cd ../supabase
-supabase start
+:: cd ../supabase
+REM supabase start
 
 cd ../back
+
 python manage.py makemigrations core
 python manage.py migrate core
 
