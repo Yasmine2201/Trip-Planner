@@ -16,7 +16,7 @@ const visitId = Number(route.params.visitId);
 const tripId = Number(route.params.tripId);
 
 // Charge les données de la visite depuis l'API
-const { data: row, status, error } = await useApiFetch<Visit>(`/visits/${visitId}`);
+const { data: row, status, error } = await useApiFetch<Visit>(`trips/${tripId}/visits/${visitId}`);
 if (status.value === 'error' && error.value.statusCode === 404) {
   router.push('/notfound');
 }

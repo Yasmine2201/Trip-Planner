@@ -36,6 +36,7 @@
     "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
+    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
@@ -45,8 +46,7 @@
     "others": "Autres",
     "remaining-budget": "Budget restant",
     "title": "Budget",
-    "transport": "Transport",
-    "declare-budget": "Déclarer mon budget"
+    "transport": "Transport"
   },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
@@ -117,18 +117,17 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": "101",
+      "enter-actual-amount": 101,
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": "100",
+      "enter-planned-amount": 100,
+      "filter-by-category": "Filtrer par catégorie",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
-      "select-expense-group": "Mon groupe de dépenses",
-      "filter-by-category": "Filtrer par catégorie"
+      "select-expense-group": "Mon groupe de dépenses"
     },
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
     "yes": "Partagé"
-
   },
   "form_visit": {
     "visit_create_button": "Créer la visite",
@@ -189,7 +188,19 @@
     "vi": "Vietnamien",
     "zh": "Chinois"
   },
+  "locations": {
+    "popup": {
+      "too-many-locations": "Trop de lieux. Veuillez filtrer ou zoomer."
+    },
+    "price_range": {
+      "unknown": "Prix inconnu"
+    },
+    "titles": {
+      "select-location": "Lieux à visiter"
+    }
+  },
   "misc": {
+    "all": "Tout",
     "back": "Retour",
     "delete": "Supprimer",
     "deletion": "Suppression",
@@ -203,10 +214,9 @@
     "save": "Enregistrer",
     "search": "Rechercher...",
     "see": "Voir",
-    "select-value": "Sélectionnez des valeurs",
-    "success": "Succès de l'opération",
     "select": "Sélectionner",
-    "all": "Tout"
+    "select-value": "Sélectionnez des valeurs",
+    "success": "Succès de l'opération"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -221,6 +231,7 @@
     "login": "Se connecter",
     "logout": "Déconnexion",
     "modify_trip": "Modifier un voyage",
+    "modify_visit": "Modifier la visite",
     "my-trips": "Mes voyages",
     "new-trip": "Nouveau voyage",
     "notifications": "Notifications",
@@ -284,17 +295,6 @@
     },
     "title": {
       "finalize": "Finaliser la création"
-    }
-  },
-  "locations": {
-    "titles": {
-      "select-location": "Lieux à visiter"
-    },
-    "price_range": {
-      "unknown": "Prix inconnu"
-    },
-    "popup": {
-      "too-many-locations": "Trop de lieux. Veuillez filtrer ou zoomer."
     }
   }
 }

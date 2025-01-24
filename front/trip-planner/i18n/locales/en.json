@@ -121,9 +121,9 @@
       "enter-description": "My expense description",
       "enter-name": "My expense name",
       "enter-planned-amount": 100,
+      "filter-by-category": "Filter by category",
       "select-category": "Food, accommodation, transport, activity, others",
-      "select-expense-group": "My expense group",
-      "filter-by-category": "Filter by category"
+      "select-expense-group": "My expense group"
     },
     "planned-amount": "Planned Amount",
     "planned-amount-short": "Planned",
@@ -188,7 +188,19 @@
     "vi": "Vietnamese",
     "zh": "Chinese"
   },
+  "locations": {
+    "popup": {
+      "too-many-locations": "Too many locations. Please filter or zoom in."
+    },
+    "price_range": {
+      "unknown": "Price unknown"
+    },
+    "titles": {
+      "select-location": "Places to visit"
+    }
+  },
   "misc": {
+    "all": "All",
     "back": "Back",
     "delete": "Delete",
     "deletion": "Deletion",
@@ -202,10 +214,9 @@
     "save": "Save",
     "search": "Search...",
     "see": "See",
-    "select-value": "Select values",
-    "success": "Operation succeeded",
     "select": "Select",
-    "all": "All"
+    "select-value": "Select values",
+    "success": "Operation succeeded"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -220,6 +231,7 @@
     "login": "Log in",
     "logout": "Log out",
     "modify_trip": "Modify a trip",
+    "modify_visit": "Modify the visit",
     "my-trips": "My trips",
     "new-trip": "New trip",
     "notifications": "Notifications",
@@ -283,17 +295,6 @@
     },
     "title": {
       "finalize": "Finalize creation"
-    }
-  },
-  "locations": {
-    "titles": {
-      "select-location": "Places to visit"
-    },
-    "price_range": {
-      "unknown": "Price unknown"
-    },
-    "popup": {
-      "too-many-locations": "Too many locations. Please filter or zoom in."
     }
   }
 }
