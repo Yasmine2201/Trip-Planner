@@ -43,7 +43,7 @@ const locationSelected = (location: Location) => {
                @click="router.back()"/>
     </template>
   </PageTitle>
-  <VisitLocationSelector v-if="step === 1" :tripId="tripId" @onLocationSelected="locationSelected"/>
+  <VisitLocationSelector v-if="step === 1" :tripId="tripId" @onLocationSelected="locationSelected" :selectedLocation="visit?.location"/>
   <UButton v-if="step === 2" @click="step = 1" class="mr-2 mb-4" color="orange" icon="i-heroicons-arrow-uturn-left"> {{ t('modify_visit.return_to_step1') }} </UButton>
   <VisitForm v-if="step === 2" mode="create" :visit-data="visit"/>
 </template>
