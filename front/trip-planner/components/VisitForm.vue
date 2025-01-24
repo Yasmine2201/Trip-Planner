@@ -42,7 +42,7 @@ const onSubmit = async ({ data }: any) => {
       method,
       body: JSON.stringify(data),
     });
-    navigateTo('/home');
+    navigateTo(`/home/trips/${data.trip_id}/visits`);
   } catch (error) {
     formError.value = t('errors.unknown-error');
   }
@@ -51,7 +51,7 @@ const onSubmit = async ({ data }: any) => {
 </script>
 
 <template>
-  <UForm  class="space-y-5" :state="state" @submit="onSubmit" ref="form"> <!-- :schema="createVisitSchema" -->
+  <UForm  :schema="createVisitSchema" class="space-y-5" :state="state" @submit="onSubmit" ref="form"> <!-- :schema="createVisitSchema" -->
     <UFormGroup :label="t('form_visit.visit_name')" name="name" required>
       <UInput v-model="state.name" placeholder="Visit Name" />
       <template #error="{ error }">
