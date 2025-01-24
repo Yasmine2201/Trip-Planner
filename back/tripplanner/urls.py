@@ -50,6 +50,7 @@ urlpatterns = [
 
     # Visits
     path('api/trips/<int:trip_id>/visits', VisitView.as_view(), name='visit-view'),
+    path('api/trips/<int:trip_id>/visits/<int:visit_id>', VisitView.as_view(), name='visit-view'),
 
     # Locations
     path('api/locations', LocationView.as_view(), name='location-view'),
