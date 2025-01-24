@@ -36,7 +36,6 @@
     "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
-    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
@@ -46,7 +45,8 @@
     "others": "Autres",
     "remaining-budget": "Budget restant",
     "title": "Budget",
-    "transport": "Transport"
+    "transport": "Transport",
+    "declare-budget": "Déclarer mon budget"
   },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
@@ -127,7 +127,7 @@
     },
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
-    "yes": "Partagé",
+    "yes": "Partagé"
 
   },
   "form_visit": {
@@ -205,6 +205,7 @@
     "see": "Voir",
     "select-value": "Sélectionnez des valeurs",
     "success": "Succès de l'opération",
+    "select": "Sélectionner",
     "all": "Tout"
   },
   "modify_trip": {
@@ -280,6 +281,20 @@
     "list": {
       "add": "Ajouter une visite",
       "title": "Mes visites"
+    },
+    "title": {
+      "finalize": "Finaliser la création"
+    }
+  },
+  "locations": {
+    "titles": {
+      "select-location": "Lieux à visiter"
+    },
+    "price_range": {
+      "unknown": "Prix inconnu"
+    },
+    "popup": {
+      "too-many-locations": "Trop de lieux. Veuillez filtrer ou zoomer."
     }
   }
 }

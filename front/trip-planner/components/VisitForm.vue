@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import PlaceSelector from "~/components/PlaceSelector.vue";
-import type { FormSubmitEvent } from "#ui/types";
-import type {Trip, Location} from "~/types";
-import {createVisitSchema} from "~/schemas";
 
-const props = defineProps({
-  mode: { type: String, required: true }, // "create" ou "modify"
-  visitData: { type: Object, default: () => ({}) }, // Données de la visite en mode "modify"
-  trip_id: { type: String, required: true },
-});
+import type {Location, Trip, Visit} from "~/types";
+import {createVisitSchema} from "~/schemas";
+import type {AsyncData} from "#app";
+
+const props = defineProps<{
+  mode: string, // "create" ou "modify"
+  visitData: Partial<Visit>, // Données de la visite
+}>();
+
 console.log("tripId:", props.trip_id);
 const { t } = useI18n();
 const { $api } = useNuxtApp();
@@ -17,35 +17,13 @@ const state = reactive({
   name: props.visitData.name || '',
   start_date: props.visitData.start_date || '',
   end_date: props.visitData.end_date || '',
-  place: props.visitData.place || null,
-  trip_id: props.trip_id || null,
+  trip_id: props.visitData.trip_id || null,
+  location_id: props.visitData.location?.location_id || null,
 });
 
-// Charge les données du voyage depuis l'API
-const { data: row, status, error } = await useApiFetch<Trip>(`/trips/${state.trip_id}`);
-if (status.value === 'error' && error.value?.statusCode === 404) {
-  console.log("WARNING : trip not found");
-}
-
-const tripData: Trip = Object.assign({}, row.value ?? {}) as Trip;
-const getTripLocation = () => {
-  return {
-    latitude: tripData.latitude || 0,
-    longitude: tripData.longitude || 0,
-    radius: tripData.radius || 0,
-  };
-};
-
-
-// placeSelector est de type Location
-const placeSelector = ref(null);
 const form = ref();
 const formError = ref('');
 const submitting = ref(false);
-
-const updatePlace = () => {
-  state.place = placeSelector.value?.selectedPlace || state.place;
-};
 
 const onSubmit = async ({ data }: any) => {
   updatePlace();
@@ -97,7 +75,7 @@ const onSubmit = async ({ data }: any) => {
       </template>
     </UFormGroup>
 
-    <PlaceSelector ref="placeSelector" class="w-full" :placeData="state.place" :filterData="getTripLocation()"/>
+    <MapViewer :lat="visitData.location?.latitude ?? 0" :lon="visitData.location?.longitude ?? 0"/>
 
     <UAlert
         v-if="formError !== ''"

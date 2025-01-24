@@ -19,6 +19,7 @@ class LocationQueryParamsSerializer(serializers.Serializer):
     max_lat: float = serializers.FloatField(required=False)
     min_lon: float = serializers.FloatField(required=False)
     max_lon: float = serializers.FloatField(required=False)
+    only_prices: bool = serializers.BooleanField(required=False)
 
     def validate(self, data: dict):
         lat = data.get('lat')
@@ -37,9 +38,6 @@ class LocationQueryParamsSerializer(serializers.Serializer):
             raise serializers.ValidationError("min_lat must be less than or equal to max_lat")
         if min_lon and max_lon and min_lon > max_lon:
             raise serializers.ValidationError("min_lon must be less than or equal to max_lon")
-
-        if any([min_lat, max_lat, min_lon, max_lon]) and any([lat, lon, radius]):
-            raise serializers.ValidationError("Cannot provide both lat, lon, radius and min_lat, max_lat, min_lon, max_lon")
 
         min_price = data.get('minPrice', 0)
         max_price = data.get('maxPrice', 10000000)

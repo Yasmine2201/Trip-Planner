@@ -60,7 +60,7 @@ class LocationService:
     def get_filtered_locations(query_params: dict) -> list[Location]:
         params_serializer = LocationQueryParamsSerializer(data=query_params)
         params_serializer.is_valid(raise_exception=True)
-        params: dict = params_serializer.validated_data
+        params: dict = params_serializer.data
 
         # Extract query parameters
         lat: float | None = params.get('lat', None)
@@ -76,6 +76,7 @@ class LocationService:
         sort_by: str = params.get('sort_by', 'location_id')
         sort_order: str = params.get('sort_order', 'asc')
         is_viewport: bool = params.get('is_viewport', False)
+        only_prices: bool = params.get('only_prices', False)
 
         if sort_by and sort_order:
             if sort_order == 'desc':
@@ -102,8 +103,11 @@ class LocationService:
             )
             filters &= Q(max_price__lte=max_price)
 
+        if not only_prices:
+            filters |= Q(prices__isnull=True)
+
         # 3. Add geographical filter (Haversine formula or viewport)
-        if lat and lon and radius and not is_viewport:
+        if lat and lon and radius:
             try:
                 valid_ids = [
                     loc.location_id for loc in queryset

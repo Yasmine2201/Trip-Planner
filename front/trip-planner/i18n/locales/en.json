@@ -204,7 +204,8 @@
     "see": "See",
     "select-value": "Select values",
     "success": "Operation succeeded",
-    "all": "All"
+    "all": "All",
+    "select": "Select"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -279,6 +280,20 @@
     "list": {
       "add": "Add a visit",
       "title": "My visits"
+    },
+    "title": {
+      "finalize": "Finalize creation"
+    }
+  },
+  "locations": {
+    "titles": {
+      "select-location": "Places to visit"
+    },
+    "price_range": {
+      "unknown": "Price unknown"
+    },
+    "popup": {
+      "too-many-locations": "Too many locations. Please filter or zoom in."
     }
   }
 }
