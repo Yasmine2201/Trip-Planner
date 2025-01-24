@@ -117,10 +117,10 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": "101",
+      "enter-actual-amount": 101,
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": "100",
+      "enter-planned-amount": 100,
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-expense-group": "Mon groupe de dépenses",
       "filter-by-category": "Filtrer par catégorie"
