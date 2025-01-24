@@ -76,7 +76,7 @@ defineExpose({
 <template>
   <div class="location-selector">
     <h1 id="title">{{ t('LocationSelect.place') }}</h1>
-    <div id="map" class="map-container"></div>
+    <div id="map" class="map-container-mapviewer"></div>
     <div class="controls">
       <div class="control-item">
         <span class="label">{{ t('LocationSelect.latitude') }}:</span>
@@ -104,7 +104,7 @@ defineExpose({
 </template>
 
 <style scoped>
-.map-container {
+.map-container-mapviewer {
   height: 400px;
   width: 100%;
   position: relative;

@@ -12,10 +12,10 @@ const {t} = useI18n();
 
 const route = useRoute();
 const router = useRouter();
-const tripId = route.params.tripId?.toString() as string | undefined | null;
+const tripId = Number(route.params.tripId);
 const visit = {
-  trip_id: tripId ?? "",
-} as Partial<Visit>;
+  trip_id: tripId ?? undefined
+} as Partial<Visit>
 
 onBeforeMount(() => {
   if (!tripId) {

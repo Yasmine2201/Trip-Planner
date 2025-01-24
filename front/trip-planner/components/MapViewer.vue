@@ -17,7 +17,7 @@ const props = defineProps({
 
 onMounted(() => {
   nextTick(() => {
-    const mapElement = document.getElementById('map');
+    const mapElement = document.getElementById('map-mapviewer');
     if (mapElement) {
       const map = L.map(mapElement).setView([props.lat, props.lon], 13);
 
@@ -32,20 +32,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="map-container">
-    <div id="map" class="map"></div>
+  <div class="map-container-mapviewer">
+    <div id="map-mapviewer" class="map-mapviewer"></div>
   </div>
 </template>
 
 <style scoped>
-.map-container {
+.map-container-mapviewer {
   height: 400px;
   width: 100%;
   position: relative;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.map {
+.map-mapviewer {
   width: 100%;
   height: 100%;
   z-index: 1;

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import {useI18n} from "vue-i18n";
-import {type Location, type Page, type Trip} from "~/types";
-import type {AsyncData} from "#app";
+import { useI18n } from "vue-i18n";
+import { type Location, type Page, type Trip } from "~/types";
+import type { AsyncData } from "#app";
 import LocationCard from "~/components/LocationCard.vue";
 import L from "leaflet";
 
-const {t} = useI18n();
+const { t } = useI18n();
 
 const props = defineProps<{
   tripId: string;
@@ -131,8 +131,7 @@ class LocationsMap {
   }
 }
 
-
-const {data: trip}: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${props.tripId}`, {}, true);
+const { data: trip }: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${props.tripId}`, {}, true);
 
 const radius = ref(trip.value.radius);
 const minBudget = ref(0);
@@ -168,7 +167,7 @@ async function fetchLocations(page: number = 1, useViewPort: boolean = false) {
     params.pageSize = viewPageSize;
   }
 
-  const {data: locations}: AsyncData<Page<Location>, any> = await useApiFetch(`/locations`, {
+  const { data: locations }: AsyncData<Page<Location>, any> = await useApiFetch(`/locations`, {
     params: params
   });
 

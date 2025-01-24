@@ -117,10 +117,10 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101",
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-expense-group": "Mon groupe de dépenses",
       "filter-by-category": "Filtrer par catégorie"
@@ -189,6 +189,7 @@
     "zh": "Chinois"
   },
   "misc": {
+    "all": "Tout",
     "back": "Retour",
     "delete": "Supprimer",
     "deletion": "Suppression",
@@ -202,14 +203,16 @@
     "save": "Enregistrer",
     "search": "Rechercher...",
     "see": "Voir",
+    "select": "Sélectionner",
     "select-value": "Sélectionnez des valeurs",
-    "success": "Succès de l'opération",
-    "all": "Tout",
-    "select": "Sélectionner"
+    "success": "Succès de l'opération"
   },
   "modify_trip": {
     "title": "Modification du voyage",
     "trip_modify_button": "Modifier le voyage"
+  },
+  "modify_visit": {
+    "return_to_step1": "Retour au choix de l'endroit"
   },
   "navigation": {
     "about": "À propos",
@@ -220,6 +223,7 @@
     "login": "Se connecter",
     "logout": "Déconnexion",
     "modify_trip": "Modifier un voyage",
+    "modify_visit": "Modifier la visite",
     "my-trips": "Mes voyages",
     "new-trip": "Nouveau voyage",
     "notifications": "Notifications",
@@ -283,23 +287,6 @@
     },
     "title": {
       "finalize": "Finaliser la création"
-    }
-  },
-  "locations": {
-    "titles": {
-      "select-location": "Lieux à visiter"
-    },
-    "price_range": {
-      "unknown": "Prix inconnu"
-    },
-    "popup": {
-      "too-many-locations": "Trop de lieux. Veuillez filtrer ou zoomer."
-    },
-    "labels": {
-      "only-prices": "Masquer prix inconnus",
-      "radius": "Rayon",
-      "min-budget": "Prix min.",
-      "max-budget": "Prix max."
     }
   }
 }

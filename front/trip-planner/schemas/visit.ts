@@ -10,12 +10,6 @@ export const createVisitSchema = z.object({
         const end = new Date(value);
         return !isNaN(end.getTime());
     }, { message: 'errors.invalid-end-date' }),
-    place: z.object({
-        latitude: z.number().min(-90).max(90, { message: 'errors.invalid-coordinates' }),
-        longitude: z.number().min(-180).max(180, { message: 'errors.invalid-coordinates' }),
-        radius: z.number().positive({ message: 'errors.radius-required' }),
-    }).nullable(),
-    trip_id: z.string().uuid({ message: 'errors.invalid-trip-id' }),
 }).refine((data) => {
     const start_date = new Date(data.start_date);
     const end_date = new Date(data.end_date);
@@ -26,9 +20,3 @@ export const createVisitSchema = z.object({
 });
 
 export type CreateVisitDto = z.input<typeof createVisitSchema>;
-
-const modifyVisitSchema: z.ZodType<CreateVisitDto> = createVisitSchema.sourceType().extend({
-    visit_id: z.string().uuid({ message: 'errors.invalid-visit-id' }),
-});
-
-export type ModifyVisitDto = z.input<typeof modifyVisitSchema>;
