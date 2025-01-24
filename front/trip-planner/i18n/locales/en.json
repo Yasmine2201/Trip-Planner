@@ -91,7 +91,8 @@
     "sent-invalid-data": "Sent invalid data",
     "start-date-before-end-date": "Start date must be before end date",
     "trip-name-required": "Trip name is required",
-    "unknown-error": "Please retry later."
+    "unknown-error": "Please retry later.",
+    "budget-positive": "Budget must be a positive number",
   },
   "expense": {
     "actual-amount": "Actual Amount",
@@ -229,8 +230,8 @@
   "notifications": {
     "content": {
       "added-to-trip": "You have been added to trip '{tripName}'",
-      "budget-changed": "Budget for trip '{tripName}' has been changed to {budget}",
-      "expenses-exceed-budget": "Expenses for the trip amount to 'totalExpenses'€ and exceed the declared budget of '{budget}'€"
+      "budget-changed": "Budget for trip '{tripName}' has been changed to {budget} €",
+      "expenses-exceed-budget": "Expenses for the trip amount to {totalExpenses} € and exceed the declared budget of {budget} €"
     },
     "deleted": "Notification deleted",
     "mark-as-read": "Mark as read",

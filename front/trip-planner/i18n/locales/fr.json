@@ -91,7 +91,8 @@
     "sent-invalid-data": "Les données envoyées sont invalides",
     "start-date-before-end-date": "La date de début doit être avant la date de fin",
     "trip-name-required": "Le nom du voyage est requis",
-    "unknown-error": "Merci de réessayer ultérieurement."
+    "unknown-error": "Merci de réessayer ultérieurement.",
+    "budget-positive": "Le budget doit être positif"
   },
   "expense": {
     "actual-amount": "Montant réel",
@@ -230,8 +231,8 @@
   "notifications": {
     "content": {
       "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
-      "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget}",
-      "expenses-exceed-budget": "Les dépenses du voyage '{tripName}' s'élèvent à '{totalExpenses}'€ et dépassent le budget déclaré de '{budget}'€"
+      "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget} €",
+      "expenses-exceed-budget": "Les dépenses du voyage {tripName} s'élèvent à {totalExpenses} € et dépassent le budget déclaré de {budget} €"
     },
     "deleted": "Notification supprimée",
     "mark-as-read": "Marquer comme lu",

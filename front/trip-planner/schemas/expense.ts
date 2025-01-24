@@ -19,3 +19,9 @@ export const expenseSchema = z.object({
 });
 
 export type ExpenseDto = z.input<typeof expenseSchema>;
+
+export const budgetSchema = z.object({
+  budget: z.number({invalid_type_error: 'errors.must-be-number'}).positive({ message: 'errors.budget-positive' }),
+});
+
+export type BudgetDto = z.input<typeof budgetSchema>;
