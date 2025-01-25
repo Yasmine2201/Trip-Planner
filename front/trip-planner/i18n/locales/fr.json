@@ -36,7 +36,6 @@
     "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
-    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
@@ -47,6 +46,7 @@
     "remaining-budget": "Budget restant",
     "title": "Budget",
     "transport": "Transport",
+    "declare-budget": "Déclarer mon budget",
     "visit": "Visite",
     "shopping": "Shopping"
   },
@@ -94,7 +94,8 @@
     "start-date-before-end-date": "La date de début doit être avant la date de fin",
     "trip-name-required": "Le nom du voyage est requis",
     "unknown-error": "Merci de réessayer ultérieurement.",
-    "budget-positive": "Le budget doit être positif"
+    "budget-positive": "Le budget doit être positif",
+    "name-too-long": "Nom trop long"
   },
   "expense": {
     "actual-amount": "Montant réel",
@@ -123,10 +124,10 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": "101",
+      "enter-actual-amount": 101,
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": "100",
+      "enter-planned-amount": 100,
       "filter-by-category": "Filtrer par catégorie",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-visit": "Ma visite"

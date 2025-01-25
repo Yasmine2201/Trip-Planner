@@ -4,33 +4,19 @@ definePageMeta({
   requiresAuth: true,
   layout: 'navigation'
 });
-const {t} = useI18n();
 
-const budgetItems = computed(() =>
-  [
-    {
-      label: t('budget.expenses'),
-      icon: 'solar:banknote-2-linear',
-      content: t('budget.expenses-description'),
-      component: 'Expenses'
-    },
-    {
-      label: t('budget.debts-and-credits'),
-      icon: 'material-symbols:account-balance-wallet',
-      content: t('budget.debts-and-credits-description'),
-      component: 'DebtsAndCredits'
-    }
-  ]
-);
+
+const { t } = useI18n();
+const router = useRouter();
+const tripId = Number(useRoute().params.tripId);
 
 </script>
 
 <template>
-  <UTabs :items="budgetItems">
-    <template #item="{item}">
-      <DebtsAndCredits v-if="item.component === 'DebtsAndCredits'"/>
-      <Expenses v-if="item.component === 'Expenses'"/>
+  <PageTitle :name="t('budget.title')">
+    <template v-slot:actions>
+      <UButton @click="router.push(`/home/trips/${tripId}`)" icon="i-heroicons-arrow-uturn-left" class="mr-2" :title="t('misc.back')" color="gray" />
     </template>
-  </UTabs>
-
+  </PageTitle>
+  <Expenses />
 </template>
