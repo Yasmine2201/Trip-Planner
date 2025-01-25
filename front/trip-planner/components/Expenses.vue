@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import type {Expense} from "~/types/expense";
-import {CategoryValues} from "~/schemas/expense";
+import {type BudgetDto, CategoryValues} from "~/schemas/expense";
 
 const route = useRoute();
 const router = useRouter();
@@ -29,6 +29,7 @@ const expensesResponse = await useApiFetch<Expense[]>(`/trips/${tripId.value}/bu
 expenses.value = expensesResponse.data.value ?? [];
 
 // Computed values
+const isOpen = ref(false);
 const totalExpenses = computed(() => expenses.value.reduce((acc, expense) => acc + expense.actual_amount, 0));
 const remainingBudget = computed(() => declaredBudget.value - totalExpenses.value);
 const ratio = computed(() => (remainingBudget.value / declaredBudget.value) * 100);
@@ -136,16 +137,35 @@ onBeforeUnmount(() => {
     chartInstance.destroy();
   }
 });
+
+const refreshBudget = (budgetData: BudgetDto) => {
+  declaredBudget.value = budgetData.budget;
+  isOpen.value = false;
+}
 </script>
 
 <template>
   <UCard>
+    <UModal v-model="isOpen" prevent-close>
+      <UCard>
+        <PageTitle :name="t('budget.edit-budget')">
+          <template #actions>
+            <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpen = false" />
+          </template>
+        </PageTitle>
+        <BudgetForm :budgetData="declaredBudget" @onSave="refreshBudget" />
+      </UCard>
+    </UModal>
+
     <template #header>
       <div class="h-8 header flex">
         <!--left -->
         <div class="flex-1 flex flex-col justify-center items-center">
-          <div class="text-sm">{{ t('budget.initial-budget') }}</div>
-          <div class="text-lg text-primary">{{ declaredBudget }} €</div>
+          <div class="text-sm">{{ t('budget.initial-budget') }}
+          </div>
+          <div>
+            <span class="text-lg text-primary">{{ declaredBudget }} €</span>
+          </div>
         </div>
         <!--right -->
         <div class="flex-1 flex flex-col justify-center items-center space-y-1">
@@ -178,7 +198,7 @@ onBeforeUnmount(() => {
             size="md"
             square
             variant="solid"
-            @click="$router.push(`/home/trips/${tripId}/budget/edit`)"
+            @click="isOpen = true"
         />
         <UButton
             :label="t('budget.manage-expenses')"
