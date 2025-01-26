@@ -1,3 +1,5 @@
+import type {Visit} from "~/types/visits";
+
 export type Expense = {
     "expense_id": number,
     "name": string,
@@ -6,5 +8,5 @@ export type Expense = {
     "actual_amount": number,
     "is_shared": boolean,
     "category": string,
-    "visit": Object
+    "visit": Pick<Visit, 'visit_id' | 'name'>
 }

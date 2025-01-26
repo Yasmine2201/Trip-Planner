@@ -9,7 +9,11 @@ import {number} from "zod";
 
 const props = defineProps({
   budgetData: {type: number, default: 0},
-})
+});
+
+const emits = defineEmits<{
+  onSave: (data: BudgetDto) => void
+}>();
 
 const {$api} = useNuxtApp();
 const {t} = useI18n();
@@ -32,20 +36,20 @@ const onSubmit = async ({data}: FormSubmitEvent<BudgetDto>) => {
       method: 'PUT',
       body: sentData
     });
-    navigateTo(`/home/trips/${tripId.value}/budget`);
+    emits('onSave', data);
   } catch (error) {
+    console.error(error);
     if (error instanceof FetchError) {
       if (error.response.status === 400) formError.value = 'errors.sent-invalid-data';
     } else formError.value = 'errors.unknown-error';
   }
-
 }
 
 </script>
 
 <template>
   <UForm :schema="budgetSchema" :state="state" @submit="onSubmit">
-    <UFormGroup :label="t('budget.title')" class="w-1/2" name="budget" required>
+    <UFormGroup :label="t('budget.title')" name="budget" required class="mb-4">
       <UInput v-model="state.budget" :placeholder="t('budget.edit-budget')" type="number">
         <template #trailing>
           <span class="text-gray-500 dark:text-gray-400 text-xs">€</span>
@@ -63,6 +67,7 @@ const onSubmit = async ({data}: FormSubmitEvent<BudgetDto>) => {
         color="red"
         variant="outline"
     />
+    <UButton type="submit" color="primary" block>{{ t('misc.save') }}</UButton>
   </UForm>
 </template>
 

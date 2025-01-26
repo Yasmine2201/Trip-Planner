@@ -95,7 +95,8 @@
     "start-date-before-end-date": "Start date must be before end date",
     "trip-name-required": "Trip name is required",
     "unknown-error": "Please retry later.",
-    "budget-positive": "Budget must be a positive number"
+    "budget-positive": "Budget must be a positive number",
+    "name-too-long": "Name too long"
   },
   "expense": {
     "actual-amount": "Actual Amount",
