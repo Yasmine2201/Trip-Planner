@@ -12,6 +12,11 @@ const props = defineProps({
   lon: {
     type: Number,
     required: true,
+  },
+  popup: {
+    type: Boolean,
+    required: false,
+    default: true,
   }
 });
 
@@ -25,7 +30,8 @@ onMounted(() => {
         attribution: '© OpenStreetMap contributors',
       }).addTo(map);
 
-      L.marker([props.lat, props.lon]).addTo(map).bindPopup(t("trip_home.trip_location_info")).openPopup();
+      const marker = L.marker([props.lat, props.lon]).addTo(map);
+      if (props.popup) marker.bindPopup(t("trip_home.trip_location_info")).openPopup();
     }
   });
 });

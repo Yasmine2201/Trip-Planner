@@ -36,7 +36,6 @@
     "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
-    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
@@ -47,6 +46,7 @@
     "remaining-budget": "Budget restant",
     "title": "Budget",
     "transport": "Transport",
+    "declare-budget": "Déclarer mon budget",
     "visit": "Visite",
     "shopping": "Shopping"
   },
@@ -123,10 +123,10 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": "101",
+      "enter-actual-amount": 101,
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": "100",
+      "enter-planned-amount": 100,
       "filter-by-category": "Filtrer par catégorie",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-visit": "Ma visite"
@@ -142,7 +142,8 @@
     "visit_name": "Nom de la visite",
     "visit_start_date": "Date de début",
     "change_location": "Changer de lieu",
-    "location": "Lieu"
+    "location": "Lieu",
+    "no_location": "Lieu non renseigné"
   },
   "language": {
     "af": "Afrikaans",
@@ -312,6 +313,13 @@
       "radius": "Rayon",
       "min-budget": "Prix min.",
       "max-budget": "Prix max."
+    },
+    "description": "Description",
+    "price": {
+      "name": "Nom du tarif",
+      "price": "Prix",
+      "no-description": "Pas de description fournie",
+      "no-prices": "Pas de tarifs renseignés"
     }
   }
 }

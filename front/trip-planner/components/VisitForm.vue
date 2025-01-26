@@ -2,6 +2,7 @@
 
 import type {Visit} from "~/types";
 import {createVisitSchema} from "~/schemas";
+import LocationDetails from "~/components/LocationDetails.vue";
 
 const props = defineProps<{
   mode: string, // "create" ou "modify"
@@ -89,14 +90,19 @@ const onSubmit = async ({ data }: any) => {
       </template>
     </UFormGroup>
 
-    <div class="w-full flex flex-row items-center justify-between">
-      <span class="font-semibold text-xl">{{ t('form_visit.location') }}</span>
-      <UButton @click="$emit('changeLocation')">
-        {{ t('form_visit.change_location') }}
-      </UButton>
-    </div>
+    <UCard>
+      <template #header>
+      <div class="w-full flex flex-row items-center justify-between">
+        <span class="font-semibold text-xl">{{ t('form_visit.location') }}</span>
+        <UButton @click="$emit('changeLocation')">
+          {{ t('form_visit.change_location') }}
+        </UButton>
+      </div>
+      </template>
 
-    <MapViewer v-if="verify_map_has_place()" :lat="visitData.location?.latitude ?? 0" :lon="visitData.location?.longitude ?? 0"/>
+      <LocationDetails v-if="visitData.location" :location="visitData.location" />
+      <span v-else>{{ t('form_visit.no_location') }}</span>
+    </UCard>
 
     <UAlert
         v-if="formError !== ''"
