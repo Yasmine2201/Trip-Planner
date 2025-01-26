@@ -1,7 +1,7 @@
 from rest_framework.exceptions import ValidationError
 
 from core.models import User
-from trips.models import TripParticipation, Trip
+from trips.models import TripParticipation, Trip, TripInvitation
 from trips.serializers import TripInputSerializer
 from utils import ForbiddenActionError
 
@@ -102,3 +102,60 @@ class TripService:
         Get all users participating in a trip.
         """
         return TripParticipation.objects.filter(trip_id=trip_id)
+########################################################################################################################
+
+class TripInvitationService:
+
+    @staticmethod
+    def get_sent_trip_invitations(user: User, trip_id: int):
+        """
+        Get all trip invitations sent by user to invite others to a trip.
+        """
+
+        if TripService.check_participation(Trip.objects.get(trip_id=trip_id), user, is_owner=True):
+            return TripInvitation.objects.filter(sender=user, trip=trip_id)
+        else :
+            raise ForbiddenActionError("User is not the owner of the trip.")
+
+    @staticmethod
+    def get_sent_trip_invitations_by_id(user: User, trip_id : int, trip_invitation_id: int):
+        """
+        Get a specific trip invitation sent by user.
+        """
+        trip_invitation = TripInvitation.objects.get(trip_invitation_id=trip_invitation_id)
+
+        if trip_invitation.sender != user or trip_invitation.trip.trip_id != trip_id:
+            raise ValueError(f"User {user} is not the sender of the invitation or the trip {trip_id} id does not match what is in the invitation.")
+
+        return trip_invitation
+
+    @staticmethod
+    def create_trip_invitation(sender : User, receiver_alias: str, trip_id: int):
+        """
+        Create a trip invitation from one user to another.
+        """
+
+        if not TripService.check_participation(Trip.objects.get(trip_id=trip_id), sender, is_owner=True):
+            raise ForbiddenActionError("User is not the owner of the trip.")
+
+        receiver = User.objects.get(alias=receiver_alias)
+
+        if TripParticipation.objects.filter(trip=trip_id, user=receiver).exists():
+            raise ValidationError("User is already participating in the trip.")
+
+        trip = Trip.objects.get(trip_id=trip_id)
+
+        trip_invitation = TripInvitation.objects.create(trip= trip, sender=sender, receiver=receiver)
+        trip_invitation.save()
+
+        return trip_invitation
+
+    @staticmethod
+    def delete_trip_invitation(user: User, trip_id, trip_invitation_id: int):
+        """
+        Delete a trip invitation.
+        """
+        trip_invitation = TripInvitationService.get_sent_trip_invitations_by_id(user, trip_id, trip_invitation_id)
+
+        trip_invitation.delete()
+        return trip_invitation

@@ -4,9 +4,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from authentication.utils import ProtectableAPIView
-from trips.models import Trip
-from trips.serializers import TripSerializer
-from trips.services import TripService
+from core.models import User
+from trips.models import Trip, TripInvitation
+from trips.serializers import TripSerializer, TripInvitationSerializer
+from trips.services import TripService, TripInvitationService
 from utils import NOT_FOUND_ERROR, ForbiddenActionError, INVALID_BODY_ERROR
 
 
@@ -95,3 +96,75 @@ class LastTripView(ProtectableAPIView):
         trip = TripService.get_last_user_trip(request.user)
         serializer = TripSerializer(trip)
         return Response(serializer.data)
+
+
+class TripSentInvitation(ProtectableAPIView):
+
+    @staticmethod
+    def __get_all_trip_invitations(request, trip_id):
+        try:
+            trip_invitations = TripInvitationService.get_sent_trip_invitations(request.user, trip_id)
+            serializer = TripInvitationSerializer(trip_invitations, many=True)
+            return Response(serializer.data, status=200)
+        except ForbiddenActionError as e:
+            return Response({"error": e.msg}, status=403)
+
+    @staticmethod
+    def __get_trip_invitation_by_id(request, trip_id, invitation_id):
+        try:
+            trip_invitation = TripInvitationService.get_sent_trip_invitations_by_id(request.user, trip_id,
+                                                                                    invitation_id)
+            serializer = TripInvitationSerializer(trip_invitation)
+            return Response(serializer.data, status=200)
+        except TripInvitation.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+
+    @staticmethod
+    def get(request, trip_id, invitation_id=None):
+        """
+        Fetch all trip invitations sent by a user for a trip.
+        If an invitation_id is provided, it fetches that specific invitation.
+        Otherwise, it fetches all invitations for the trip.
+        """
+        if invitation_id is None:
+            return TripSentInvitation.__get_all_trip_invitations(request, trip_id)
+        else:
+            return TripSentInvitation.__get_trip_invitation_by_id(request, trip_id, invitation_id)
+
+    @staticmethod
+    def post(request, trip_id: int):
+        """
+        Create a new trip invitation.
+        """
+        try:
+            receiver_alias = request.GET.get('alias', None)
+            trip_invitation = TripInvitationService.create_trip_invitation(request.user, receiver_alias, trip_id)
+            serializer = TripInvitationSerializer(trip_invitation)
+            return Response(serializer.data, status=201)
+
+        except ForbiddenActionError as e:
+            return Response({"error": e.msg}, status=403)
+
+        except User.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="User")}, status=404)
+
+        except ValidationError as e:
+            return Response({"error": INVALID_BODY_ERROR, "detail": e.detail}, status=400)
+
+        except Trip.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="Trip")}, status=404)
+
+    @staticmethod
+    def delete(request, trip_id, invitation_id):
+        """
+        Delete a specific trip invitation.
+        """
+        try:
+            TripInvitationService.delete_trip_invitation(request.user, trip_id, invitation_id)
+            return Response(status=204)
+        except TripInvitation.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
