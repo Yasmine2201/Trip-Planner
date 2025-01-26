@@ -7,7 +7,7 @@ const props = defineProps<{
 
 const {t} = useI18n();
 
-const columns = [
+const columns = computed(() => [
   {
     key: 'price_name',
     label: t('locations.price.name'),
@@ -17,7 +17,7 @@ const columns = [
     label: t('locations.price.price'),
     direction: 'desc' as const
   }
-];
+]);
 
 const tooltipUi = {
   strategy: 'override',
