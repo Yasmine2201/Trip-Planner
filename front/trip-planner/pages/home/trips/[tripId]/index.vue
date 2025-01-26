@@ -8,7 +8,7 @@ definePageMeta({
   requiresAuth: true,
   layout: 'navigation'
 });
-const {t} = useI18n();
+const {t, locale} = useI18n();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
@@ -70,7 +70,14 @@ const deleteTrip = async (tripId: number) => {
       timeout: 2000
     });
   }
-}
+};
+
+const formatDate = (date: string | null) => {
+  if (!date) {
+    return '';
+  }
+  return new Date(date).toLocaleDateString([locale.value], { dateStyle: 'full' });
+};
 
 </script>
 
@@ -106,6 +113,10 @@ const deleteTrip = async (tripId: number) => {
     <table class="table-auto border-collapse w-full bg-white dark:bg-gray-800 shadow-md rounded-lg">
 
       <tbody>
+      <tr>
+        <th class="w-48"></th>
+        <th></th>
+      </tr>
       <!-- Nom du voyage -->
       <tr class="border-t dark:border-gray-700">
         <td class="px-6 py-4 text-gray-800 dark:text-gray-100 text-sm font-medium">
@@ -121,7 +132,7 @@ const deleteTrip = async (tripId: number) => {
           {{ t('create_trip.trip_start_date') }}
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
-          {{ trip?.start_date }}
+          {{ formatDate(trip?.start_date) }}
         </td>
       </tr>
       <!-- Date de fin -->
@@ -130,7 +141,7 @@ const deleteTrip = async (tripId: number) => {
           {{ t('create_trip.trip_end_date') }}
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
-          {{ trip?.end_date }}
+          {{ formatDate(trip?.end_date) }}
         </td>
       </tr>
       <!-- Localisation -->

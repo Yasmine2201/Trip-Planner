@@ -8,7 +8,7 @@ definePageMeta({
   layout: 'navigation'
 });
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const toast = useToast();
 
 const sort = ref({
@@ -95,11 +95,11 @@ const deleteTrip = async (tripId: number) => {
     </template>
 
     <template #start_date-data="{ row }">
-      {{ new Date(row.start_date).toLocaleDateString() }}
+      {{ new Date(row.start_date).toLocaleDateString([locale], { dateStyle: 'full' }) }}
     </template>
 
     <template #end_date-data="{ row }">
-      {{ new Date(row.end_date).toLocaleDateString() }}
+      {{ new Date(row.end_date).toLocaleDateString([locale], { dateStyle: 'full' }) }}
     </template>
 
     <template #actions-data="{ row }">

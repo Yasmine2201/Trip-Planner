@@ -41,7 +41,7 @@ defineEmits<{
 
 <template>
   <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }"
-         class="w-full overflow-hidden p-0 h-24 hover:bg-gray-200 hover:dark:bg-gray-800"
+         class="w-full overflow-hidden p-0 h-24 hover:bg-gray-200 hover:dark:bg-gray-800 cursor-pointer"
          @click="$emit('onSelect', location)"
   >
     <div class="flex">

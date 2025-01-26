@@ -238,15 +238,27 @@ defineEmits<{
       <div class="flex flex-row gap-4 mt-2">
         <div class="flex-1">
           <label for="radius">{{ t('locations.labels.radius') }}</label>
-          <UInput id="radius" v-model="radius" placeholder="Radius" type="number"/>
+          <UInput id="radius" v-model="radius" placeholder="Radius" type="number">
+            <template #trailing>
+              <span class="text-gray-500 dark:text-gray-400 text-xs">km</span>
+            </template>
+          </UInput>
         </div>
         <div class="flex-1">
           <label for="minBudget">{{ t('locations.labels.min-budget') }}</label>
-          <UInput v-model="minBudget" placeholder="Min budget" type="number"/>
+          <UInput v-model="minBudget" placeholder="Min budget" type="number">
+            <template #trailing>
+              <span class="text-gray-500 dark:text-gray-400 text-xs">€</span>
+            </template>
+          </UInput>
         </div>
         <div class="flex-1">
           <label for="maxBudget">{{ t('locations.labels.max-budget') }}</label>
-          <UInput v-model="maxBudget" placeholder="Max budget" type="number"/>
+          <UInput v-model="maxBudget" placeholder="Max budget" type="number">
+            <template #trailing>
+              <span class="text-gray-500 dark:text-gray-400 text-xs">€</span>
+            </template>
+          </UInput>
         </div>
         <div class="flex-1">
           <label for="onlyPrices">{{ t('locations.labels.only-prices') }}</label><br>

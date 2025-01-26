@@ -14,7 +14,7 @@ const deleteNotification = (id: number) => {
 <template>
   <USlideover>
     <UCard
-        class="flex flex-col flex-1"
+        class="flex flex-col flex-1 scroll-auto overflow-y-scroll"
         :ui="{
                 body: { base: 'flex-1' },
                 ring: '',

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
 import type {Trip, Visit} from '~/types';
 import type {AsyncData} from "#app";
@@ -10,11 +10,11 @@ definePageMeta({
 });
 
 const route = useRoute();
-const { t } = useI18n();
+const {t, locale} = useI18n();
 const toast = useToast();
 
 const tripId = route.params.tripId as number;
-const { data: trip }: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${tripId}`, {}, true);
+const {data: trip}: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${tripId}`, {}, true);
 
 // const toast = useToast();
 //
@@ -50,11 +50,11 @@ const columns = computed(() => [
   }
 ]);
 
-const { data: rows, status }: AsyncData<Visit[], any> = await useApiFetch<Visit[]>(`/trips/${tripId}/visits`);
+const {data: rows, status}: AsyncData<Visit[], any> = await useApiFetch<Visit[]>(`/trips/${tripId}/visits`);
 const computedRows = computed(() => rows.value ?? []);
 
 const deleteVisit = async (visit: Visit) => {
-  const { status } = await useApiFetch(`/trips/${visit.trip_id}/visits/${visit.visit_id}`, {
+  const {status} = await useApiFetch(`/trips/${visit.trip_id}/visits/${visit.visit_id}`, {
     method: 'DELETE'
   });
 
@@ -82,60 +82,64 @@ const deleteVisit = async (visit: Visit) => {
 <template>
   <PageTitle :name="t('visits.list.title')">
     <template #actions>
+      <UButton :title="t('misc.back')" class="mr-2" color="gray"
+               icon="i-heroicons-arrow-uturn-left" @click="router.push(`/home/trips/${tripId}`)"/>
       <UButton
-          icon="i-entypo:add-to-list"
-          size="sm"
-          color="primary"
-          variant="solid"
           :label="t('visits.list.add')"
           :to='`/home/trips/${tripId}/visits/create`'
+          color="primary"
+          icon="i-entypo:add-to-list"
+          size="sm"
+          variant="solid"
       />
     </template>
   </PageTitle>
   <UTable
       :columns
-      :sort
-      :rows="computedRows"
+      :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: t('misc.no-items') }"
       :loading="status === 'pending'"
       :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: t('misc.loading') }"
       :progress="{ color: 'primary', animation: 'carousel' }"
-      :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: t('misc.no-items') }"
+      :rows="computedRows"
+      :sort
 
   >
     <template #name-data="{ row }">
-      <NuxtLink :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`" class="font-semibold underline text-left">{{ row.name }}</NuxtLink>
+      <NuxtLink :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`" class="font-semibold underline text-left">
+        {{ row.name }}
+      </NuxtLink>
     </template>
 
     <template #start_date-data="{ row }">
-      {{ new Date(row.start_date).toLocaleString([], {dateStyle: 'full' ,timeStyle: 'short'}) }}
+      {{ new Date(row.start_date).toLocaleString([locale], {dateStyle: 'long', timeStyle: 'short'}) }}
     </template>
 
     <template #end_date-data="{ row }">
-      {{ new Date(row.end_date).toLocaleString([], {dateStyle: 'full' ,timeStyle: 'short'})  }}
+      {{ new Date(row.end_date).toLocaleString([locale], {dateStyle: 'long', timeStyle: 'short'}) }}
     </template>
 
     <template #actions-data="{ row }">
       <div class="flex space-x-2">
         <UButton
+            :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`"
+            color="gray"
             icon="i-heroicons-eye"
             size="xs"
-            color="gray"
             square
             variant="solid"
-            :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`"
         />
         <UButton
+            :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}/edit`"
+            color="primary"
             icon="i-heroicons-pencil-square"
             size="xs"
-            color="primary"
             square
             variant="solid"
-            :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}/edit`"
         />
         <UButton
+            color="red"
             icon="i-heroicons-trash"
             size="xs"
-            color="red"
             square
             variant="solid"
             @click="deleteVisit(row)"
