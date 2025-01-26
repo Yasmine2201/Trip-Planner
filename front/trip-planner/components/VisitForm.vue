@@ -76,19 +76,24 @@ const onSubmit = async ({ data }: any) => {
       </template>
     </UFormGroup>
 
-    <UFormGroup :label="t('form_visit.visit_start_date')" name="start_date" required>
-      <UInput v-model="state.start_date" type="datetime-local" />
-      <template #error="{ error }">
-        <span>{{ t(error) }}</span>
-      </template>
-    </UFormGroup>
-
-    <UFormGroup :label="t('form_visit.visit_end_date')" name="end_date" required>
-      <UInput v-model="state.end_date" type="datetime-local" />
-      <template #error="{ error }">
-        <span>{{ t(error) }}</span>
-      </template>
-    </UFormGroup>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <div class="flex-1">
+        <UFormGroup :label="t('form_visit.visit_start_date')" name="start_date" required>
+          <UInput v-model="state.start_date" type="datetime-local" />
+          <template #error="{ error }">
+            <span>{{ t(error) }}</span>
+          </template>
+        </UFormGroup>
+      </div>
+      <div class="flex-1">
+        <UFormGroup :label="t('form_visit.visit_end_date')" name="end_date" required>
+          <UInput v-model="state.end_date" type="datetime-local" />
+          <template #error="{ error }">
+            <span>{{ t(error) }}</span>
+          </template>
+        </UFormGroup>
+      </div>
+    </div>
 
     <UCard>
       <template #header>

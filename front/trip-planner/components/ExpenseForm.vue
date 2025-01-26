@@ -42,7 +42,7 @@ const default_state = {
   planned_amount: props.expenseData?.planned_amount || undefined,
   actual_amount: props.expenseData?.actual_amount || undefined,
   is_shared: props.expenseData?.is_shared || false,
-  visit_id: props.expenseData?.visit.visit_id || undefined,
+  visit_id: props.expenseData?.visit?.visit_id || undefined,
 };
 
 const state = reactive(Object.assign({}, default_state));
