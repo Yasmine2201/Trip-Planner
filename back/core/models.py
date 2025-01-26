@@ -13,7 +13,7 @@ class Image(models.Model):
 class User(models.Model):
     user_id = models.CharField(max_length=100, primary_key=True)
     email = models.EmailField(unique=True)
-    alias = models.CharField(max_length=150)
+    alias = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     birthdate = models.DateField(blank=True, null=True)

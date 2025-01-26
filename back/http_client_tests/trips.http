@@ -41,3 +41,12 @@ Content-Type: application/json
 ###
 DELETE http://localhost:8000/api/trips/4
 ###
+
+### Trip Invitations Tests
+POST http://localhost:8000/api/trips/4/invitations/?alias=Jojo3
+###
+GET http://localhost:8000/api/trips/4/invitations
+###
+GET http://localhost:8000/api/trips/4/invitations/3
+###
+DELETE http://localhost:8000/api/trips/4/invitations/4
