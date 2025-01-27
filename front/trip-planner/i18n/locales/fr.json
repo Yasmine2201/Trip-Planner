@@ -56,7 +56,8 @@
     "trip_location": "Lieu",
     "trip_map": "Carte",
     "trip_name": "Nom du voyage",
-    "trip_start_date": "Date de début"
+    "trip_start_date": "Date de début",
+    "trip_name_placeholder": "Mon voyage"
   },
   "errors": {
     "actual-amount-positive": "Le montant réel doit être un nombre positif",
@@ -96,7 +97,8 @@
     "unknown-error": "Merci de réessayer ultérieurement.",
     "budget-positive": "Le budget doit être positif",
     "name-too-long": "Nom trop long",
-    "alias-required": "Un pseudonyme est requis",
+    "quantity-positive": "La quantité doit être positive",
+    "quantity-whole": "Les quantités doivent être entières",
     "alias-not-exists": "Ce pseudo n'existe pas",
     "already-invited": "Cette personne a déjà été invitée au voyage"
   },
@@ -127,17 +129,18 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101 ",
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100 ",
       "filter-by-category": "Filtrer par catégorie",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-visit": "Ma visite"
     },
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
-    "yes": "Partagé"
+    "yes": "Partagé",
+    "expense": "Dépense"
   },
   "form_visit": {
     "visit_create_button": "Créer la visite",
@@ -219,7 +222,8 @@
     "select": "Sélectionner",
     "select-value": "Sélectionnez des valeurs",
     "success": "Succès de l'opération",
-    "copied": "Copié",
+    "add-expense": "Ajout d'une dépense",
+    "copied": "Copié"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -243,8 +247,7 @@
     "notifications": "Notifications",
     "profile": "Profil",
     "register": "Créer un compte",
-    "share-trip": "Partager le voyage"
-    "register": "Créer un compte",
+    "share-trip": "Partager le voyage",
     "visit_details": "Détails de la visite"
   },
   "notifications": {
@@ -252,7 +255,7 @@
       "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
       "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget} €",
       "expenses-exceed-budget": "Les dépenses du voyage {tripName} s'élèvent à {totalExpenses} € et dépassent le budget déclaré de {budget} €",
-      "invitation-created": "Vous avez créé une invitation pour le voyage '{tripId}'",
+      "invitation-created": "Vous avez créé une invitation pour le voyage '{tripId}'"
     },
     "deleted": "Notification supprimée",
     "mark-as-read": "Marquer comme lu",
@@ -263,7 +266,7 @@
     "type": {
       "add-to-trip": "Ajouté au voyage",
       "budget": "Budget",
-      "invitation-created": "Invitation créée",
+      "invitation-created": "Invitation créée"
     },
     "view-all": "Voir tout"
   },
@@ -310,7 +313,9 @@
     },
     "display": {
       "dates": "Visite du {start} à {end}.",
-      "fill-prices": "Ajouter des tarifs"
+      "fill-prices": "Ajouter des tarifs",
+      "price-quantity": "Quantité",
+      "total-price": "Prix total"
     }
   },
   "locations": {
