@@ -57,7 +57,8 @@
     "trip_location": "Location",
     "trip_map": "Map",
     "trip_name": "Trip name",
-    "trip_start_date": "Start date"
+    "trip_start_date": "Start date",
+    "trip_name_placeholder": "My trip"
   },
   "errors": {
     "actual-amount-positive": "Actual amount must be a positive number",
@@ -96,7 +97,9 @@
     "trip-name-required": "Trip name is required",
     "unknown-error": "Please retry later.",
     "budget-positive": "Budget must be a positive number",
-    "name-too-long": "Name too long"
+    "name-too-long": "Name too long",
+    "quantity-positive": "Quantity must be positive",
+    "quantity-whole": "Quantites must be whole numbers"
   },
   "expense": {
     "actual-amount": "Actual Amount",
@@ -125,17 +128,18 @@
     "no": "Not shared",
     "no-expenses": "No expenses yet. Please add some to see the expense chart",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101 ",
       "enter-description": "My expense description",
       "enter-name": "My expense name",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100 ",
       "filter-by-category": "Filter by category",
       "select-category": "Food, accommodation, transport, activity, others",
       "select-visit": "My visit"
     },
     "planned-amount": "Planned Amount",
     "planned-amount-short": "Planned",
-    "yes": "Shared"
+    "yes": "Shared",
+    "expense": "Expense"
   },
   "form_visit": {
     "visit_create_button": "Create visit",
@@ -216,7 +220,8 @@
     "see": "See",
     "select": "Select",
     "select-value": "Select values",
-    "success": "Operation succeeded"
+    "success": "Operation succeeded",
+    "add-expense": "Adding expense"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -302,7 +307,9 @@
     },
     "display": {
       "dates": "Visit from {start} to {end}.",
-      "fill-prices": "Add prices"
+      "fill-prices": "Add prices",
+      "price-quantity": "Quantity",
+      "total-price": "Total price"
     }
   },
   "locations": {

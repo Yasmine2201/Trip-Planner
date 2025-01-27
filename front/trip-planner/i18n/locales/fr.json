@@ -56,7 +56,8 @@
     "trip_location": "Lieu",
     "trip_map": "Carte",
     "trip_name": "Nom du voyage",
-    "trip_start_date": "Date de début"
+    "trip_start_date": "Date de début",
+    "trip_name_placeholder": "Mon voyage"
   },
   "errors": {
     "actual-amount-positive": "Le montant réel doit être un nombre positif",
@@ -95,7 +96,9 @@
     "trip-name-required": "Le nom du voyage est requis",
     "unknown-error": "Merci de réessayer ultérieurement.",
     "budget-positive": "Le budget doit être positif",
-    "name-too-long": "Nom trop long"
+    "name-too-long": "Nom trop long",
+    "quantity-positive": "La quantité doit être positive",
+    "quantity-whole": "Les quantités doivent être entières"
   },
   "expense": {
     "actual-amount": "Montant réel",
@@ -124,17 +127,18 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": 101,
+      "enter-actual-amount": "101 ",
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": 100,
+      "enter-planned-amount": "100 ",
       "filter-by-category": "Filtrer par catégorie",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-visit": "Ma visite"
     },
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
-    "yes": "Partagé"
+    "yes": "Partagé",
+    "expense": "Dépense"
   },
   "form_visit": {
     "visit_create_button": "Créer la visite",
@@ -215,7 +219,8 @@
     "see": "Voir",
     "select": "Sélectionner",
     "select-value": "Sélectionnez des valeurs",
-    "success": "Succès de l'opération"
+    "success": "Succès de l'opération",
+    "add-expense": "Ajout d'une dépense"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -301,7 +306,9 @@
     },
     "display": {
       "dates": "Visite du {start} à {end}.",
-      "fill-prices": "Ajouter des tarifs"
+      "fill-prices": "Ajouter des tarifs",
+      "price-quantity": "Quantité",
+      "total-price": "Prix total"
     }
   },
   "locations": {
