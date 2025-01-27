@@ -239,7 +239,8 @@
     "new-trip": "New trip",
     "notifications": "Notifications",
     "profile": "Profile",
-    "register": "Register"
+    "register": "Register",
+    "visit_details": "Visit details"
   },
   "notifications": {
     "content": {
@@ -298,6 +299,9 @@
     },
     "title": {
       "finalize": "Finalize creation"
+    },
+    "display": {
+      "dates": "Visit from {start} to {end}."
     }
   },
   "locations": {

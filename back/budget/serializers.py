@@ -6,7 +6,7 @@ from visits.serializers import VisitSerializer
 
 
 class ExpenseInputSerializer(serializers.ModelSerializer):
-    visit_id = serializers.IntegerField()
+    visit_id = serializers.IntegerField(required=False)
 
     class Meta:
         model = Expense
