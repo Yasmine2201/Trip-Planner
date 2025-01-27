@@ -136,12 +136,16 @@ const filteredExpenses = computed(() => {
       :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: t('misc.no-items') }"
   >
     <template #name-data="{ row }">
-      <UTooltip>
+      <UTooltip :ui="{
+                          strategy: 'override',
+                          base: '[@media(pointer:coarse)]:hidden max-h-96 px-2 py-1 text-xs font-normal relative overflow-hidden',
+                          con
+        }">
         <span class="font-semibold underline text-left">{{ row.name }}</span>
 
         <template #text>
           <p class="font-bold">{{ t('expense.description') }}:</p>
-          <p>{{ row.description }}</p>
+          <p class="whitespace-pre-line">{{ row.description }}</p>
         </template>
       </UTooltip>
 

@@ -59,12 +59,12 @@ const savePrices = async (pricesForm: PricesForm) => {
   let totalPrice = 0;
 
   pricesForm.forEach((price) => {
-    description += `${price.price_name}: ${price.quantity} x ${price.price}€\n`;
+    if (price.quantity !== 0) description += `${price.price_name}: ${price.quantity} x ${price.price}€\n`;
     totalPrice += price.quantity * price.price;
   });
 
   const expense: ExpenseDto = {
-    name: t('expense.expense') + " - " + visit.name,
+    name: t('expense.expense') + " - " + visit.value.name,
     category: CategoryValues.VISIT,
     planned_amount: totalPrice,
     visit_id: visitId,
