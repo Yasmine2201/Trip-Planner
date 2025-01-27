@@ -140,8 +140,8 @@ class TripInvitationService:
 
         receiver = User.objects.get(alias=receiver_alias)
 
-        if TripParticipation.objects.filter(trip=trip_id, user=receiver).exists():
-            raise ValidationError("User is already participating in the trip.")
+        if TripInvitation.objects.filter(trip=trip_id, receiver=receiver.user_id).exists():
+            raise ValidationError("You have already invited this user to the trip.")
 
         trip = Trip.objects.get(trip_id=trip_id)
 

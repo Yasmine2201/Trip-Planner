@@ -144,12 +144,15 @@ class TripSentInvitation(ProtectableAPIView):
             serializer = TripInvitationSerializer(trip_invitation)
             return Response(serializer.data, status=201)
 
+        #  if user is not the owner of the trip
         except ForbiddenActionError as e:
             return Response({"error": e.msg}, status=403)
 
+        # if receiver is not found
         except User.DoesNotExist:
             return Response({"error": NOT_FOUND_ERROR.format(Model="User")}, status=404)
 
+        # if receiver is already participating in the trip
         except ValidationError as e:
             return Response({"error": INVALID_BODY_ERROR, "detail": e.detail}, status=400)
 
