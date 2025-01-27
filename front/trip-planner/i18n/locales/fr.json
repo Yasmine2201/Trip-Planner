@@ -95,7 +95,10 @@
     "trip-name-required": "Le nom du voyage est requis",
     "unknown-error": "Merci de réessayer ultérieurement.",
     "budget-positive": "Le budget doit être positif",
-    "name-too-long": "Nom trop long"
+    "name-too-long": "Nom trop long",
+    "alias-required": "Un pseudonyme est requis",
+    "alias-not-exists": "Ce pseudo n'existe pas",
+    "already-invited": "Cette personne a déjà été invitée au voyage"
   },
   "expense": {
     "actual-amount": "Montant réel",
@@ -215,7 +218,8 @@
     "see": "Voir",
     "select": "Sélectionner",
     "select-value": "Sélectionnez des valeurs",
-    "success": "Succès de l'opération"
+    "success": "Succès de l'opération",
+    "copied": "Copié",
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -239,13 +243,16 @@
     "notifications": "Notifications",
     "profile": "Profil",
     "register": "Créer un compte",
+    "share-trip": "Partager le voyage"
+    "register": "Créer un compte",
     "visit_details": "Détails de la visite"
   },
   "notifications": {
     "content": {
       "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
       "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget} €",
-      "expenses-exceed-budget": "Les dépenses du voyage {tripName} s'élèvent à {totalExpenses} € et dépassent le budget déclaré de {budget} €"
+      "expenses-exceed-budget": "Les dépenses du voyage {tripName} s'élèvent à {totalExpenses} € et dépassent le budget déclaré de {budget} €",
+      "invitation-created": "Vous avez créé une invitation pour le voyage '{tripId}'",
     },
     "deleted": "Notification supprimée",
     "mark-as-read": "Marquer comme lu",
@@ -255,7 +262,8 @@
     "title": "Notifications",
     "type": {
       "add-to-trip": "Ajouté au voyage",
-      "budget": "Budget"
+      "budget": "Budget",
+      "invitation-created": "Invitation créée",
     },
     "view-all": "Voir tout"
   },
@@ -277,7 +285,8 @@
     "budget": "Budget",
     "trip_details": "Détails du voyage",
     "trip_location_info": "Vous avez choisi d'aller ici",
-    "visits": "Visites"
+    "visits": "Visites",
+    "share": "Partage"
   },
   "trips": {
     "end": "Date de fin",
@@ -327,5 +336,14 @@
       "no-description": "Pas de description fournie",
       "no-prices": "Pas de tarifs renseignés"
     }
+  },
+  "share": {
+    "see-profile": "Voir le profil",
+    "delete-from-trip": "Retirer du voyage",
+    "invite": "Inviter un ami",
+    "headline" : "Voici les personnes qui participent à votre voyage. Voulez-vous en ajouter d'autres ?",
+    "alias": "Pseudo",
+    "placeholder": "pseudo2025",
+    "link": "Voici le lien d'invitation",
   }
 }
