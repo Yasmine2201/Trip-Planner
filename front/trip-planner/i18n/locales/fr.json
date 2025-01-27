@@ -238,7 +238,8 @@
     "new-trip": "Nouveau voyage",
     "notifications": "Notifications",
     "profile": "Profil",
-    "register": "Créer un compte"
+    "register": "Créer un compte",
+    "visit_details": "Détails de la visite"
   },
   "notifications": {
     "content": {
@@ -297,6 +298,9 @@
     },
     "title": {
       "finalize": "Finaliser la création"
+    },
+    "display": {
+      "dates": "Visite du {start} à {end}."
     }
   },
   "locations": {
