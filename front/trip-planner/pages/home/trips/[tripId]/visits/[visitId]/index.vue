@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type {AsyncData} from "#app";
 import type {Visit, Expense} from "~/types";
+import PricesForm from "~/components/PricesForm.vue";
+import {CategoryValues, type ExpenseDto} from "~/schemas/expense";
 
 definePageMeta({
   title: 'navigation.visit_details',
@@ -12,7 +14,9 @@ const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
+const { $api } = useNuxtApp();
 
+const isOpen = ref(false);
 const tripId = Number(route.params.tripId);
 const visitId = Number(route.params.visitId);
 
@@ -48,6 +52,46 @@ const deleteVisit = async () => {
       timeout: 2000,
     });
   }
+};
+
+const savePrices = async (pricesForm: PricesForm) => {
+  let description = "";
+  let totalPrice = 0;
+
+  pricesForm.forEach((price) => {
+    if (price.quantity !== 0) description += `${price.price_name}: ${price.quantity} x ${price.price}€\n`;
+    totalPrice += price.quantity * price.price;
+  });
+
+  const expense: ExpenseDto = {
+    name: t('expense.expense') + " - " + visit.value.name,
+    category: CategoryValues.VISIT,
+    planned_amount: totalPrice,
+    visit_id: visitId,
+    actual_amount: undefined,
+    description: description,
+    is_shared: false
+  };
+
+  try {
+    await $api(`/trips/${tripId}/budget/expenses`, {
+      method: 'POST',
+      body: expense
+    });
+
+    isOpen.value = false;
+
+    const { data: refreshedExpenses }: AsyncData<Expense[], any> = await useApiFetch<Expense[]>(`/trips/${tripId}/budget/expenses`);
+    expenses.value = refreshedExpenses.value.filter((expense) => expense.visit?.visit_id === visitId);
+  } catch (error) {
+    toast.add({
+      title: t('misc.add-expense'),
+      description: t('misc.error'),
+      icon: 'i-heroicons-x-circle',
+      color: "red",
+      timeout: 2000,
+    });
+  }
 }
 
 </script>
@@ -76,6 +120,17 @@ const deleteVisit = async () => {
       />
     </template>
   </PageTitle>
+
+  <UModal v-model="isOpen" prevent-close>
+    <UCard>
+      <PageTitle :name="t('visits.display.fill-prices')">
+        <template #actions>
+          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpen = false" />
+        </template>
+      </PageTitle>
+      <PricesForm :tripId="tripId" :visitId="visitId" :prices="visit.location.prices" @onSave="savePrices" />
+    </UCard>
+  </UModal>
 
   <UCard>
     <template #header>
@@ -110,6 +165,7 @@ const deleteVisit = async () => {
                   :label="t('visits.display.fill-prices')"
                   size="sm"
                   icon="material-symbols:add-shopping-cart"
+                  @click="isOpen = true"
               />
             </div>
           </div>

@@ -75,7 +75,7 @@ const onSubmit = async ({ data }: any) => {
 <template>
   <UForm :schema="createTripSchema" :state="state" class="space-y-5" @submit="onSubmit" ref="form">
     <UFormGroup :label="t('create_trip.trip_name')" name="trip_name" required>
-      <UInput v-model="state.trip_name" placeholder="MyTrip" />
+      <UInput v-model="state.trip_name" :placeholder="t('create_trip.trip_name_placeholder')" />
       <template #error="{ error }">
         <span>{{ t(error) }}</span>
       </template>

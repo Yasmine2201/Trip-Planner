@@ -20,7 +20,7 @@ export type Location = {
 }
 
 export type LocationPrice = {
-  location_id: number;
+  price_id: number;
   price: number;
   price_name: string;
   description?: string | null;
