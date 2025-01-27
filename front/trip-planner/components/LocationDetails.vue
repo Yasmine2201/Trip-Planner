@@ -46,7 +46,7 @@ const tooltipUi = {
   <div class="flex flex-row gap-6 mt-6">
     <div class="grow basis-3/5">
       <h3 class="font-semibold text-lg mb-2">{{ t('locations.description') }}</h3>
-      <p>{{ location.description }}</p>
+      <p class="whitespace-pre-line text-justify pl-4 pr-2">{{ location.description }}</p>
     </div>
     <div class="grow basis-2/5">
       <UTable :columns="columns"
