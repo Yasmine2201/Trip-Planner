@@ -53,11 +53,11 @@ const onSubmit = async ({ data }: any) => {
   }
 
   try {
-    await $api(endpoint, {
+    const visit = await $api(endpoint, {
       method,
       body: JSON.stringify(data),
     });
-    navigateTo(`/home/trips/${data.trip_id}/visits`);
+    navigateTo(`/home/trips/${data.trip_id}/visits/${visit.visit_id}`);
   } catch (error) {
     formError.value = t('errors.unknown-error');
   }

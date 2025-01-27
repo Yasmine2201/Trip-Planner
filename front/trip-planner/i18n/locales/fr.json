@@ -124,10 +124,10 @@
     "no": "Non partagée",
     "no-expenses": "Pas de dépenses pour le moment. Veuillez en ajouter pour voir le graphique des dépenses",
     "placeholders": {
-      "enter-actual-amount": "101",
+      "enter-actual-amount": 101,
       "enter-description": "Description de la dépense",
       "enter-name": "Nom de la dépense",
-      "enter-planned-amount": "100",
+      "enter-planned-amount": 100,
       "filter-by-category": "Filtrer par catégorie",
       "select-category": "Nourriture, hébergement, transport, activités, autres",
       "select-visit": "Ma visite"
@@ -300,7 +300,8 @@
       "finalize": "Finaliser la création"
     },
     "display": {
-      "dates": "Visite du {start} à {end}."
+      "dates": "Visite du {start} à {end}.",
+      "fill-prices": "Ajouter des tarifs"
     }
   },
   "locations": {

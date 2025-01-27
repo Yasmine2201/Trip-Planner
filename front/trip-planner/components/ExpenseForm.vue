@@ -17,6 +17,8 @@ const {t} = useI18n();
 const {$api} = useNuxtApp();
 const route = useRoute();
 const tripId = ref(route.params.tripId);
+const visitIdStr = route.query?.visit_id as string | undefined;
+const visitId = visitIdStr ? parseInt(visitIdStr) : undefined;
 
 const getCategoryLabel = (category: string) => t(`expense.categories.${category.toLowerCase()}`);
 
@@ -42,7 +44,7 @@ const default_state = {
   planned_amount: props.expenseData?.planned_amount || undefined,
   actual_amount: props.expenseData?.actual_amount || undefined,
   is_shared: props.expenseData?.is_shared || false,
-  visit_id: props.expenseData?.visit?.visit_id || undefined,
+  visit_id: props.expenseData?.visit?.visit_id || visitId,
 };
 
 const state = reactive(Object.assign({}, default_state));
