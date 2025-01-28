@@ -97,7 +97,7 @@ class TripService:
         return TripParticipation.objects.filter(trip=trip, user=user).exists()
 
     @staticmethod
-    def get_trip_participations(trip_id: int):
+    def get_sent_trip_participations(trip_id: int):
         """
         Get all users participating in a trip.
         """
@@ -105,7 +105,6 @@ class TripService:
 ########################################################################################################################
 
 class TripInvitationService:
-
     @staticmethod
     def get_sent_trip_invitations(user: User, trip_id: int):
         """
@@ -158,4 +157,57 @@ class TripInvitationService:
         trip_invitation = TripInvitationService.get_sent_trip_invitations_by_id(user, trip_id, trip_invitation_id)
 
         trip_invitation.delete()
+        return trip_invitation
+    ###########################################
+    @staticmethod
+    def get_received_trip_invitations(receiver: User):
+        """
+        Get all trip invitations received by user.
+        """
+        return TripInvitation.objects.filter(receiver=receiver, status=TripInvitation.TripInvitationStatus.PENDING)
+
+    @staticmethod
+    def get_received_trip_invitations_by_id(receiver: User, trip_invitation_id: int):
+        """
+        Get a specific trip invitation received by user.
+        """
+        trip_invitation = TripInvitation.objects.get(trip_invitation_id=trip_invitation_id)
+
+        if trip_invitation.receiver != receiver:
+            raise ValueError(f"User {receiver} is not the receiver of the invitation.")
+
+        return trip_invitation
+    @staticmethod
+    def accept_trip_invitation(receiver: User, trip_invitation_id: int):
+        """
+        Accept a trip invitation.
+        """
+        trip_invitation = TripInvitationService.get_received_trip_invitations_by_id(receiver, trip_invitation_id)
+        if trip_invitation.receiver != receiver:
+            raise ValueError(f"User {receiver} is not the receiver of the invitation.")
+
+        trip_invitation.status= TripInvitation.TripInvitationStatus.ACCEPTED
+
+        if TripParticipation.objects.filter(trip=trip_invitation.trip, user=receiver).exists():
+            raise ValidationError("You have already accepted this trip invitation")
+        trip_participation = TripParticipation.objects.create(trip=trip_invitation.trip, user=receiver, is_owner=False)
+        trip_participation.save()
+
+        trip_invitation.save()
+
+        return trip_invitation
+
+    @staticmethod
+    def decline_trip_invitation(receiver: User, trip_invitation_id: int):
+        """
+        Decline a trip invitation.
+        """
+        trip_invitation = TripInvitationService.get_received_trip_invitations_by_id(receiver, trip_invitation_id)
+
+        if trip_invitation.receiver != receiver:
+            raise ValueError(f"User {receiver} is not the receiver of the invitation.")
+
+        trip_invitation.status = TripInvitation.TripInvitationStatus.DECLINED
+        trip_invitation.save()
+
         return trip_invitation

@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 from budget.models import Expense
-from trips.models import TripParticipation
+from trips.models import TripParticipation, TripInvitation
 from .models import Notification
 
 
@@ -98,6 +98,70 @@ def notify_expenses_exceed_budget(sender, instance, created, **kwargs):
             notification.save()
     print(f"Notified user {instance.trip_participation.user} about expenses exceeding budget for "
           f"trip {instance.trip_participation.trip.trip_name} after adding Expense: {instance.expense_id}")
+########################################################################################################################
+@receiver(post_save, sender=TripInvitation)
+def notify_trip_invitation_received(sender, instance, created, **kwargs):
+    if created:
+        content = NotificationContent(
+            message="notifications.content.invitation-received",
+            data={
+                "tripName": instance.trip.trip_name,
+                "alias": instance.sender.alias,
+            }
+        )
+
+        notification = Notification.objects.create(
+            user=instance.receiver,
+            type="Invitation",
+            content=str(content),
+            is_read=False,
+            created_at=timezone.now()
+        )
+        notification.save()
+    print(f"Notified user {instance.receiver} about trip invitation for trip {instance.trip.trip_name}")
+
+@receiver(post_save, sender=TripInvitation)
+def notify_trip_invitation_accepted(sender, instance, created, **kwargs):
+    if not created and instance.status == TripInvitation.TripInvitationStatus.ACCEPTED:
+        content = NotificationContent(
+            message="notifications.content.invitation-accepted",
+            data={
+                "tripName": instance.trip.trip_name,
+                "alias": instance.receiver.alias,
+            }
+        )
+
+        notification = Notification.objects.create(
+            user=instance.sender,
+            type="Invitation",
+            content=str(content),
+            is_read=False,
+            created_at=timezone.now()
+        )
+        notification.save()
+    print(f"Notified user {instance.sender} about trip invitation acceptance for trip {instance.trip.trip_name}")
+
+@receiver(post_save, sender=TripInvitation)
+def notify_trip_invitation_declined(sender, instance, created, **kwargs):
+    if not created and instance.status == TripInvitation.TripInvitationStatus.DECLINED:
+        content = NotificationContent(
+            message="notifications.content.invitation-declined",
+            data={
+                "tripName": instance.trip.trip_name,
+                "alias": instance.receiver.alias,
+            }
+        )
+
+        notification = Notification.objects.create(
+            user=instance.sender,
+            type="Invitation",
+            content=str(content),
+            is_read=False,
+            created_at=timezone.now()
+        )
+        notification.save()
+    print(f"Notified user {instance.sender} about trip invitation decline for trip {instance.trip.trip_name}")
+
 
 ########################################################################################################################
 

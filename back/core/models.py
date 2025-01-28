@@ -22,4 +22,4 @@ class User(models.Model):
     languages = models.CharField(max_length=500, blank=True, null=True, help_text='Comma separated list of languages')
 
     def __str__(self):
-        return self.email
+        return f"{self.alias} ({self.first_name} {self.last_name})"
