@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
-import type {Visit} from "~/types";
+import type {Visit, Trip} from "~/types";
 import {createVisitSchema} from "~/schemas";
 import LocationDetails from "~/components/LocationDetails.vue";
+import type {AsyncData} from "#app";
+import {getDateTimeString, getLater, getHoursFromTimestamp} from "~/utils/date";
 
 const props = defineProps<{
   mode: string, // "create" ou "modify"
@@ -16,6 +18,13 @@ defineEmits<{
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 
+const { data: trip }: AsyncData<Trip, any> = await useApiFetch(`trips/${props.visitData.trip_id}`);
+const start = new Date(trip.value.start_date);
+start.setHours(10);
+let visitDuration = 2;
+const end = getLater(start, 0, visitDuration);
+
+
 // Fonction pour convertir une date timestampz en format YYYY-MM-DDTHH:MM
 const formatDateForInput = (dateString: string | undefined): string => {
   if (!dateString) return '';
@@ -25,11 +34,23 @@ const formatDateForInput = (dateString: string | undefined): string => {
 
 const state = reactive({
   name: props.visitData.name || '',
-  start_date: formatDateForInput(props.visitData.start_date) || '',
-  end_date: formatDateForInput(props.visitData.end_date) || '',
+  start_date: formatDateForInput(props.visitData.start_date) || getDateTimeString(start),
+  end_date: formatDateForInput(props.visitData.end_date) || getDateTimeString(end),
   trip_id: props.visitData.trip_id || null,
   location_id: props.visitData.location?.location_id || null,
 });
+
+function onStartChange(value: string) {
+  state.end_date = getDateTimeString(getLater(value, 0, visitDuration));
+}
+
+function onEndChange(value: string) {
+  const startTime = new Date(state.start_date).getTime();
+  const endTime = new Date(value).getTime();
+  if (endTime > startTime) {
+    visitDuration = getHoursFromTimestamp(endTime - startTime);
+  }
+}
 
 const verify_map_has_place = () => {
   return props.mode != "modify" || props.visitData.location?.location_id !== null;
@@ -79,7 +100,7 @@ const onSubmit = async ({ data }: any) => {
     <div class="flex flex-col sm:flex-row gap-2">
       <div class="flex-1">
         <UFormGroup :label="t('form_visit.visit_start_date')" name="start_date" required>
-          <UInput v-model="state.start_date" type="datetime-local" />
+          <UInput v-model="state.start_date" type="datetime-local" @change="onStartChange" />
           <template #error="{ error }">
             <span>{{ t(error) }}</span>
           </template>
@@ -87,7 +108,7 @@ const onSubmit = async ({ data }: any) => {
       </div>
       <div class="flex-1">
         <UFormGroup :label="t('form_visit.visit_end_date')" name="end_date" required>
-          <UInput v-model="state.end_date" type="datetime-local" />
+          <UInput v-model="state.end_date" type="datetime-local" @change="onEndChange" />
           <template #error="{ error }">
             <span>{{ t(error) }}</span>
           </template>

@@ -3,6 +3,7 @@
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
 import {createTripSchema} from "~/schemas";
+import { getDateTimeString, getDaysFromTimestamp, getLater } from "~/utils/date";
 
 const props = defineProps({
   mode: { type: String, required: true }, // "create" ou "modify"
@@ -12,13 +13,17 @@ const props = defineProps({
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 
+const now = new Date();
+let tripDuration = 7;
+const later = getLater(now, tripDuration);
+
 const state = reactive({
   trip_name: props.tripData.trip_name || '',
   latitude: props.tripData.latitude || null,
   longitude: props.tripData.longitude || null,
   radius: props.tripData.radius || null,
-  start_date: props.tripData.start_date || '',
-  end_date: props.tripData.end_date || '',
+  start_date: props.tripData.start_date || getDateTimeString(now),
+  end_date: props.tripData.end_date || getDateTimeString(later),
 });
 
 const locationSelector = ref(null);
@@ -26,19 +31,31 @@ const form = ref();
 const formError = ref('');
 const submitting = ref(false);
 
-const updateLocation = () => {
+function onStartDateChange(value: string) {
+  state.end_date = getDateTimeString(getLater(value, tripDuration));
+}
+
+function onEndDateChange(value: string)  {
+  const startTime = new Date(state.start_date).getTime();
+  const endTime = new Date(value).getTime();
+  if (endTime > startTime) {
+    tripDuration = getDaysFromTimestamp(endTime - startTime);
+  }
+}
+
+function updateLocation()  {
   state.latitude = locationSelector.value?.selectedLat || state.latitude;
   state.longitude = locationSelector.value?.selectedLng || state.longitude;
   state.radius = locationSelector.value?.radius || state.radius;
-};
+}
 
-const getLocation = () => {
+function getLocation() {
   return {
     latitude: state.latitude,
     longitude: state.longitude,
     radius: state.radius,
   };
-};
+}
 
 onMounted(() => {
   updateLocation();
@@ -81,19 +98,21 @@ const onSubmit = async ({ data }: any) => {
       </template>
     </UFormGroup>
 
-    <UFormGroup :label="t('create_trip.trip_start_date')" name="start_date" required>
-      <UInput v-model="state.start_date" type="date" />
-      <template #error="{ error }">
-        <span>{{ t(error) }}</span>
-      </template>
-    </UFormGroup>
+    <div class="flex flew-row justify-between gap-4">
+      <UFormGroup :label="t('create_trip.trip_start_date')" name="start_date" class="flex-1" required>
+        <UInput v-model="state.start_date" type="date" @change="onStartDateChange" />
+        <template #error="{ error }">
+          <span>{{ t(error) }}</span>
+        </template>
+      </UFormGroup>
 
-    <UFormGroup :label="t('create_trip.trip_end_date')" name="end_date" required>
-      <UInput v-model="state.end_date" type="date" />
-      <template #error="{ error }">
-        <span>{{ t(error) }}</span>
-      </template>
-    </UFormGroup>
+      <UFormGroup :label="t('create_trip.trip_end_date')" name="end_date" class="flex-1" required>
+        <UInput v-model="state.end_date" type="date" @change="onEndDateChange" />
+        <template #error="{ error }">
+          <span>{{ t(error) }}</span>
+        </template>
+      </UFormGroup>
+    </div>
 
     <TripLocationSelector ref="locationSelector" class="w-full h-96" :locationData="getLocation()" />
 

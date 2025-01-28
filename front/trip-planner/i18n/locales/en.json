@@ -250,8 +250,6 @@
     "register": "Register",
     "share-trip": "Share trip",
     "invitations": "Invitations",
-    "share-trip": "Share trip",
-    "register": "Register",
     "visit_details": "Visit details"
   },
   "notifications": {
@@ -262,7 +260,7 @@
       "invitation-created": "You have created an invitation for trip",
       "invitation-received": "You have received an invitation for trip '{tripName}' from '{alias}'",
       "invitation-accepted": "'{alias}' has accepted your invitation the your trip '{tripName}'",
-      "invitation-declined": "'{alias}' has declined your invitation for the trip '{tripName}'",
+      "invitation-declined": "'{alias}' has declined your invitation for the trip '{tripName}'"
 
     },
     "deleted": "Notification deleted",
@@ -275,8 +273,7 @@
       "add-to-trip": "Added to trip",
       "budget": "Budget",
       "invitation-created": "Invitation created",
-      "invitation": "Invitation",
-
+      "invitation": "Invitation"
     },
     "view-all": "View all"
   },
@@ -364,6 +361,6 @@
     "link": " Here is the invitation link",
     "invitation": "invites you to join their trip",
     "from": "from",
-    "to": "to",
+    "to": "to"
   }
 }
