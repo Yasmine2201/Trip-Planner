@@ -14,7 +14,7 @@ class Trip(models.Model):
     image = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
-        return f"Trip(id={self.trip_id}, name={self.trip_name}, start_date={self.start_date}, end_date={self.end_date}, latitude={self.latitude}, longitude={self.longitude})"
+        return f"{self.trip_name} from {self.start_date} to {self.end_date}"
 
 
 class TripParticipation(models.Model):

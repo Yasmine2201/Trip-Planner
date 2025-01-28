@@ -97,7 +97,7 @@ watch(isOpen, (newVal) => {
   </div>
   <ul class="space-y-4 max-h-96 overflow-y-auto">
     <li v-for="friend in friends" :key="friend.id"
-        class="flex justify-between items-center p-2 border border-gray-700 rounded-lg hover:bg-gray-800 ">
+        class="flex justify-between items-center p-2 border dark:border-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800">
       <div class="flex items-center">
         <img :src="friend.avatar" alt="Avatar" class="w-10 h-10 rounded-full mr-3">
         <div>

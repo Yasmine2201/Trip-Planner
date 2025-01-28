@@ -171,3 +171,53 @@ class TripSentInvitation(ProtectableAPIView):
             return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
+
+
+class TripReceivedInvitation(ProtectableAPIView):
+
+    @staticmethod
+    def get(request, invitation_id=None):
+        """
+        Fetch all trip invitations received by a user.
+        """
+        if invitation_id is None:
+            trip_invitations = TripInvitationService.get_received_trip_invitations(request.user)
+            if trip_invitations is None:
+                return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
+
+            serializer = TripInvitationSerializer(trip_invitations, many=True)
+            return Response(serializer.data, status=200)
+
+        else:
+            try:
+                trip_invitation = TripInvitationService.get_received_trip_invitations_by_id(request.user, invitation_id)
+                serializer = TripInvitationSerializer(trip_invitation)
+                return Response(serializer.data, status=200)
+
+            except TripInvitation.DoesNotExist:
+                return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
+            except ValueError as e:
+                return Response({"error": str(e)}, status=400)
+
+    @staticmethod
+    def put(request, invitation_id):
+        """
+        Accept or decline a trip invitation.
+        """
+        status = request.data.get('status', None)  # boolean
+        if status is None:
+            return Response({"error": INVALID_BODY_ERROR}, status=400)
+
+        try:
+            if status:  # accept
+                trip_invitation = TripInvitationService.accept_trip_invitation(request.user, invitation_id)
+            else:  # decline
+                trip_invitation = TripInvitationService.decline_trip_invitation(request.user, invitation_id)
+
+            serializer = TripInvitationSerializer(trip_invitation)
+            return Response(serializer.data, status=200)
+
+        except TripInvitation.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)

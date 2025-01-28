@@ -248,6 +248,7 @@
     "profile": "Profil",
     "register": "Créer un compte",
     "share-trip": "Partager le voyage",
+    "invitations": "Invitations",
     "visit_details": "Détails de la visite"
   },
   "notifications": {
@@ -255,7 +256,10 @@
       "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
       "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget} €",
       "expenses-exceed-budget": "Les dépenses du voyage {tripName} s'élèvent à {totalExpenses} € et dépassent le budget déclaré de {budget} €",
-      "invitation-created": "Vous avez créé une invitation pour le voyage '{tripId}'"
+      "invitation-created": "Vous avez créé une invitation pour le voyage en cours",
+      "invitation-received": "Vous avez reçu une invitation pour le voyage '{tripName}' from '{alias}'",
+      "invitation-accepted": "'alias' a accepté votre invitation pour le voyage '{tripName}'",
+      "invitation-declined": "'alias' a refusé votre invitation pour le voyage '{tripName}'"
     },
     "deleted": "Notification supprimée",
     "mark-as-read": "Marquer comme lu",
@@ -289,7 +293,7 @@
     "trip_details": "Détails du voyage",
     "trip_location_info": "Vous avez choisi d'aller ici",
     "visits": "Visites",
-    "share": "Partage"
+    "share": "Membres"
   },
   "trips": {
     "end": "Date de fin",
@@ -345,10 +349,15 @@
   "share": {
     "see-profile": "Voir le profil",
     "delete-from-trip": "Retirer du voyage",
+    "accept-invitation": "Accepter l'invitation",
+    "decline-invitation": "Refuser l'invitation",
     "invite": "Inviter un ami",
-    "headline" : "Voici les personnes qui participent à votre voyage. Voulez-vous en ajouter d'autres ?",
+    "headline": "Voici les personnes qui participent à votre voyage. Voulez-vous en ajouter d'autres ?",
     "alias": "Pseudo",
     "placeholder": "pseudo2025",
-    "link": "Voici le lien d'invitation"
+    "link": "Voici le lien d'invitation",
+    "invitation": "vous invite à rejoindre son voyage",
+    "from": "de",
+    "to": "à",
   }
 }

@@ -27,7 +27,7 @@ const onSubmit = async () => {
   else {
     const aliasExists = computed(() => users.value.some((user: any) => user.alias === state.alias));
     if (aliasExists.value) {
-      const {data: invitation, error} = await useApiFetch(`/trips/${tripId.value}/invitations/?alias=${state.alias}`, {
+      const {data: invitation, error} = await useApiFetch(`/trips/${tripId.value}/invitations?alias=${state.alias}`, {
         method: 'POST'
       });
       if (error.value) {

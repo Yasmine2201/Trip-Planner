@@ -16,7 +16,12 @@ const links = computed(() => {
         label: t('navigation.profile'),
         icon: "i-uil-user",
         to: "/home/profile/me",
-      }
+      },
+      {
+      label: t('navigation.invitations'),
+      icon: 'ic:outline-markunread-mailbox',
+      to: "/home/invitations"
+    }
     ],
     [
       {

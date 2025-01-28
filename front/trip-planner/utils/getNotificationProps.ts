@@ -10,5 +10,10 @@ export default function getNotificationProps(notificationContent, t) {
       icon: 'material-symbols:currency-exchange',
       link: () => `/home/trips/${notificationContent.data.tripId}/budget`
     },
+    'Invitation': {
+        label: t('notifications.type.invitation'),
+        icon: 'ic:outline-markunread-mailbox',
+        link: () => `/home/invitations`
+    }
   }
 }
