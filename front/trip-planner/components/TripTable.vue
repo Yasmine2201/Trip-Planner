@@ -46,6 +46,10 @@ const columns = computed(() => [
     direction: 'desc' as const
   },
   {
+    key: 'members',
+    label: t('trips.members'),
+  },
+  {
     key: 'actions',
   }
 ]);
@@ -121,6 +125,12 @@ const leaveTrip = async (tripId: number) => {
 
     <template #end_date-data="{ row }">
       {{ new Date(row.end_date).toLocaleDateString([locale], { dateStyle: 'full' }) }}
+    </template>
+
+    <template #members-data="{ row }">
+      <UAvatarGroup size="sm" :max="3">
+        <UAvatar v-for="member in row.members" icon="i-uil-user" size="sm" :src="member.profile_picture?.url" class="object-scale-down"/>
+      </UAvatarGroup>
     </template>
 
     <template #actions-data="{ row }">

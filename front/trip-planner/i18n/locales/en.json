@@ -311,7 +311,8 @@
     "name": "Name",
     "start": "Start date",
     "triplist-title": "My trips",
-    "leave": "Trip exit"
+    "leave": "Trip exit",
+    "members": "Members"
   },
   "visits": {
     "fields": {
