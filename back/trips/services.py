@@ -124,7 +124,7 @@ class TripInvitationService:
         trip_invitation = TripInvitation.objects.get(trip_invitation_id=trip_invitation_id)
 
         if trip_invitation.sender != user or trip_invitation.trip.trip_id != trip_id:
-            raise ValueError(f"User {user} is not the sender of the invitation or the trip {trip_id} id does not match what is in the invitation.")
+            raise ForbiddenActionError(f"User {user} is not the sender of the invitation or the trip {trip_id} id does not match what is in the invitation.")
 
         return trip_invitation
 
@@ -211,3 +211,14 @@ class TripInvitationService:
         trip_invitation.save()
 
         return trip_invitation
+
+########################################################################################################################
+class TripParticipationService:
+
+    @staticmethod
+    def get_all_members(trip_id: int):
+        """
+        Get all members of a trip.
+        """
+        trip_participations = TripParticipation.objects.filter(trip_id=trip_id)
+        return [trip_participation.user for trip_participation in trip_participations]

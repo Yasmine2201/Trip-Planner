@@ -257,7 +257,7 @@
       "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget} €",
       "expenses-exceed-budget": "Les dépenses du voyage {tripName} s'élèvent à {totalExpenses} € et dépassent le budget déclaré de {budget} €",
       "invitation-created": "Vous avez créé une invitation pour le voyage en cours",
-      "invitation-received": "Vous avez reçu une invitation pour le voyage '{tripName}' from '{alias}'",
+      "invitation-received": "Vous avez reçu une invitation pour le voyage '{tripName}' de '{alias}'",
       "invitation-accepted": "'alias' a accepté votre invitation pour le voyage '{tripName}'",
       "invitation-declined": "'alias' a refusé votre invitation pour le voyage '{tripName}'"
     },
@@ -270,7 +270,10 @@
     "type": {
       "add-to-trip": "Ajouté au voyage",
       "budget": "Budget",
-      "invitation-created": "Invitation créée"
+      "invitation-created": "Invitation créée",
+      "invitation-received": "Invitation reçue",
+      "invitation-accepted": "Invitation acceptée",
+      "invitation-declined": "Invitation refusée"
     },
     "view-all": "Voir tout"
   },

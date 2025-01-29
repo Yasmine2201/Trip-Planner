@@ -112,7 +112,7 @@ def notify_trip_invitation_received(sender, instance, created, **kwargs):
 
         notification = Notification.objects.create(
             user=instance.receiver,
-            type="Invitation",
+            type="InvitationReceived",
             content=str(content),
             is_read=False,
             created_at=timezone.now()
@@ -128,12 +128,13 @@ def notify_trip_invitation_accepted(sender, instance, created, **kwargs):
             data={
                 "tripName": instance.trip.trip_name,
                 "alias": instance.receiver.alias,
+                "tripId": instance.trip.trip_id
             }
         )
 
         notification = Notification.objects.create(
             user=instance.sender,
-            type="Invitation",
+            type="InvitationAccepted",
             content=str(content),
             is_read=False,
             created_at=timezone.now()
@@ -149,12 +150,13 @@ def notify_trip_invitation_declined(sender, instance, created, **kwargs):
             data={
                 "tripName": instance.trip.trip_name,
                 "alias": instance.receiver.alias,
+                "tripId": instance.trip.trip_id
             }
         )
 
         notification = Notification.objects.create(
             user=instance.sender,
-            type="Invitation",
+            type="InvitationDeclined",
             content=str(content),
             is_read=False,
             created_at=timezone.now()

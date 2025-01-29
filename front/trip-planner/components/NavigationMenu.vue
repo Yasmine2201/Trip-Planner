@@ -65,7 +65,7 @@ const links = computed(() => {
       {
         label: t('trip_home.share'),
         icon: "ic:baseline-people-alt",
-        to: `/home/trips/${selectedTripId.value}/share`
+        to: `/home/trips/${selectedTripId.value}/members`
       }
     ]);
   }

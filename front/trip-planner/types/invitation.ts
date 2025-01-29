@@ -1,10 +1,14 @@
-type PublicUser = {
+export type PublicUser = {
     user_id: string,
     alias: string,
     first_name: string,
-    profile_picture: string,
+    profile_picture: ProfilePicture | null,
     description: string,
     languages: string
+}
+type ProfilePicture = {
+    name: string,
+    url: string
 }
 type Trip = {
     trip_id: number
