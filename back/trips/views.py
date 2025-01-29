@@ -5,9 +5,10 @@ from rest_framework.response import Response
 
 from authentication.utils import ProtectableAPIView
 from core.models import User
-from trips.models import Trip, TripInvitation
+from core.serializers import PublicUserSerializer
+from trips.models import Trip, TripInvitation, TripParticipation
 from trips.serializers import TripSerializer, TripInvitationSerializer
-from trips.services import TripService, TripInvitationService
+from trips.services import TripService, TripInvitationService, TripParticipationService
 from utils import NOT_FOUND_ERROR, ForbiddenActionError, INVALID_BODY_ERROR
 
 
@@ -221,3 +222,19 @@ class TripReceivedInvitation(ProtectableAPIView):
             return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
+
+
+########################################################################################################################
+class TripParticipationView(ProtectableAPIView):
+
+    @staticmethod
+    def get(request, trip_id: int):
+        """
+        Fetch all trip participations for a trip.
+        """
+        try:
+            all_members = TripParticipationService.get_all_members(trip_id)
+            serializer = PublicUserSerializer(all_members, many=True)
+            return Response(serializer.data, status=200)
+        except TripParticipation.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="TripParticipation")}, status=404)

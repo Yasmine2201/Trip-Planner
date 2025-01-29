@@ -9,5 +9,8 @@ export type Notifications = {
 export enum NotificationType {
     AddToTrip = 'AddToTrip',
     Budget = 'Budget',
-    Invitation = 'Invitation',
+    InvitationReceived = 'InvitationReceived',
+    InvitationAccepted = 'InvitationAccepted',
+    InvitationDeclined = 'InvitationDeclined',
+
 }

@@ -261,7 +261,6 @@
       "invitation-received": "You have received an invitation for trip '{tripName}' from '{alias}'",
       "invitation-accepted": "'{alias}' has accepted your invitation the your trip '{tripName}'",
       "invitation-declined": "'{alias}' has declined your invitation for the trip '{tripName}'"
-
     },
     "deleted": "Notification deleted",
     "mark-as-read": "Mark as read",
@@ -273,7 +272,9 @@
       "add-to-trip": "Added to trip",
       "budget": "Budget",
       "invitation-created": "Invitation created",
-      "invitation": "Invitation"
+      "invitation-received": "Received Invitation",
+      "invitation-accepted": "Invitation accepted",
+      "invitation-declined": "Invitation declined"
     },
     "view-all": "View all"
   },

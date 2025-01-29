@@ -10,10 +10,20 @@ export default function getNotificationProps(notificationContent, t) {
       icon: 'material-symbols:currency-exchange',
       link: () => `/home/trips/${notificationContent.data.tripId}/budget`
     },
-    'Invitation': {
-        label: t('notifications.type.invitation'),
+    'InvitationReceived': {
+        label: t('notifications.type.invitation-received'),
         icon: 'ic:outline-markunread-mailbox',
         link: () => `/home/invitations`
+    },
+    'InvitationAccepted': {
+        label: t('notifications.type.invitation-accepted'),
+        icon: 'material-symbols:check-circle-outline',
+        link: () => `/home/trips/${notificationContent.data.tripId}/members`
+    },
+    'InvitationDeclined': {
+        label: t('notifications.type.invitation-declined'),
+        icon: 'material-symbols:cancel-outline',
+        link: () => `/home/trips/${notificationContent.data.tripId}/members`
     }
   }
 }

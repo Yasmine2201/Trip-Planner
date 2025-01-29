@@ -7,7 +7,8 @@ definePageMeta({
   requiresAuth: true,
 });
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
+const router = useRouter();
 
 const invitations = ref<Invitation[]>([]);
 
@@ -24,6 +25,7 @@ const handleAccept = async (invitationId: number) => {
   });
   if (status.value === 'success') {
     invitations.value = invitations.value.filter((invitation) => invitation.trip_invitation_id !== invitationId);
+    router.push(`/home/trips/${data.value.trip.trip_id}`);
   }
 
 }
@@ -48,19 +50,21 @@ const handleDecline = async (invitationId: number) => {
   <ul class="space-y-4 max-h-96 overflow-y-auto">
     <transition-group name="invitation" tag="div" class="flex flex-col gap-2">
       <li v-for="invitation in invitations" :key="invitation.trip_invitation_id"
-          class="flex justify-between items-center p-2 border dark:border-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800">
+          class="flex justify-between items-center p-2 bg-white dark:bg-gray-800
+          border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
         <div class="flex items-center">
           <UTooltip :title="invitation.sender.alias">
-            <img :src="invitation.sender.profile_picture" alt="Avatar" class="w-10 h-10 rounded-full mr-3">
+            <UAvatar icon="i-uil-user" size="sm" :src="invitation.sender.profile_picture?.url" class="mr-3"/>
           </UTooltip>
           <div>
-            <span class="text-lg font-bold text-primary-600">{{ invitation.sender.first_name }}</span>
-            {{ t('share.invitation') }}
-            <span class="text-lg font-bold text-primary-600"> {{ invitation.trip.trip_name }}</span>
-            {{ t('share.from') }}
-            <span class="text-lg font-bold"> {{ invitation.trip.start_date }}</span>
-            {{ t('share.to') }}
-            <span class="text-lg font-bold"> {{ invitation.trip.end_date }}</span>
+            <div>
+              <span class="font-bold text-primary"> {{ invitation.sender.first_name }}&nbsp;</span>
+              <span> {{ t('share.invitation') }}&nbsp;</span>
+              <UTooltip
+                  :title="`${t('share.from')} ${new Date(invitation.trip.start_date).toLocaleDateString([locale], {dateStyle: 'full'})} ${t('share.to')} ${new Date(invitation.trip.end_date).toLocaleDateString([locale], {dateStyle: 'full'})}`">
+                <span class="font-bold text-primary">{{ invitation.trip.trip_name }}&nbsp;</span>
+              </UTooltip>
+            </div>
           </div>
         </div>
         <div class="space-x-2 mr-2">
