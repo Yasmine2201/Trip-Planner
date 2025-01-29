@@ -17,7 +17,7 @@ const expenses = ref<Expense[]>([]);
 const expensesResponse = await useApiFetch<Expense[]>(`/trips/${tripId.value}/budget/expenses`);
 expenses.value = expensesResponse.data.value ?? [];
 
-const selected = ref([]) as Ref<Expense[]>;
+const selected = ref<Expense[]>([]);
 const anySelected = computed(() => selected.value?.length >= 1);
 
 const deleteExpense = async (expenseId: number) => {
@@ -61,17 +61,18 @@ const deleteAllSelected = async () => {
     <template #actions>
       <UButton :title="t('misc.back')" class="mr-2" color="gray" icon="i-heroicons-arrow-uturn-left"
                @click="router.back()"/>
-      <UButton
-          :disabled="!anySelected"
-          :label="t('expense.delete-selected')"
-          :title="t('expense.delete-many-tooltip')"
-          class="min-w-48 justify-center"
-          color="red"
-          icon="material-symbols:delete"
-          size="xs"
-          variant="solid"
-          @click="deleteAllSelected"
-      />
+      <ConfirmationDropdown @confirm="deleteAllSelected">
+        <UButton
+            :disabled="!anySelected"
+            :label="t('expense.delete-selected')"
+            :title="t('expense.delete-many-tooltip')"
+            class="min-w-48 justify-center"
+            color="red"
+            icon="material-symbols:delete"
+            size="xs"
+            variant="solid"
+        />
+      </ConfirmationDropdown>
       <UButton
           :label="t('budget.add-expense')"
           class="min-w-48 justify-center"
@@ -90,7 +91,7 @@ const deleteAllSelected = async () => {
       :selectable="true"
       :display-visit="true"
       :categoryFilter="categoryQuery"
-      v-model:selected="selected.value"
+      v-model:selected="selected"
   >
   </ExpenseTable>
 </template>

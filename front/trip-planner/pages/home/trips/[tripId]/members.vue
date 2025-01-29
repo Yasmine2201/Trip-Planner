@@ -51,23 +51,11 @@ const isOwner = (user: PublicUser) => user.user_id === trip.value.owner_id;
                 variant="solid"
             />
           </UTooltip>
-          <!--          <UTooltip :title="t('share.delete-from-trip')">-->
-          <!--            <UButton-->
-          <!--                color="red"-->
-          <!--                icon="i-heroicons-trash"-->
-          <!--                size="sm"-->
-          <!--                square-->
-          <!--                variant="solid"-->
-          <!--            />-->
-          <!--          </UTooltip>-->
         </div>
       </div>
     </UCard>
   </ul>
-
-
 </template>
-
 
 <style scoped>
 

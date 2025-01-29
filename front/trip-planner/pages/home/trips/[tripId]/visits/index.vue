@@ -136,14 +136,15 @@ const deleteVisit = async (visit: Visit) => {
             square
             variant="solid"
         />
-        <UButton
-            color="red"
-            icon="i-heroicons-trash"
-            size="xs"
-            square
-            variant="solid"
-            @click="deleteVisit(row)"
-        />
+        <ConfirmationDropdown @confirm="deleteVisit(row)">
+          <UButton
+              color="red"
+              icon="i-heroicons-trash"
+              size="xs"
+              square
+              variant="solid"
+          />
+        </ConfirmationDropdown>
       </div>
     </template>
   </UTable>

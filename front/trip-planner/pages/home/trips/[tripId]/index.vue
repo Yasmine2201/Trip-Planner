@@ -95,15 +95,16 @@ const formatDate = (date: string | null) => {
             square
             variant="solid"
         />
-        <UButton
-            @click="deleteTrip(trip?.trip_id)"
-            color="red"
-            icon="i-heroicons-trash"
-            :label="t('misc.delete')"
-            size="md"
-            square
-            variant="solid"
-        />
+        <ConfirmationDropdown @confirm="deleteTrip(trip?.trip_id)">
+          <UButton
+              color="red"
+              icon="i-heroicons-trash"
+              :label="t('misc.delete')"
+              size="md"
+              square
+              variant="solid"
+          />
+        </ConfirmationDropdown>
       </template>
     </PageTitle>
 

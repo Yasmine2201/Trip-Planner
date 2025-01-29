@@ -69,8 +69,7 @@ const savePrices = async (pricesForm: PricesForm) => {
     planned_amount: totalPrice,
     visit_id: visitId,
     actual_amount: undefined,
-    description: description,
-    is_shared: false
+    description: description
   };
 
   try {
@@ -109,15 +108,16 @@ const savePrices = async (pricesForm: PricesForm) => {
           square
           variant="solid"
       />
-      <UButton
-          @click="deleteVisit()"
-          color="red"
-          icon="i-heroicons-trash"
-          :label="t('misc.delete')"
-          size="md"
-          square
-          variant="solid"
-      />
+      <ConfirmationDropdown @confirm="deleteVisit">
+        <UButton
+            color="red"
+            icon="i-heroicons-trash"
+            :label="t('misc.delete')"
+            size="md"
+            square
+            variant="solid"
+        />
+      </ConfirmationDropdown>
     </template>
   </PageTitle>
 

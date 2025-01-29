@@ -141,23 +141,24 @@ const leaveTrip = async (tripId: number) => {
             variant="solid"
             :to="`/home/trips/${row.trip_id}/edit`"
         />
-        <UButton
-            v-if="row.isOwner"
-            icon="i-heroicons-trash"
-            size="xs"
-            color="red"
-            square
-            variant="solid"
-            @click="deleteTrip(row.trip_id)"
-        />
-        <UButton
-          v-if="!row.isOwner"
-          icon="i-heroicons-arrow-right-start-on-rectangle-20-solid"
-          size="xs"
-          color="red"
-          square
-          variant="solid"
-          @click="leaveTrip(row.trip_id)" />
+        <ConfirmationDropdown @confirm="deleteTrip(row.trip_id)" v-if="row.isOwner">
+          <UButton
+              icon="i-heroicons-trash"
+              size="xs"
+              color="red"
+              square
+              variant="solid"
+          />
+        </ConfirmationDropdown>
+        <ConfirmationDropdown @confirm="leaveTrip(row.trip_id)" v-if="!row.isOwner">
+          <UButton
+              icon="i-heroicons-arrow-right-start-on-rectangle-20-solid"
+              size="xs"
+              color="red"
+              square
+              variant="solid"
+          />
+        </ConfirmationDropdown>
       </div>
     </template>
   </UTable>

@@ -226,7 +226,10 @@
     "select-value": "Sélectionnez des valeurs",
     "success": "Succès de l'opération",
     "add-expense": "Ajout d'une dépense",
-    "copied": "Copié"
+    "copied": "Copié",
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
+    "ask-confirmation": "Veuillez confirmer"
   },
   "modify_trip": {
     "title": "Modification du voyage",

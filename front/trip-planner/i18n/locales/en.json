@@ -226,7 +226,10 @@
     "select-value": "Select values",
     "success": "Operation succeeded",
     "add-expense": "Adding expense",
-    "copied": "Copied"
+    "copied": "Copied",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "ask-confirmation": "Please confirm"
   },
   "modify_trip": {
     "title": "Trip edition",

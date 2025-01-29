@@ -224,14 +224,15 @@ const filteredExpenses = computed(() => {
             square
             variant="solid"
         />
-        <UButton
-            color="red"
-            icon="i-heroicons-trash"
-            size="xs"
-            square
-            variant="solid"
-            @click="deleteExpense(row.expense_id)"
-        />
+        <ConfirmationDropdown @confirm="deleteExpense(row.expense_id)">
+          <UButton
+              color="red"
+              icon="i-heroicons-trash"
+              size="xs"
+              square
+              variant="solid"
+          />
+        </ConfirmationDropdown>
       </div>
     </template>
   </UTable>
