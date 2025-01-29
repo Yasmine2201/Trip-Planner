@@ -50,5 +50,10 @@ GET http://localhost:8000/api/trips/4/invitations
 GET http://localhost:8000/api/trips/4/invitations/3
 ###
 DELETE http://localhost:8000/api/trips/4/invitations/4
-###
-GET http://localhost:8000/api/trips/17/members
+
+### Leave trip : owner => 400
+POST http://localhost:8000/api/trips/1/leave
+### Leave trip : not member => 403
+POST http://localhost:8000/api/trips/3/leave
+### Leave trip : member => 200
+POST http://localhost:8000/api/trips/4/leave

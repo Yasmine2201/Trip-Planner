@@ -3,7 +3,7 @@
 import { useI18n } from "vue-i18n";
 import { useNuxtApp } from "#app";
 import {createTripSchema} from "~/schemas";
-import { getDateTimeString, getDaysFromTimestamp, getLater } from "~/utils/date";
+import { getDateString, getDaysFromTimestamp, getLater } from "~/utils/date";
 
 const props = defineProps({
   mode: { type: String, required: true }, // "create" ou "modify"
@@ -18,13 +18,15 @@ let tripDuration = 7;
 const later = getLater(now, tripDuration);
 
 const state = reactive({
-  trip_name: props.tripData.trip_name || '',
-  latitude: props.tripData.latitude || null,
-  longitude: props.tripData.longitude || null,
-  radius: props.tripData.radius || null,
-  start_date: props.tripData.start_date || getDateTimeString(now),
-  end_date: props.tripData.end_date || getDateTimeString(later),
+  trip_name: props.tripData?.trip_name || '',
+  latitude: props.tripData?.latitude || null,
+  longitude: props.tripData?.longitude || null,
+  radius: props.tripData?.radius || null,
+  start_date: props.tripData?.start_date || getDateString(now),
+  end_date: props.tripData?.end_date || getDateString(later),
 });
+
+console.debug("state:", state);
 
 const locationSelector = ref(null);
 const form = ref();
@@ -32,7 +34,7 @@ const formError = ref('');
 const submitting = ref(false);
 
 function onStartDateChange(value: string) {
-  state.end_date = getDateTimeString(getLater(value, tripDuration));
+  state.end_date = getDateString(getLater(value, tripDuration));
 }
 
 function onEndDateChange(value: string)  {

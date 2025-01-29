@@ -102,7 +102,8 @@
     "quantity-positive": "La quantité doit être positive",
     "quantity-whole": "Les quantités doivent être entières",
     "alias-not-exists": "Ce pseudo n'existe pas",
-    "already-invited": "Cette personne a déjà été invitée au voyage"
+    "already-invited": "Cette personne a déjà été invitée au voyage",
+    "page-forbidden": "Accès interdit"
   },
   "expense": {
     "actual-amount": "Montant réel",
