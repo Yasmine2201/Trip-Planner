@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import type {FormSubmitEvent} from "#ui/types";
+import type { FormSubmitEvent } from "#ui/types";
 import type { LoginDto } from "~/schemas";
 import { loginSchema } from '~/schemas';
 
@@ -49,6 +49,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
         <UInput
             v-model="state.email"
             placeholder="youremail@example.com"
+            autocomplete="email"
         />
 
         <template #error="{ error }">
@@ -65,6 +66,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<LoginDto>) => {
             v-model="state.password"
             type="password"
             placeholder="********"
+            autocomplete="current-password"
         />
 
         <template #error="{ error }">

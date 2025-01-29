@@ -2,6 +2,9 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+
+  <UNotifications />
+  <USlideovers />
 </template>
 
 <script setup lang="ts">
@@ -10,6 +13,7 @@
 
   const getTitle = computed(() => {
     const pageName = $router.currentRoute.value.meta.title;
+    console.debug("PAGE: ", pageName);
     return `${t(pageName)} • TripPlanner`;
   });
 

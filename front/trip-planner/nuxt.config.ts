@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
 
-  modules: ['@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt'],
+  modules: ['@nuxt/ui', '@nuxtjs/i18n', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', 'nuxt3-leaflet'],
 
   i18n: {
     locales: [
@@ -31,9 +31,21 @@ export default defineNuxtConfig({
     strategy: 'no_prefix'
   },
 
+  pinia: {
+    storesDirs: ['./stores/**']
+  },
+
+  piniaPluginPersistedstate: {
+    storage: 'localStorage',
+  },
+
   runtimeConfig: {
     public: {
       apiBaseUrl: process.env.API_BASE_URL || 'http://127.0.0.1:8000/api',
     },
-  }
+  },
+
+  css: [
+    'leaflet/dist/leaflet.css',
+  ],
 })

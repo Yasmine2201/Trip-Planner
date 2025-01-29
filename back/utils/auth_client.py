@@ -122,6 +122,9 @@ class AuthClient(metaclass=Singleton):
 
         :raises InvalidRefreshToken: If the refresh token is invalid
         """
+        if not refresh_token:
+            raise InvalidRefreshToken("No refresh token provided")
+
         data = {
             "refresh_token": refresh_token
         }
@@ -150,7 +153,6 @@ class AuthClient(metaclass=Singleton):
     @staticmethod
     def _parse_auth_response(response: dict) -> AuthSession:
         user: Optional[AuthUser] = None
-        session: Optional[AuthSession] = None
 
         if "user" in response:
             user = AuthUser(
@@ -161,11 +163,11 @@ class AuthClient(metaclass=Singleton):
 
         return AuthSession(
             user=user,
-            access_token=response["access_token"],
-            refresh_token=response["refresh_token"],
-            expires_in=response["expires_in"],
-            expires_at=response["expires_at"],
-            token_type=response["token_type"]
+            access_token=response.get("access_token"),
+            refresh_token=response.get("refresh_token"),
+            expires_in=response.get("expires_in"),
+            expires_at=response.get("expires_at"),
+            token_type=response.get("token_type")
         )
 
     @staticmethod

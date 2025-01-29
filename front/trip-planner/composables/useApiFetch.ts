@@ -1,31 +1,28 @@
-export function useApiFetch<T>(url: string, options: RequestInit = {}) {
-  const config = useRuntimeConfig();
-  const auth = useAuthStore();
+import type { UseFetchOptions } from "#app";
 
-  return useFetch<T>(url, {
+export const useApiFetch = <T>(url: string, options: UseFetchOptions<T> = {}, redirect: boolean = false) => {
+  const config = useRuntimeConfig();
+  const authStore = useAuthStore();
+
+  return useFetch<T>(
+    url,
+    {
       baseURL: config.public.apiBaseUrl,
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...(options.headers || {}),
       },
-      ...options,
-    onResponseError: async (error) => {
-      if (error.response && error.response.status === 401) {
-        return auth.refreshToken().then(() => {
-          return useFetch<T>(url, {
-            baseURL: config.public.apiBaseUrl,
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-              ...(options.headers || {}),
-            },
-            ...options
-          });
-        }).catch(() => {
-          return Promise.reject('Token refresh failed');
-        });
-      }
-    }
-  });
+      onResponseError: async ({ response}) => {
+        if (response.status === 404 && redirect) {
+          navigateTo('/notfound');
+        } else if (response.status === 401) {
+          await authStore.clearUser();
+          navigateTo('/login');
+        } else if (response.status === 403) {
+          navigateTo('/forbidden');
+        }
+      },
+      ...options as any,
+    });
 }

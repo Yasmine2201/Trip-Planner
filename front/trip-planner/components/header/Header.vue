@@ -5,14 +5,14 @@ const isAuthenticated = computed(() => auth.isAuthenticated);
 
 <template>
   <div class="flex justify-between items- w-full">
-    <HeaderLogo/>
+    <HeaderLogo :logo-link="isAuthenticated ? '/home' : '/'"/>
 
     <HeaderMenu/>
 
     <div class="flex items-center justify-end gap-4">
       <div class="flex items-center justify-end gap-4" v-if="isAuthenticated">
         <HeaderNotifications />
-        <HeaderUserMenu />
+        <HeaderUserMenu :user="auth.user"/>
         <div class="w-0 h-10 border" />
       </div>
 

@@ -4,9 +4,8 @@ from rest_framework.views import APIView
 
 from authentication.serializers import LoginInputSerializer, AuthErrorSerializer, RegisterInputSerializer
 from authentication.services import AuthService
-from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies, \
-    TokenAuthentication, CustomAPIView
-from core.serializers import UserSerializer
+from authentication.utils import set_supabase_cookies, ACCESS_TOKEN_COOKIE_NAME, remove_supabase_cookies
+from core.serializers import PrivateUserSerializer
 from utils.auth_client import AuthException, InvalidCredentialsException, BadTokenException, \
     SessionNotFound, UserAlreadyExistsException, WeakPasswordException, InvalidRegisterRequestException
 
@@ -26,7 +25,7 @@ class LoginView(APIView):
                 return handle_auth_error(AuthException.from_validation_error(request_serializer.errors), 400)
 
             session, user = AuthService.login(**request_serializer.validated_data)
-            response_serializer = UserSerializer(user)
+            response_serializer = PrivateUserSerializer(user)
 
             response = Response(response_serializer.data, status=200)
             set_supabase_cookies(response, session)
@@ -39,8 +38,7 @@ class LoginView(APIView):
             return handle_auth_error(e, 400)
 
 
-class LogoutView(CustomAPIView):
-    authentication_classes = [TokenAuthentication]
+class LogoutView(APIView):
 
     @staticmethod
     def post(request: Request):
@@ -53,12 +51,9 @@ class LogoutView(CustomAPIView):
                 request.auth = None
 
             if not access_token:
-                return handle_auth_error(AuthException("validation_failed", "invalid"), 400)
+                return handle_auth_error(AuthException("No credentials were provided", "no-credentials"), 401)
 
             AuthService.logout(access_token)
-
-            if hasattr(request, 'auth') and hasattr(request.auth, 'auth_session'):
-                request.auth = None
 
             response = Response(status=204)
 

@@ -1,8 +1,10 @@
 from typing import Optional
 
+from django.db import IntegrityError
+
 from core.models import User
 from core.services import UserService
-from utils.auth_client import AuthSession, AuthClient
+from utils.auth_client import AuthSession, AuthClient, UserAlreadyExistsException
 
 
 class AuthService:
@@ -38,15 +40,20 @@ class AuthService:
         :raises InvalidRegisterRequestException: If the request is invalid
         """
         auth_response: AuthSession = AuthClient().register(email, password)
-        user = User(
-            user_id=auth_response.user.id,
-            email=email,
-            alias=alias,
-            first_name=first_name,
-            last_name=last_name,
-            birthdate=birthdate
-        )
-        user.save()
+        try:
+            user = User(
+                user_id=auth_response.user.id,
+                email=email,
+                alias=alias,
+                first_name=first_name,
+                last_name=last_name,
+                birthdate=birthdate
+            )
+            user.save()
+        except IntegrityError as e:
+            if 'unique constraint' in str(e):
+                raise UserAlreadyExistsException("User already exists with this alias")
+            raise e
         return user
 
     @staticmethod

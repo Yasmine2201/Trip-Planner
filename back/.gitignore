@@ -10,4 +10,6 @@ db.sqlite3
 *.pyc
 *.pyo
 .env
+.env.prod
+.env.dev
 */migrations

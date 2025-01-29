@@ -104,6 +104,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
         <UInput
             v-model="state.firstName"
             placeholder="John"
+            autocomplete="firstname"
         />
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
@@ -118,6 +119,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
         <UInput
             v-model="state.lastName"
             placeholder="Doe"
+            autocomplete="lastname"
         />
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
@@ -132,6 +134,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
         <UInput
             v-model="state.alias"
             placeholder="johndoe123"
+            autocomplete="alias"
         />
         <template #help>
           <span>{{ t('auth.alias-help') }}</span>
@@ -149,6 +152,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
         <UInput
             v-model="state.birthdate"
             type="date"
+            autocomplete="birthdate"
         />
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
@@ -163,6 +167,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
         <UInput
             v-model="state.email"
             placeholder="youremail@example.com"
+            autocomplete="email"
         />
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
@@ -178,6 +183,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
             v-model="state.password"
             type="password"
             placeholder="********"
+            autocomplete="new-password"
         />
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
@@ -193,6 +199,7 @@ const onSubmit = async ({ data }: FormSubmitEvent<RegisterDto>) => {
             v-model="state.confirmPassword"
             type="password"
             placeholder="********"
+            autocomplete="confirm-new-password"
         />
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
