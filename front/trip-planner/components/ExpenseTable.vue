@@ -216,14 +216,6 @@ const filteredExpenses = computed(() => {
 
     <template #actions-data="{ row }">
       <div class="flex space-x-2 items-center">
-        <div class="mr-4 pt-1">
-          <UTooltip v-if="row.is_shared" :title="t('expense.yes')">
-            <UIcon class="w-5 h-5 aspect-1" color="gray" name="ic:sharp-people-alt"/>
-          </UTooltip>
-          <UTooltip v-else :title="t('expense.no')">
-            <UIcon class="w-5 h-5 aspect-1" color="gray" name="material-symbols-light:person-rounded"/>
-          </UTooltip>
-        </div>
         <UButton
             :to="`/home/trips/${tripId}/budget/expenses/${row.expense_id}/edit`"
             color="primary"

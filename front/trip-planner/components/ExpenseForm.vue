@@ -43,7 +43,6 @@ const default_state = {
   description: props.expenseData?.description || '',
   planned_amount: props.expenseData?.planned_amount || undefined,
   actual_amount: props.expenseData?.actual_amount || undefined,
-  is_shared: props.expenseData?.is_shared || false,
   visit_id: props.expenseData?.visit?.visit_id || visitId,
 };
 
@@ -60,7 +59,7 @@ const onSubmit = async ({data}: FormSubmitEvent<ExpenseDto>) => {
           description: data.description,
           planned_amount: data.planned_amount,
           actual_amount: data.actual_amount,
-          is_shared: data.is_shared,
+          is_shared: false,
           visit_id: data.visit_id,
         }
     )
@@ -142,13 +141,6 @@ async function resetForm() {
             <span class="text-gray-500 dark:text-gray-400 text-xs">€</span>
           </template>
         </UInput>
-        <template #error="{ error }">
-          <span>{{ t(error) }}</span>
-        </template>
-      </UFormGroup>
-
-      <UFormGroup :label="t('expense.is-shared')" name="is_shared">
-        <UToggle v-model="state.is_shared"/>
         <template #error="{ error }">
           <span>{{ t(error) }}</span>
         </template>

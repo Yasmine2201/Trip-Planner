@@ -6,7 +6,6 @@ export type Expense = {
     "description": string,
     "planned_amount": number,
     "actual_amount": number,
-    "is_shared": boolean,
     "category": string,
     "visit": Pick<Visit, 'visit_id' | 'name'>
 }

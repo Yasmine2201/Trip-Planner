@@ -33,7 +33,6 @@ class ExpenseCategory(models.Model):
         return f'Category {self.name}'
 
 
-
 class Expense(models.Model):
     expense_id = models.AutoField(primary_key=True)
     trip_participation = models.ForeignKey(TripParticipation, on_delete=models.CASCADE)
@@ -42,20 +41,7 @@ class Expense(models.Model):
     description = models.TextField(null=True, blank=True)
     planned_amount = models.FloatField(null=True, blank=True)
     actual_amount = models.FloatField(null=True, blank=True)
-    is_shared = models.BooleanField(default=False)
     visit = models.ForeignKey(Visit, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f' Expense{self.name} - {self.planned_amount} - {self.actual_amount}'
-
-
-class ExpenseShare(models.Model):
-    expense_share_id = models.AutoField(primary_key=True)
-    expense = models.ForeignKey(Expense, on_delete=models.CASCADE)
-    with_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    due_amount = models.FloatField(null=True, blank=True)
-    refund_amount = models.FloatField(null=True, blank=True)
-    status = models.CharField(max_length=255)
-
-    def __str__(self):
-        return f'ExpenseShare {self.expense} - {self.with_user} - {self.due_amount} - {self.refund_amount} - {self.status}'

@@ -1,9 +1,9 @@
 from rest_framework.response import Response
 
 from authentication.utils import ProtectableAPIView
-from budget.models import Expense, ExpenseShare
-from budget.serializers import ExpenseSerializer, DebtInputSerializer, RefundInputSerializer, ExpenseShareSerializer, CategorySerializer
-from budget.services import BudgetService, ExpenseService, ExpenseShareService, CategoryService
+from budget.models import Expense
+from budget.serializers import ExpenseSerializer, CategorySerializer
+from budget.services import BudgetService, ExpenseService, CategoryService
 from trips.models import TripParticipation
 
 
@@ -71,7 +71,6 @@ class ExpenseView(ProtectableAPIView):
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
 
-
     @staticmethod
     def put(request, trip_id, expense_id):
         """
@@ -135,102 +134,6 @@ class ExpenseView(ProtectableAPIView):
 
         except Expense.DoesNotExist:
             return Response({"error": f"Expense {expense_id} not found"}, status=404)
-
-        except ValueError as e:
-            return Response({"error": str(e)}, status=400)
-
-
-############################################################################################################
-class ExpenseShareView(ProtectableAPIView):
-
-    @staticmethod
-    def post(request, trip_id):
-        """
-        Declare a dept for an expense.
-        """
-        user_id = request.user.user_id
-        shared_expense_data = request.data
-        if 'due_amount' in shared_expense_data:
-            serializer = DebtInputSerializer
-        else:
-            serializer = RefundInputSerializer
-
-        try:
-            shared_expense = ExpenseShareService.declare_debt(user_id, trip_id, shared_expense_data) \
-                if serializer == DebtInputSerializer \
-                else ExpenseShareService.declare_refund(user_id, trip_id, shared_expense_data)
-            shared_expense_serializer = serializer(shared_expense)
-            return Response(shared_expense_serializer.data, status=200)
-
-        except ValueError as e:
-            return Response({"error": str(e)}, status=400)
-
-    @staticmethod
-    def put(request, trip_id, share_id):
-        """
-        Update a dept for an expense.
-        """
-        user_id = request.user.user_id
-        shared_expense_data = request.data
-        if 'due_amount' in shared_expense_data:
-            serializer = DebtInputSerializer
-        else:
-            serializer = RefundInputSerializer
-
-        try:
-            shared_expense = ExpenseShareService.update_debt(user_id, trip_id, share_id, shared_expense_data) \
-                if serializer == DebtInputSerializer \
-                else ExpenseShareService.update_refund(user_id, trip_id, share_id, shared_expense_data)
-            shared_expense_serializer = serializer(shared_expense)
-            return Response(shared_expense_serializer.data, status=200)
-
-        except ValueError as e:
-            return Response({"error": str(e)}, status=400)
-        except ExpenseShare.DoesNotExist:
-            return Response({"error": f"Expense share {share_id} not found"}, status=404)
-
-    @staticmethod
-    def get(request, trip_id, share_id=None):
-        """
-        Get a specific dept for an expense or all depts for an expense if no dept id is provided.
-        """
-        if share_id:
-            try:
-                shared_expense = ExpenseShareService.get_expense_share_by_id(request.user.user_id, trip_id, share_id)
-                return Response(ExpenseShareSerializer(shared_expense).data, status=200)
-
-            except ExpenseShare.DoesNotExist:
-                return Response({"error": f"Expense share {share_id} not found"}, status=404)
-
-            except ValueError as e:
-                return Response({"error": str(e)}, status=400)
-        else:
-            if 'debts' in request.path:
-                shared_expenses = ExpenseShareService.get_all_debts(request.user.user_id, trip_id)
-            elif 'refunds' in request.path:
-                shared_expenses = ExpenseShareService.get_all_refunds(request.user.user_id, trip_id)
-            else:
-                shared_expenses = None
-
-            if not shared_expenses:
-                return Response({"error": f"Expense shares not found"}, status=404)
-
-            else:
-                return Response(ExpenseShareSerializer(shared_expenses, many=True).data, status=200)
-
-    @staticmethod
-    def delete(request, trip_id, share_id):
-        """
-        Delete a dept for an expense.
-        """
-        user_id = request.user.user_id
-        try:
-            shared_expense = ExpenseShareService.delete_expense_share(user_id, trip_id, share_id)
-            shared_expense_serializer = ExpenseShareSerializer(shared_expense)
-            return Response(shared_expense_serializer.data, status=200)
-
-        except ExpenseShare.DoesNotExist:
-            return Response({"error": f"Expense share {share_id} not found"}, status=404)
 
         except ValueError as e:
             return Response({"error": str(e)}, status=400)

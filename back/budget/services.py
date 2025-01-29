@@ -1,5 +1,5 @@
-from budget.models import Expense, ExpenseShare, ExpenseCategory
-from budget.serializers import ExpenseInputSerializer, DebtInputSerializer, RefundInputSerializer
+from budget.models import Expense, ExpenseCategory
+from budget.serializers import ExpenseInputSerializer
 from trips.models import TripParticipation
 from visits.models import Visit, VisitParticipation
 
@@ -104,125 +104,7 @@ class ExpenseService:
 
 
 ############################################################################################################
-class ExpenseShareService:
-
-    @staticmethod
-    def get_potentials_creditors_debtors(user_id: str, trip_id: str):
-        """
-        Get the potential creditors and debtors for a user in a trip.
-        """
-        others_participants = TripParticipation.objects.filter(trip=trip_id).exclude(user=user_id)
-        return others_participants
-
-    @staticmethod
-    def __declare_expense_share(user_id: str, trip_id: str, data: dict, serializer_class):
-        """
-        Create a new expense share (debt or refund) for a user.
-        """
-        # Validate the data
-        serializer = serializer_class(data=data)
-        serializer.is_valid(raise_exception=True)
-
-        # Deserialize the data
-        data_object = serializer.validated_data
-
-        # Check if the expense in the payload belongs to the user and trip in the URL
-        expense_id = data_object.get('expense').expense_id
-        expense = Expense.objects.get(expense_id=expense_id)
-
-        if expense.trip_participation.user.user_id != user_id or expense.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(
-                f"Mismatch between the user or trip present in the URL arguments and the attributes of the expense {expense_id}"
-                f" in the payload")
-
-        if data_object.get("status") is None:
-            data_object["status"] = "Created"
-
-        expense_share = ExpenseShare.objects.create(**data_object)
-        return expense_share
-
-    @staticmethod
-    def declare_debt(user_id: str, trip_id: str, debt_data: dict):
-        return ExpenseShareService.__declare_expense_share(user_id, trip_id, debt_data, DebtInputSerializer)
-
-    @staticmethod
-    def declare_refund(user_id: str, trip_id: str, refund_data: dict):
-        return ExpenseShareService.__declare_expense_share(user_id, trip_id, refund_data, RefundInputSerializer)
-
-    @staticmethod
-    def update_expense_share(user_id: str, trip_id: str, share_id: str, share_data: dict, serializer_class):
-        """
-        Update a debt or refund for a user.
-        """
-        share = ExpenseShare.objects.get(expense_share_id=share_id)
-        if share.expense.trip_participation.user.user_id != user_id or share.expense.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(
-                f"Mismatch between the user or trip present in the url arguments and the attributes of the expense"
-                f" in the payload")
-
-        share_serializer = serializer_class(data=share_data)
-        share_serializer.is_valid(raise_exception=True)
-
-        return share_serializer.update(share, share_serializer.validated_data)
-
-    @staticmethod
-    def update_debt(user_id: str, trip_id: str, debt_id: str, debt_data: dict):
-        return ExpenseShareService.update_expense_share(user_id, trip_id, debt_id, debt_data, DebtInputSerializer)
-
-    @staticmethod
-    def update_refund(user_id: str, trip_id: str, refund_id: str, refund_data: dict):
-        return ExpenseShareService.update_expense_share(user_id, trip_id, refund_id, refund_data, RefundInputSerializer)
-
-    @staticmethod
-    def get_all_debts(user_id: str, trip_id: str):
-        """
-        Get all debts for a user in a trip.
-        """
-        return ExpenseShare.objects.filter(expense__trip_participation__user=user_id,
-                                           expense__trip_participation__trip=trip_id, refund_amount=None)
-
-    @staticmethod
-    def get_all_refunds(user_id: str, trip_id: str):
-        """
-        Get all refunds for a user in a trip.
-        """
-        return ExpenseShare.objects.filter(expense__trip_participation__user=user_id,
-                                           expense__trip_participation__trip=trip_id, due_amount=None)
-
-    @staticmethod
-    def get_expense_share_by_id(user_id: str, trip_id: str, expense_share_id: str):
-        """
-        Get a specific debt or refund for a user in a trip.
-        """
-        expense_share = ExpenseShare.objects.get(expense_share_id=expense_share_id)
-        if expense_share.expense.trip_participation.user.user_id != user_id or expense_share.expense.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(
-                f"Mismatch between the user or trip present in the url arguments and the attributes of the expense"
-                f" in the refund payload")
-        return expense_share
-
-    @staticmethod
-    def delete_expense_share(user_id: str, trip_id: str, expense_share_id: str):
-        """
-        Delete a debt or refund for a user in a trip.
-        """
-        expense_share = ExpenseShare.objects.get(expense_share_id=expense_share_id)
-        if expense_share.expense.trip_participation.user.user_id != user_id or expense_share.expense.trip_participation.trip.trip_id != trip_id:
-            raise ValueError(
-                f"Mismatch between the user or trip present in the url arguments and the attributes of the expense"
-                f" in the refund payload")
-        expense_share.delete()
-        return expense_share
-
-
-############################################################################################################
 class CategoryService:
-    # @staticmethod
-    # def create_category(name: str):
-    #     category = ExpenseCategory.objects.create(name=name)
-    #     category.save()
-    #     return category
-
     @staticmethod
     def get_category(category_id: str):
         category = ExpenseCategory.objects.get(category_id=category_id)
@@ -231,16 +113,3 @@ class CategoryService:
     @staticmethod
     def get_all_categories():
         return ExpenseCategory.objects.all()
-
-    # @staticmethod
-    # def update_category(category_id: str, name: str):
-    #     category = ExpenseCategory.objects.get(category_id=category_id)
-    #     category.name = name
-    #     category.save()
-    #     return category
-    #
-    # @staticmethod
-    # def delete_category(category_id: str):
-    #     category = ExpenseCategory.objects.get(category_id=category_id)
-    #     category.delete()
-    #     return category
