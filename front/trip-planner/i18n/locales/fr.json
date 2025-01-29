@@ -305,7 +305,8 @@
     "end": "Date de fin",
     "name": "Nom",
     "start": "Date de début",
-    "triplist-title": "Mes voyages"
+    "triplist-title": "Mes voyages",
+    "leave": "Sortie du voyage"
   },
   "visits": {
     "fields": {

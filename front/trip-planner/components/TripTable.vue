@@ -13,8 +13,14 @@ const trips: ModelRef<Trip[]> = defineModel<Trip[]>('trips', {
   required: true
 }) as ModelRef<Trip[]>;
 
+const tripRows = computed(() => trips.value.map((trip) => ({
+  ...trip,
+  isOwner: trip.owner_id === authStore.user.id
+})));
+
 const { t, locale } = useI18n();
 const toast = useToast();
+const authStore = useAuthStore();
 
 const sort = ref({
   column: 'start_date',
@@ -68,19 +74,45 @@ const deleteTrip = async (tripId: number) => {
     });
   }
 }
+
+const leaveTrip = async (tripId: number) => {
+  const { status } = await useApiFetch(`/trips/${tripId}/leave`, {
+    method: 'POST'
+  });
+  if (status.value === 'success') {
+    trips.value = trips.value.filter((trip) => trip.trip_id !== tripId);
+    toast.add({
+      title: t('trips.leave'),
+      description: t('misc.success'),
+      icon: 'i-heroicons-check-badge',
+      color: "green",
+      timeout: 2000,
+    });
+  }
+  else {
+    toast.add({
+      title: t('trips.leave'),
+      description: t('misc.error'),
+      icon: 'i-heroicons-x-circle',
+      color: "red",
+      timeout: 2000,
+    });
+  }
+}
 </script>
 
 <template>
   <UTable
       :columns
       :sort
-      :rows="trips"
+      :rows="tripRows"
       :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: t('misc.loading') }"
       :progress="{ color: 'primary', animation: 'carousel' }"
       :empty-state="{ icon: 'i-heroicons-circle-stack-20-solid', label: t('misc.no-items') }"
   >
     <template #trip_name-data="{ row }">
-      <NuxtLink :to="`/home/trips/${row.trip_id}`">{{ row.trip_name }}</NuxtLink>
+      <NuxtLink :to="`/home/trips/${row.trip_id}`" class="font-semibold underline text-left">{{ row.trip_name }}</NuxtLink>
+      <UBadge v-if="row.isOwner" color="primary" size="xs" variant="soft" class="ml-6">{{ t('share.owner') }}</UBadge>
     </template>
 
     <template #start_date-data="{ row }">
@@ -110,6 +142,7 @@ const deleteTrip = async (tripId: number) => {
             :to="`/home/trips/${row.trip_id}/edit`"
         />
         <UButton
+            v-if="row.isOwner"
             icon="i-heroicons-trash"
             size="xs"
             color="red"
@@ -117,6 +150,14 @@ const deleteTrip = async (tripId: number) => {
             variant="solid"
             @click="deleteTrip(row.trip_id)"
         />
+        <UButton
+          v-if="!row.isOwner"
+          icon="i-heroicons-arrow-right-start-on-rectangle-20-solid"
+          size="xs"
+          color="red"
+          square
+          variant="solid"
+          @click="leaveTrip(row.trip_id)" />
       </div>
     </template>
   </UTable>
