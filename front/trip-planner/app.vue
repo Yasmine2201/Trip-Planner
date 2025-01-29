@@ -13,7 +13,7 @@
 
   const getTitle = computed(() => {
     const pageName = $router.currentRoute.value.meta.title;
-    console.log("PAGE: ", pageName);
+    console.debug("PAGE: ", pageName);
     return `${t(pageName)} • TripPlanner`;
   });
 
