@@ -4,12 +4,13 @@ import {type BudgetDto, budgetSchema} from "~/schemas/expense";
 import type {FormSubmitEvent} from "#ui/types";
 import {ref} from "vue";
 import {FetchError} from "ofetch";
-import {number} from "zod";
 
 
-const props = defineProps({
-  budgetData: {type: number, default: 0},
-});
+const props = defineProps<{
+  budgetData?: number
+}>();
+
+const { budgetData = 0 } = props;
 
 const emits = defineEmits<{
   onSave: (data: BudgetDto) => void
@@ -21,7 +22,7 @@ const route = useRoute();
 const tripId = ref(route.params.tripId);
 
 const state = reactive({
-  budget: props.budgetData
+  budget: budgetData
 });
 
 const formError = ref('');

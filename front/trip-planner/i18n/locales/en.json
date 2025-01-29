@@ -36,7 +36,6 @@
     "add-expense": "Add expense",
     "debts-and-credits": "Debts and credits",
     "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
-    "declared-budget": "Declared my budget",
     "edit-budget": "Edit budget",
     "expenses": "Expenses",
     "expenses-description": "Here you can see all the expenses of the trip",
@@ -49,7 +48,9 @@
     "transport": "Transport",
     "declare-budget": "Declare my budget",
     "visit": "Visit",
-    "shopping": "Shopping"
+    "shopping": "Shopping",
+    "forecasted-expenses": "Forecasted",
+    "effective-expenses": "Effective"
   },
   "create_trip": {
     "trip_create_button": "Create a trip",

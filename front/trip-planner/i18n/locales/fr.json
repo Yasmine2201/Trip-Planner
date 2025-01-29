@@ -48,7 +48,9 @@
     "transport": "Transport",
     "declare-budget": "Déclarer mon budget",
     "visit": "Visite",
-    "shopping": "Shopping"
+    "shopping": "Shopping",
+    "forecasted-expenses": "Prévisionnel",
+    "effective-expenses": "Effectif"
   },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
