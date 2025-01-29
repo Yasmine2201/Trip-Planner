@@ -15,6 +15,15 @@ export type User = {
   languages: string | null;
 }
 
+export type PublicUser = {
+  user_id: string,
+  alias: string,
+  first_name: string,
+  profile_picture: Image | null,
+  description: string,
+  languages: string
+}
+
 export type Error = {
   error_code: string;
   message: string;

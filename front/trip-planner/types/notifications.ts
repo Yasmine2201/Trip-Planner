@@ -12,5 +12,4 @@ export enum NotificationType {
     InvitationReceived = 'InvitationReceived',
     InvitationAccepted = 'InvitationAccepted',
     InvitationDeclined = 'InvitationDeclined',
-
 }

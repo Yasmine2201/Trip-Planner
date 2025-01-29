@@ -1,7 +1,8 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
 import {ref} from "vue";
-import type {PublicUser} from "~/types/invitation";
+import type {PublicUser, Trip} from "~/types/";
+import type {AsyncData} from "#app";
 
 const {t} = useI18n();
 definePageMeta({
@@ -11,11 +12,12 @@ definePageMeta({
 });
 
 const route = useRoute();
-const tripId = ref(route.params.tripId);
+const tripId = Number(route.params.tripId);
 
-const members = ref<PublicUser[]>([]);
-const membersResponse = await useApiFetch<PublicUser[]>(`/trips/${tripId.value}/members`);
-members.value = membersResponse.data.value ?? [];
+const {data: trip}: AsyncData<Trip, any> = await useApiFetch(`/trips/${tripId}`);
+const members = ref<PublicUser[]>(trip.value.members);
+
+const isOwner = (user: PublicUser) => user.user_id === trip.value.owner_id;
 
 </script>
 
@@ -29,34 +31,35 @@ members.value = membersResponse.data.value ?? [];
   <ul class="space-y-4 max-h-96 overflow-y-auto">
     <UCard v-for="member in members" :key="member.user_id" class="border border-gray-200 dark:border-gray-700">
       <div class="flex justify-between items-center">
-        <div class="flex items-center">
-          <UAvatar icon="i-uil-user" size="sm" :src="member.profile_picture?.url" class="mr-3"/>
+        <div class="flex items-center gap-4">
+          <UAvatar :src="member.profile_picture?.url" class="mr-3" icon="i-uil-user" size="sm"/>
           <div>
-            <span class="text-lg text-primary-500">{{ member.first_name }}</span>
-            <br>
+            <div class="space-x-6 flex items-center"><span class="text-lg text-primary-500">{{ member.first_name }}</span>
+              <UBadge v-if="isOwner(member)" color="primary" size="xs" variant="soft">{{ t('share.owner') }}</UBadge>
+            </div>
             <span class="text-sm text-gray-500">{{ member.alias }}</span>
           </div>
         </div>
         <div class="space-x-2 mr-2">
           <UTooltip :title="t('share.see-profile')">
             <UButton
+                :to="`/home/profile/${member.user_id}`"
                 color="primary"
                 icon="i-heroicons-eye"
                 size="sm"
                 square
                 variant="solid"
-                :to="`/home/profile/${member.user_id}`"
             />
           </UTooltip>
-<!--          <UTooltip :title="t('share.delete-from-trip')">-->
-<!--            <UButton-->
-<!--                color="red"-->
-<!--                icon="i-heroicons-trash"-->
-<!--                size="sm"-->
-<!--                square-->
-<!--                variant="solid"-->
-<!--            />-->
-<!--          </UTooltip>-->
+          <!--          <UTooltip :title="t('share.delete-from-trip')">-->
+          <!--            <UButton-->
+          <!--                color="red"-->
+          <!--                icon="i-heroicons-trash"-->
+          <!--                size="sm"-->
+          <!--                square-->
+          <!--                variant="solid"-->
+          <!--            />-->
+          <!--          </UTooltip>-->
         </div>
       </div>
     </UCard>

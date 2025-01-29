@@ -1,24 +1,6 @@
-export type PublicUser = {
-    user_id: string,
-    alias: string,
-    first_name: string,
-    profile_picture: ProfilePicture | null,
-    description: string,
-    languages: string
-}
-type ProfilePicture = {
-    name: string,
-    url: string
-}
-type Trip = {
-    trip_id: number
-    trip_name: string
-    start_date: string
-    end_date: string
-    latitude: number
-    longitude: number
-    radius: number
-}
+import type {PublicUser} from "~/types/core";
+import type {Trip} from "~/types/trips";
+
 export type Invitation = {
     trip_invitation_id: number,
     status: string,

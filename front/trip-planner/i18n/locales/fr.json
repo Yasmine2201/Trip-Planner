@@ -363,6 +363,8 @@
     "link": "Voici le lien d'invitation",
     "invitation": "vous invite à rejoindre son voyage",
     "from": "de",
-    "to": "à"
+    "to": "à",
+    "no-invitations": "Pas d'invitations pour le moment",
+    "owner": "Propriétaire"
   }
 }

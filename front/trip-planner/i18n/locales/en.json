@@ -363,6 +363,8 @@
     "link": " Here is the invitation link",
     "invitation": "invites you to join their trip",
     "from": "from",
-    "to": "to"
+    "to": "to",
+    "no-invitations": "No invitations for the moment",
+    "owner": "Owner"
   }
 }

@@ -1,4 +1,4 @@
-import type {Image} from "~/types/core";
+import type {Image, PublicUser} from "~/types/core";
 
 export type Trip = {
   trip_id: number;
@@ -9,4 +9,6 @@ export type Trip = {
   longitude: number;
   radius: number;
   image: Image | null;
+  owner_id: string;
+  members: PublicUser[];
 }

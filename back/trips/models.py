@@ -30,6 +30,7 @@ class TripParticipation(models.Model):
     def __str__(self):
         return f"TripParticipation(id={self.trip_participation_id}, trip_id={self.trip_id}, user_id={self.user_id})"
 
+
 class TripInvitation(models.Model):
     class TripInvitationStatus(models.TextChoices):
         ACCEPTED = 'accepted'

@@ -102,6 +102,8 @@ class TripService:
         Get all users participating in a trip.
         """
         return TripParticipation.objects.filter(trip_id=trip_id)
+
+
 ########################################################################################################################
 
 class TripInvitationService:
@@ -113,23 +115,24 @@ class TripInvitationService:
 
         if TripService.check_participation(Trip.objects.get(trip_id=trip_id), user, is_owner=True):
             return TripInvitation.objects.filter(sender=user, trip=trip_id)
-        else :
+        else:
             raise ForbiddenActionError("User is not the owner of the trip.")
 
     @staticmethod
-    def get_sent_trip_invitations_by_id(user: User, trip_id : int, trip_invitation_id: int):
+    def get_sent_trip_invitations_by_id(user: User, trip_id: int, trip_invitation_id: int):
         """
         Get a specific trip invitation sent by user.
         """
         trip_invitation = TripInvitation.objects.get(trip_invitation_id=trip_invitation_id)
 
         if trip_invitation.sender != user or trip_invitation.trip.trip_id != trip_id:
-            raise ForbiddenActionError(f"User {user} is not the sender of the invitation or the trip {trip_id} id does not match what is in the invitation.")
+            raise ForbiddenActionError(
+                f"User {user} is not the sender of the invitation or the trip {trip_id} id does not match what is in the invitation.")
 
         return trip_invitation
 
     @staticmethod
-    def create_trip_invitation(sender : User, receiver_alias: str, trip_id: int):
+    def create_trip_invitation(sender: User, receiver_alias: str, trip_id: int):
         """
         Create a trip invitation from one user to another.
         """
@@ -144,7 +147,7 @@ class TripInvitationService:
 
         trip = Trip.objects.get(trip_id=trip_id)
 
-        trip_invitation = TripInvitation.objects.create(trip= trip, sender=sender, receiver=receiver)
+        trip_invitation = TripInvitation.objects.create(trip=trip, sender=sender, receiver=receiver)
         trip_invitation.save()
 
         return trip_invitation
@@ -158,6 +161,7 @@ class TripInvitationService:
 
         trip_invitation.delete()
         return trip_invitation
+
     ###########################################
     @staticmethod
     def get_received_trip_invitations(receiver: User):
@@ -177,6 +181,7 @@ class TripInvitationService:
             raise ValueError(f"User {receiver} is not the receiver of the invitation.")
 
         return trip_invitation
+
     @staticmethod
     def accept_trip_invitation(receiver: User, trip_invitation_id: int):
         """
@@ -186,7 +191,7 @@ class TripInvitationService:
         if trip_invitation.receiver != receiver:
             raise ValueError(f"User {receiver} is not the receiver of the invitation.")
 
-        trip_invitation.status= TripInvitation.TripInvitationStatus.ACCEPTED
+        trip_invitation.status = TripInvitation.TripInvitationStatus.ACCEPTED
 
         if TripParticipation.objects.filter(trip=trip_invitation.trip, user=receiver).exists():
             raise ValidationError("You have already accepted this trip invitation")
@@ -211,6 +216,7 @@ class TripInvitationService:
         trip_invitation.save()
 
         return trip_invitation
+
 
 ########################################################################################################################
 class TripParticipationService:
