@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import type {User} from "~/types";
+
 const {t} = useI18n();
 const authStore = useAuthStore();
 const $router = useRouter();
 
+const { user } = defineProps<{ user: User | null }>();
+
+console.log("User", user);
 const profileItems = computed(() => [
   [{
     slot: 'name',
@@ -30,7 +35,7 @@ const logout = async () => {
 
 <template>
   <UDropdown :items="profileItems" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }">
-    <UAvatar icon="i-uil-user" size="sm" :src="authStore.user?.avatarImage"/>
+    <UAvatar icon="i-uil-user" size="sm" :src="user?.avatarImage" class="object-scale-down"/>
 
     <template #name="{ item }">
       <div class="text-left">

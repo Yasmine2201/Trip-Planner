@@ -54,7 +54,7 @@ const handleDecline = async (invitationId: number) => {
         <div class="flex justify-between items-center">
           <div class="flex items-center">
             <UTooltip :title="invitation.sender.alias">
-              <UAvatar icon="i-uil-user" size="md" :src="invitation.sender.profile_picture?.url" class="mr-3"/>
+              <UAvatar icon="i-uil-user" size="md" :src="invitation.sender.profile_picture?.url" class="mr-3 object-scale-down"/>
             </UTooltip>
             <div>
               <div>
@@ -93,7 +93,7 @@ const handleDecline = async (invitationId: number) => {
       </UCard>
     </transition-group>
   </ul>
-  <p class="text-lg p-6 text-center">{{ t('share.no-invitations') }}</p>
+  <p v-else class="text-lg p-6 text-center">{{ t('share.no-invitations') }}</p>
 
 
 </template>
