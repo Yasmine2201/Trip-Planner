@@ -25,7 +25,7 @@ class VisitService:
         if trip.trip_id != trip_id:
             raise ValueError(f"Mismatch between trip_id in URL and trip_id in request body")
 
-        if not TripService.check_participation(trip, user, is_owner=True):
+        if not TripService.check_participation(trip, user):
             raise ForbiddenActionError(f"User is not part of the trip")
 
         visit = Visit.objects.create(**visit_data_object)

@@ -4,7 +4,7 @@ import {Notifications} from "~/types/notifications";
 import {NotificationsList} from "#components";
 
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 const route = useRoute();
 const toast = useToast();
 const slideover = useSlideover();
@@ -14,6 +14,13 @@ const notifications = ref<Notifications[]>(await notificationsStore.fetchNotific
 
 const getNotificationText = (content: string) => {
   const notification = JSON.parse(content);
+  for (const key in notification.data) {
+    if (isValidDate(notification.data[key]) && typeof(notification.data[key]) === 'string') {
+      let date = new Date(notification.data[key]);
+      notification.data[key] = date.toLocaleString([locale.value], { dateStyle: 'short', timeStyle: 'short' });
+    }
+  }
+
   return t(notification.message, notification.data);
 }
 
@@ -31,7 +38,7 @@ watch(route, async () => {
         title: getNotificationText(notification.content),
         icon: notificationProps[notification.type].icon,
         color: 'primary',
-        duration: 2000
+        timeout: 2000
       });
     }
   }

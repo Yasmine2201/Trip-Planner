@@ -265,7 +265,8 @@
       "invitation-created": "You have created an invitation for trip",
       "invitation-received": "You have received an invitation for trip '{tripName}' from '{alias}'",
       "invitation-accepted": "'{alias}' has accepted your invitation the your trip '{tripName}'",
-      "invitation-declined": "'{alias}' has declined your invitation for the trip '{tripName}'"
+      "invitation-declined": "'{alias}' has declined your invitation for the trip '{tripName}'",
+      "visit-request": "A visist named {visitName} was created in trip {tripName} from {startDate} to {endDate}. Please inform about your participation."
     },
     "deleted": "Notification deleted",
     "mark-as-read": "Mark as read",
@@ -279,7 +280,8 @@
       "invitation-created": "Invitation created",
       "invitation-received": "Received Invitation",
       "invitation-accepted": "Invitation accepted",
-      "invitation-declined": "Invitation declined"
+      "invitation-declined": "Invitation declined",
+      "visit-request": "New visit"
     },
     "view-all": "View all"
   },

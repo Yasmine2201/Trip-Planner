@@ -1,4 +1,4 @@
-export default function getNotificationProps(notificationContent, t) {
+export default function getNotificationProps(notificationContent: { data: any }, t) {
   return {
     'AddToTrip': {
       label: t('notifications.type.add-to-trip'),
@@ -11,19 +11,24 @@ export default function getNotificationProps(notificationContent, t) {
       link: () => `/home/trips/${notificationContent.data.tripId}/budget`
     },
     'InvitationReceived': {
-        label: t('notifications.type.invitation-received'),
-        icon: 'ic:outline-markunread-mailbox',
-        link: () => `/home/invitations`
+      label: t('notifications.type.invitation-received'),
+      icon: 'ic:outline-markunread-mailbox',
+      link: () => `/home/invitations`
     },
     'InvitationAccepted': {
-        label: t('notifications.type.invitation-accepted'),
-        icon: 'material-symbols:check-circle-outline',
-        link: () => `/home/trips/${notificationContent.data.tripId}/members`
+      label: t('notifications.type.invitation-accepted'),
+      icon: 'material-symbols:check-circle-outline',
+      link: () => `/home/trips/${notificationContent.data.tripId}/members`
     },
     'InvitationDeclined': {
-        label: t('notifications.type.invitation-declined'),
-        icon: 'material-symbols:cancel-outline',
-        link: () => `/home/trips/${notificationContent.data.tripId}/members`
+      label: t('notifications.type.invitation-declined'),
+      icon: 'material-symbols:cancel-outline',
+      link: () => `/home/trips/${notificationContent.data.tripId}/members`
+    },
+    "VisitRequest": {
+      label: t('notifications.type.visit-request'),
+      icon: 'material-symbols:location-on',
+      link: () => `/home/trips/${notificationContent.data.tripId}/visits`
     }
   }
 }

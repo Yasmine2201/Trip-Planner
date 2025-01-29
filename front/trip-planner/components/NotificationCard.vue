@@ -2,7 +2,7 @@
 import {Notifications} from "~/types/notifications";
 import getNotificationProps from "~/utils/getNotificationProps";
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 const router = useRouter();
 
 const notification = defineModel<Notifications>({
@@ -30,6 +30,18 @@ const closeButton = props.canClose ? {
 } : null;
 
 const content = JSON.parse(notification.value.content);
+
+const getNotificationText = (content: string) => {
+  const notification = JSON.parse(content);
+  for (const key in notification.data) {
+    if (isValidDate(notification.data[key]) && typeof(notification.data[key]) === 'string') {
+      let date = new Date(notification.data[key]);
+      notification.data[key] = date.toLocaleString([locale.value], {dateStyle: 'long', timeStyle: 'short'});
+    }
+  }
+
+  return t(notification.message, notification.data);
+}
 
 const getActions = () => {
   return [
@@ -84,7 +96,7 @@ const handleDeleteNotification = async () => {
                  :actions="getActions(notification)"
                  :close-button
                  :color="notification.is_read ? 'gray' : 'primary'"
-                 :description="t(content.message, content.data)"
+                 :description="getNotificationText(notification.content)"
                  :icon="typeProps[notification.type].icon"
                  :timeout="0"
                  :title="typeProps[notification.type].label"
