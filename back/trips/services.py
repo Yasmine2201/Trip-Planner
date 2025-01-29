@@ -1,4 +1,3 @@
-from aiohttp.web_routedef import static
 from rest_framework.exceptions import ValidationError
 
 from core.models import User
@@ -171,16 +170,6 @@ class TripInvitationService:
         trip_invitation = TripInvitation.objects.create(trip=trip, sender=sender, receiver=receiver)
         trip_invitation.save()
 
-        return trip_invitation
-
-    @staticmethod
-    def delete_trip_invitation(user: User, trip_id, trip_invitation_id: int):
-        """
-        Delete a trip invitation.
-        """
-        trip_invitation = TripInvitationService.get_sent_trip_invitations_by_id(user, trip_id, trip_invitation_id)
-
-        trip_invitation.delete()
         return trip_invitation
 
     ###########################################

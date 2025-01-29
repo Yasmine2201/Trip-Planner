@@ -174,19 +174,6 @@ class TripSentInvitation(ProtectableAPIView):
         except Trip.DoesNotExist:
             return Response({"error": NOT_FOUND_ERROR.format(Model="Trip")}, status=404)
 
-    @staticmethod
-    def delete(request, trip_id, invitation_id):
-        """
-        Delete a specific trip invitation.
-        """
-        try:
-            TripInvitationService.delete_trip_invitation(request.user, trip_id, invitation_id)
-            return Response(status=204)
-        except TripInvitation.DoesNotExist:
-            return Response({"error": NOT_FOUND_ERROR.format(Model="TripInvitation")}, status=404)
-        except ValueError as e:
-            return Response({"error": str(e)}, status=400)
-
 
 class TripReceivedInvitation(ProtectableAPIView):
 
