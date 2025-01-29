@@ -22,35 +22,41 @@ GET http://localhost:8000/api/locations?lat=48.3&lon=7.5&radius=5&sort_by=name&s
 ### GET viewport locations
 GET localhost:8000//api/locations?min_price=0&max_price=1000&search=jar&page=1&pageSize=100&only_prices=false&min_lat=48.19607397283394&max_lat=48.33046303150273&min_lon=7.4154278097097945&max_lon=7.6090618429129195
 
-### Visits tests
-POST http://localhost:8000/api/trips/1/visits
+### Visits tests 1
+POST http://localhost:8000/api/trips/9/visits
 Content-Type: application/json
 
 {
   "location_id": 2,
-  "trip_id": 1,
+  "trip_id": 9,
   "name": "Paris",
   "start_date": "2021-12-01",
   "end_date": "2021-12-10"
 }
 
 ### GET all visits
-GET http://localhost:8000/api/trips/4/visits
+GET http://localhost:8000/api/trips/9/visits
 
 ### GET visit by id
-GET http://localhost:8000/api/trips/4/visits/1
+GET http://localhost:8000/api/trips/9/visits/1
 
 ### PUT visit
-PUT http://localhost:8000/api/trips/4/visits/2
+PUT http://localhost:8000/api/trips/9/visits/2
 Content-Type: application/json
 
 {
   "location_id": 2,
-  "trip_id": 4,
+  "trip_id": 9,
   "name": "Algiers",
   "start_date": "2021-12-01",
   "end_date": "2021-12-10"
 }
 
+### GET all visit participations via visit
+GET http://localhost:8000/api/trips/9/visits/4/participations
+
+### GET all visit participations via trip
+GET http://localhost:8000/api/trips/9/visits_participations
+
 ### DELETE visit
-DELETE http://localhost:8000/api/trips/4/visits/2
+DELETE http://localhost:8000/api/trips/9/visits/9

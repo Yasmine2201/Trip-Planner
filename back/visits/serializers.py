@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
+from core.models import User
 from core.serializers import ImageSerializer
 from trips.models import Trip
-from visits.models import Visit, Location, LocationPrice, LocationPicture
+from visits.models import Visit, Location, LocationPrice, LocationPicture, VisitParticipation
 
 
 # Locations
@@ -113,7 +114,6 @@ class VisitInputSerializer(serializers.ModelSerializer):
 
         return data
 
-
 class VisitSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
     trip_id = serializers.IntegerField(source='trip.trip_id')
@@ -121,3 +121,30 @@ class VisitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visit
         exclude = ('trip',)
+
+class VisitParticipationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VisitParticipation
+        fields = '__all__'
+
+class VisitParticipationInputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VisitParticipation
+        fields = ['visit_participation_id', 'visit_id', 'user_id', 'status']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        visit_id = instance['visit_id']
+        if 'visit_id' in data:
+            del data['visit_id']
+        data['visit'] = Visit.objects.get(visit_id=visit_id)
+
+        user_id = instance['user_id']
+        if 'user_id' in data:
+            del data['user_id']
+        data['user'] = User.objects.get(user_id=user_id)
+
+        return data
+
+

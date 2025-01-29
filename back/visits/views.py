@@ -6,9 +6,9 @@ from rest_framework.views import APIView
 from authentication.utils import ProtectableAPIView
 from trips.models import Trip
 from utils import ForbiddenActionError
-from visits.models import Location, Visit
-from visits.serializers import LocationSerializer, VisitSerializer
-from visits.services import VisitService, LocationService
+from visits.models import Location, Visit, VisitParticipation
+from visits.serializers import LocationSerializer, VisitSerializer, VisitParticipationSerializer
+from visits.services import VisitService, LocationService, VisitParticipationService
 
 
 # Create your views here.
@@ -54,7 +54,7 @@ class VisitView(ProtectableAPIView):
     @staticmethod
     def __get_all_visits(request: Request, trip_id: int) -> Response:
         try:
-            visits = VisitService.get_all_visits(request.user, trip_id)
+            visits = VisitService.get_all_visits(trip_id) # request.user,
             if visits is None:
                 return Response({"error": "No visits found"}, status=404)
 
@@ -103,6 +103,68 @@ class VisitView(ProtectableAPIView):
 
         except Visit.DoesNotExist:
             return Response({"error": "Visit not found"}, status=404)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+        except ForbiddenActionError as e:
+            return Response({"error": str(e)}, status=403)
+
+
+class VisitParticipationView(ProtectableAPIView):
+
+    @staticmethod
+    def get(request: Request, trip_id: int, visit_id: int = None):
+        """
+        Get all visit participations for a visit.
+        """
+        try:
+            visit_participations = VisitParticipationService.get_all_visit_participations(request.user, trip_id, visit_id)
+            serializer = VisitParticipationSerializer(visit_participations, many=True)
+            return Response(serializer.data, status=200)
+        except Visit.DoesNotExist:
+            return Response({"error": "Visit not found"}, status=404)
+        except ForbiddenActionError as e:
+            return Response({"error": str(e)}, status=403)
+
+    @staticmethod
+    def put(request: Request, trip_id: int, visit_id: int, visit_participation_id: int = None):
+        """
+        Update a visit participation for a user.
+        """
+        try:
+            if VisitService.check_visit_participation(visit=Visit.objects.get(visit_id=visit_id), user=request.user):
+                visit_participation = VisitParticipationService.update_visit_participation(request.user, visit_id, visit_participation_id, request.data)
+            else:
+                visit_participation = VisitParticipationService.create_visit_participation(request.user, visit_id)
+            serializer = VisitParticipationSerializer(visit_participation)
+            return Response(serializer.data, status=200)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+        except ForbiddenActionError as e:
+            return Response({"error": str(e)}, status=403)
+
+    @staticmethod
+    def post(request: Request, trip_id: int, visit_id: int):
+        """
+        Create a new visit participation for a user.
+        """
+        try:
+            visit_participation = VisitParticipationService.create_visit_participation(request.user, trip_id, visit_id)
+            serializer = VisitParticipationSerializer(visit_participation)
+            return Response(serializer.data, status=200)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+        except ForbiddenActionError as e:
+            return Response({"error": str(e)}, status=403)
+
+    @staticmethod
+    def delete(request: Request, trip_id: int, visit_id: int, visit_participation_id: int):
+        """
+        Delete a visit participation for a user.
+        """
+        try:
+            visit_participation = VisitParticipationService.delete_visit_participation(request.user, trip_id, visit_id, visit_participation_id)
+            serializer = VisitParticipationSerializer(visit_participation)
+            return Response(serializer.data, status=200)
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
         except ForbiddenActionError as e:

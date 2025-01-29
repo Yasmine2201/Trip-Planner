@@ -36,6 +36,7 @@
     "add-expense": "Add expense",
     "debts-and-credits": "Debts and credits",
     "debts-and-credits-description": "Here you can see all the debts and credits of the trip",
+    "declare-budget": "Declare my budget",
     "declared-budget": "Declared my budget",
     "edit-budget": "Edit budget",
     "expenses": "Expenses",
@@ -45,11 +46,10 @@
     "manage-expenses": "Manage my expenses",
     "others": "Others",
     "remaining-budget": "Remaining budget",
+    "shopping": "Shopping",
     "title": "Budget",
     "transport": "Transport",
-    "declare-budget": "Declare my budget",
-    "visit": "Visit",
-    "shopping": "Shopping"
+    "visit": "Visit"
   },
   "create_trip": {
     "trip_create_button": "Create a trip",
@@ -57,14 +57,17 @@
     "trip_location": "Location",
     "trip_map": "Map",
     "trip_name": "Trip name",
-    "trip_start_date": "Start date",
-    "trip_name_placeholder": "My trip"
+    "trip_name_placeholder": "My trip",
+    "trip_start_date": "Start date"
   },
   "errors": {
     "actual-amount-positive": "Actual amount must be a positive number",
+    "alias-not-exists": "Alias does not exist",
     "alias-required": "Alias is required.",
     "already-have-account": "Already have an account ? Login here.",
+    "already-invited": "Already invited to the trip",
     "birthdate-invalid": "Invalid birthdate.",
+    "budget-positive": "Budget must be a positive number",
     "category-invalid": "Invalid category",
     "category-required": "Category is required",
     "confirm-password-required": "Please repeat your password.",
@@ -85,23 +88,20 @@
     "last-name-required": "Last name is required.",
     "must-be-number": "Must be a number",
     "name-required": "Name is required.",
+    "name-too-long": "Name too long",
     "oops": "Something went wrong.",
     "page-not-found": "404 - Page not found",
     "password-rejected": "Invalid password",
     "password-required": "Password is required.",
     "passwords-must-match": "Passwords must match.",
     "planned-amount-positive": "Planned amount must be a positive number",
+    "quantity-positive": "Quantity must be positive",
+    "quantity-whole": "Quantites must be whole numbers",
     "radius-required": "Radius is required and must be a positive number",
     "sent-invalid-data": "Sent invalid data",
     "start-date-before-end-date": "Start date must be before end date",
     "trip-name-required": "Trip name is required",
-    "unknown-error": "Please retry later.",
-    "budget-positive": "Budget must be a positive number",
-    "name-too-long": "Name too long",
-    "quantity-positive": "Quantity must be positive",
-    "quantity-whole": "Quantites must be whole numbers",
-    "alias-not-exists": "Alias does not exist",
-    "already-invited": "Already invited to the trip"
+    "unknown-error": "Please retry later."
   },
   "expense": {
     "actual-amount": "Actual Amount",
@@ -119,11 +119,10 @@
     },
     "category": "Category",
     "delete-many-tooltip": "Select more than one expense to delete them",
-    "visit-tooltip": "Go see the visit",
     "delete-selected": "Delete expenses",
     "description": "Description",
     "edit-expense": "Edit expense",
-    "visit": "Visit",
+    "expense": "Expense",
     "expense-id": "ID",
     "is-shared": "Shared ?",
     "name": "Name",
@@ -140,18 +139,19 @@
     },
     "planned-amount": "Planned Amount",
     "planned-amount-short": "Planned",
-    "yes": "Shared",
-    "expense": "Expense"
+    "visit": "Visit",
+    "visit-tooltip": "Go see the visit",
+    "yes": "Shared"
   },
   "form_visit": {
+    "change_location": "Change location",
+    "location": "Location",
+    "no_location": "No known location",
     "visit_create_button": "Create visit",
     "visit_end_date": "End date",
     "visit_modify_button": "Update the visit",
     "visit_name": "Visit name",
-    "visit_start_date": "Start date",
-    "change_location": "Change location",
-    "location": "Location",
-    "no_location": "No known location"
+    "visit_start_date": "Start date"
   },
   "language": {
     "af": "Afrikaans",
@@ -205,9 +205,35 @@
     "vi": "Vietnamese",
     "zh": "Chinese"
   },
+  "locations": {
+    "description": "Description",
+    "labels": {
+      "max-budget": "Max. price",
+      "min-budget": "Min. price",
+      "only-prices": "Hide unkown prices",
+      "radius": "Radius"
+    },
+    "popup": {
+      "too-many-locations": "Too many locations. Please filter or zoom in."
+    },
+    "price": {
+      "name": "Price name",
+      "no-description": "No description",
+      "no-prices": "No prices provided",
+      "price": "Price"
+    },
+    "price_range": {
+      "unknown": "Price unknown"
+    },
+    "titles": {
+      "select-location": "Places to visit"
+    }
+  },
   "misc": {
+    "add-expense": "Adding expense",
     "all": "All",
     "back": "Back",
+    "copied": "Copied",
     "delete": "Delete",
     "deletion": "Deletion",
     "edit": "Edit",
@@ -222,9 +248,7 @@
     "see": "See",
     "select": "Select",
     "select-value": "Select values",
-    "success": "Operation succeeded",
-    "add-expense": "Adding expense",
-    "copied": "Copied"
+    "success": "Operation succeeded"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -285,12 +309,21 @@
     "not-filled": "Not provided",
     "title": "My profile"
   },
+  "share": {
+    "alias": "Alias",
+    "delete-from-trip": "Delete from trip",
+    "headline": "Here are the people participating in your trip. Do you want to invite someone else ?",
+    "invite": "Invite a friend",
+    "link": " Here is the invitation link",
+    "placeholder": "pseudo2025",
+    "see-profile": "See profile"
+  },
   "trip_home": {
     "budget": "Budget",
+    "share": "Share",
     "trip_details": "Trip details",
     "trip_location_info": "You chose to go here",
-    "visits": "Visits",
-    "share": "Share"
+    "visits": "Visits"
   },
   "trips": {
     "end": "End date",
@@ -299,10 +332,17 @@
     "triplist-title": "My trips"
   },
   "visits": {
+    "display": {
+      "dates": "Visit from {start} to {end}.",
+      "fill-prices": "Add prices",
+      "price-quantity": "Quantity",
+      "total-price": "Total price"
+    },
     "fields": {
       "end_date": "End time",
       "location_name": "Location",
       "name": "Name",
+      "participation": "Participation",
       "start_date": "Start time"
     },
     "list": {
@@ -311,45 +351,6 @@
     },
     "title": {
       "finalize": "Finalize creation"
-    },
-    "display": {
-      "dates": "Visit from {start} to {end}.",
-      "fill-prices": "Add prices",
-      "price-quantity": "Quantity",
-      "total-price": "Total price"
     }
-  },
-  "locations": {
-    "titles": {
-      "select-location": "Places to visit"
-    },
-    "price_range": {
-      "unknown": "Price unknown"
-    },
-    "popup": {
-      "too-many-locations": "Too many locations. Please filter or zoom in."
-    },
-    "labels": {
-      "only-prices": "Hide unkown prices",
-      "radius": "Radius",
-      "min-budget": "Min. price",
-      "max-budget": "Max. price"
-    },
-    "description": "Description",
-    "price": {
-      "name": "Price name",
-      "price": "Price",
-      "no-description": "No description",
-      "no-prices": "No prices provided"
-    }
-  },
-  "share": {
-    "see-profile": "See profile",
-    "delete-from-trip": "Delete from trip",
-    "invite": "Invite a friend",
-    "headline": "Here are the people participating in your trip. Do you want to invite someone else ?",
-    "alias": "Alias",
-    "placeholder": "pseudo2025",
-    "link": " Here is the invitation link"
   }
 }

@@ -22,15 +22,15 @@ Content-Type: application/json
 ###
 GET http://localhost:8000/api/trips
 ###
-GET http://localhost:8000/api/trips/4
+GET http://localhost:8000/api/trips/1
 ###
 GET http://localhost:8000/api/trips/last
 ###
-PUT http://localhost:8000/api/trips/4
+PUT http://localhost:8000/api/trips/1
 Content-Type: application/json
 
 {
-  "trip_id": 4,
+  "trip_id": 1,
   "trip_name": "new Trip to the moon",
   "start_date": "2022-12-02",
   "end_date": "2022-12-31",
@@ -39,14 +39,14 @@ Content-Type: application/json
   "radius" : 0.0
 }
 ###
-DELETE http://localhost:8000/api/trips/4
+DELETE http://localhost:8000/api/trips/1
 ###
 
 ### Trip Invitations Tests
-POST http://localhost:8000/api/trips/4/invitations/?alias=Jojo3
+POST http://localhost:8000/api/trips/1/invitations/?alias=Jojo3
 ###
-GET http://localhost:8000/api/trips/4/invitations
+GET http://localhost:8000/api/trips/1/invitations
 ###
-GET http://localhost:8000/api/trips/4/invitations/3
+GET http://localhost:8000/api/trips/1/invitations/1
 ###
-DELETE http://localhost:8000/api/trips/4/invitations/4
+DELETE http://localhost:8000/api/trips/1/invitations/1

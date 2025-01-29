@@ -3,6 +3,10 @@ REM supabase start
 
 cd ../back
 
+if exist .venv\Scripts\activate (
+    call .venv\Scripts\activate
+)
+
 python manage.py makemigrations core
 python manage.py migrate core
 
@@ -17,3 +21,6 @@ python manage.py migrate visits
 
 python manage.py makemigrations budget
 python manage.py migrate budget
+
+python manage.py makemigrations
+python manage.py migrate

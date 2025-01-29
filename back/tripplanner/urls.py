@@ -5,8 +5,7 @@ from budget.views import BudgetView, ExpenseView, ExpenseShareView, CategoryView
 from notifications.views import NotificationView
 from core.views import CurrentUserView, OtherUsersView
 from trips.views import TripView, LastTripView, TripSentInvitation
-from visits.views import VisitView, LocationView
-
+from visits.views import VisitView, LocationView, VisitParticipationView
 
 urlpatterns = [
     # Authentication
@@ -53,6 +52,10 @@ urlpatterns = [
     # Visits
     path('api/trips/<int:trip_id>/visits', VisitView.as_view(), name='visit-view'),
     path('api/trips/<int:trip_id>/visits/<int:visit_id>', VisitView.as_view(), name='visit-view'),
+    path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations', VisitParticipationView.as_view(), name='visit-participation-view'),
+    path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations/<int:visit_participation_id>', VisitParticipationView.as_view(), name='visit-participation-view'),
+    path('api/trips/<int:trip_id>/visits/participations/', VisitParticipationView.as_view(), name='visit-participation-view'),
+
 
     # Locations
     path('api/locations', LocationView.as_view(), name='location-view'),

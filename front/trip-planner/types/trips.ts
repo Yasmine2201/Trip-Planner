@@ -1,4 +1,4 @@
-import type {Image} from "~/types/core";
+import type {Image, User} from "~/types/core";
 
 export type Trip = {
   trip_id: number;
@@ -9,4 +9,12 @@ export type Trip = {
   longitude: number;
   radius: number;
   image: Image | null;
+}
+
+export type TripInvitation = {
+    tripInvitationId: number;
+    trip: Trip;
+    user: User;
+    status: string;
+    url: string;
 }
