@@ -19,6 +19,8 @@ export const useApiFetch = <T>(url: string, options: UseFetchOptions<T> = {}, re
         } else if (response.status === 401) {
           await authStore.clearUser();
           navigateTo('/login');
+        } else if (response.status === 403) {
+          navigateTo('/forbidden');
         }
       },
       ...options as any,

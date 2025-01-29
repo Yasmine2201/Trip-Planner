@@ -4,7 +4,7 @@ from authentication.views import LoginView, LogoutView, RegisterView
 from budget.views import BudgetView, ExpenseView, CategoryView
 from notifications.views import NotificationView
 from core.views import CurrentUserView, OtherUsersView
-from trips.views import TripView, LastTripView, TripSentInvitation, TripReceivedInvitation
+from trips.views import TripView, LastTripView, TripSentInvitation, TripReceivedInvitation, LeaveTripView
 from visits.views import VisitView, LocationView
 
 
@@ -24,6 +24,7 @@ urlpatterns = [
     path('api/trips', TripView.as_view(), name='trip-view'),
     path('api/trips/<int:trip_id>', TripView.as_view(), name='trip-view'),
     path('api/trips/last', LastTripView.as_view(), name='trip-view'),
+    path('api/trips/<int:trip_id>/leave', LeaveTripView.as_view(), name='trip-leave-view'),
 
     # Trip Invitations
     # Sent

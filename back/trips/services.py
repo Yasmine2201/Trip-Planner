@@ -1,3 +1,4 @@
+from aiohttp.web_routedef import static
 from rest_framework.exceptions import ValidationError
 
 from core.models import User
@@ -80,6 +81,26 @@ class TripService:
 
         trip.delete()
         return trip
+
+    @staticmethod
+    def leave_trip(user: User, trip_id: int):
+        """
+        Leave a trip.
+
+        :param user: User object
+        :param trip_id: Trip id
+
+        :raises ValueError: If the user is the owner of the trip
+        :raises ForbiddenActionError: If the user is not participating in the trip
+        :raises Trip.DoesNotExist: If the trip does not exist
+        """
+        trip = TripService.get_user_trip_by_id(user, trip_id)
+
+        if TripService.check_participation(trip, user, is_owner=True):
+            raise ValueError("Owner cannot leave the trip.")
+
+        trip_participation = TripParticipation.objects.get(trip=trip, user=user)
+        trip_participation.delete()
 
     @staticmethod
     def check_participation(trip: Trip, user: User, is_owner: bool = False) -> bool:
@@ -216,15 +237,3 @@ class TripInvitationService:
         trip_invitation.save()
 
         return trip_invitation
-
-
-########################################################################################################################
-class TripParticipationService:
-
-    @staticmethod
-    def get_all_members(trip_id: int):
-        """
-        Get all members of a trip.
-        """
-        trip_participations = TripParticipation.objects.filter(trip_id=trip_id)
-        return [trip_participation.user for trip_participation in trip_participations]

@@ -98,6 +98,21 @@ class LastTripView(ProtectableAPIView):
         return Response(serializer.data)
 
 
+class LeaveTripView(ProtectableAPIView):
+
+    @staticmethod
+    def post(request: Request, trip_id: int):
+        try:
+            TripService.leave_trip(request.user, trip_id)
+            return Response(status=204)
+        except Trip.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="Trip")}, status=404)
+        except ForbiddenActionError as e:
+            return Response({"error": e.msg}, status=403)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+
+
 class TripSentInvitation(ProtectableAPIView):
 
     @staticmethod

@@ -102,7 +102,8 @@
     "quantity-positive": "Quantity must be positive",
     "quantity-whole": "Quantites must be whole numbers",
     "alias-not-exists": "Alias does not exist",
-    "already-invited": "Already invited to the trip"
+    "already-invited": "Already invited to the trip",
+    "page-forbidden": "Forbidden access"
   },
   "expense": {
     "actual-amount": "Actual Amount",
