@@ -6,7 +6,7 @@ from trips.models import Trip, TripInvitation
 from trips.services import TripService
 from utils import ForbiddenActionError, haversine
 from visits.models import Visit, Location, VisitParticipation
-from visits.serializers import VisitInputSerializer, LocationQueryParamsSerializer
+from visits.serializers import VisitInputSerializer, LocationQueryParamsSerializer, VisitParticipationInputSerializer
 
 
 class VisitService:
@@ -41,19 +41,22 @@ class VisitService:
         return visit
 
     @staticmethod
-    def check_visit_participation(visit: Visit, user: User):
+    def check_visit_participation(visit: Visit, user: User, accepted_only: bool = False):
         """
         Check if a user is part of a visit.
         """
-        return VisitParticipation.objects.filter(visit=visit, user=user, status=TripInvitation.TripInvitationStatus.ACCEPTED ).exists()
+        visitParticipationFiltered = VisitParticipation.objects.filter(visit=visit, user=user)
+        if accepted_only:
+            visitParticipationFiltered = visitParticipationFiltered.filter(status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
+        return visitParticipationFiltered.exists()
 
     @staticmethod
-    def get_all_visits(user: User, trip_id: int):
+    def get_all_visits(trip_id: int): # user: User,
         """
         Get all visits for a trip.
         """
-        trip = TripService.get_user_trip_by_id(user, trip_id)
-        return Visit.objects.filter(trip = trip, visitparticipation__user=user, visitparticipation__status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
+        trip = Trip.objects.get(trip_id=trip_id) # TripService.get_user_trip_by_id(user, trip_id)
+        return Visit.objects.filter(trip = trip) #, visitparticipation__user=user , visitparticipation__status=VisitParticipation.VisitParticipationStatus.ACCEPTED
 
     @staticmethod
     def get_visit_by_id(user: User, trip_id: int, visit_id: int):
@@ -102,6 +105,67 @@ class VisitService:
 
         visit.delete()
         return visit
+
+class VisitParticipationService:
+
+    @staticmethod
+    def create_visit_participation(user: User, visit_id: int):
+        """
+        Create a new visit participation for a user.
+        """
+        visit = Visit.objects.get(visit_id=visit_id)
+        if VisitParticipation.objects.filter(visit=visit, user=user).exists():
+            raise ForbiddenActionError("User already has a visit participation for this visit")
+
+        VisitParticipation.objects.create(visit=visit, user=user)
+
+    @staticmethod
+    def get_all_visit_participations(user: User, trip_id: int, visit_id: int):
+        """
+        Get all visit participations for a visit.
+        """
+        if visit_id:
+            visit = Visit.objects.get(visit_id=visit_id)
+            return VisitParticipation.objects.filter(visit=visit)
+        visits = VisitService.get_all_visits(trip_id)
+        return VisitParticipation.objects.filter(visit__in=visits, user=user)
+
+    @staticmethod
+    def get_visit_participation_by_id(user: User, visit_id: int, visit_participation_id: int):
+        """
+        Get a visit participation by its ID.
+        """
+        if visit_participation_id:
+            return VisitParticipation.objects.get(visit_participation_id=visit_participation_id)
+        visit = Visit.objects.get(visit_id=visit_id)
+        return VisitParticipation.objects.get(visit=visit, user=user)
+
+    @staticmethod
+    def update_visit_participation(user: User, visit_id: int, visit_participation_id: int, visit_participation_data: dict):
+        """
+        Update a visit participation by its ID.
+        """
+        visit_participation = VisitParticipationService.get_visit_participation_by_id(user, visit_id, visit_participation_id)
+
+        if visit_participation_data.get('visit_participation_id') and visit_participation_data['visit_participation_id'] != visit_participation.visit_participation_id:
+            raise ValueError("Trying to update visit_participation_id which is generated automatically")
+        if visit_participation_data['visit_id'] != visit_id:
+            raise ValueError("Mismatch between visit_id in URL and visit_id in request body")
+
+        visit_participation_serializer = VisitParticipationInputSerializer(visit_participation, data=visit_participation_data)
+        visit_participation_serializer.is_valid(raise_exception=True)
+        visit_participation_serializer.save()
+
+        return visit_participation
+
+    @staticmethod
+    def delete_visit_participation(user: User, trip_id: int, visit_id: int, visit_participation_id: int):
+        """
+        Delete a visit participation by its ID.
+        """
+        visit_participation = VisitParticipationService.get_visit_participation_by_id(user, visit_id, visit_participation_id)
+        visit_participation.delete()
+        return visit_participation
 
 class LocationService:
 

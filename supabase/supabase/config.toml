@@ -86,23 +86,11 @@ file_size_limit = "50MiB"
 enabled = true
 
 # Uncomment to configure local storage buckets
-[storage.buckets.profile]
-public = true
-file_size_limit = "4MiB"
-allowed_mime_types = ["image/png", "image/jpeg"]
-objects_path = "./profile"
-
-[storage.buckets.trips]
-public = false
-file_size_limit = "4MiB"
-allowed_mime_types = ["image/png", "image/jpeg"]
-objects_path = "./trips"
-
-[storage.buckets.locations]
-public = true
-file_size_limit = "4MiB"
-allowed_mime_types = ["image/png", "image/jpeg"]
-objects_path = "./locations"
+# [storage.buckets.images]
+# public = false
+# file_size_limit = "50MiB"
+# allowed_mime_types = ["image/png", "image/jpeg"]
+# objects_path = "./images"
 
 [auth]
 enabled = true
@@ -112,7 +100,7 @@ site_url = "http://127.0.0.1:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 additional_redirect_urls = ["https://127.0.0.1:3000"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
-jwt_expiry = 1200
+jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
 enable_refresh_token_rotation = true
 # Allows refresh tokens to be reused after expiry, up to the specified interval in seconds.

@@ -41,14 +41,16 @@ class Visit(models.Model):
 
 
 class VisitParticipation(models.Model):
+    visit_participation_id = models.AutoField(primary_key=True)
+    visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     class VisitParticipationStatus(models.TextChoices):
         ACCEPTED = 'accepted'
         PENDING = 'pending'
         DECLINED = 'declined'
-
-    visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(choices=VisitParticipationStatus, default=VisitParticipationStatus.PENDING)
 
     class Meta:
         unique_together = ('visit', 'user')
+
+

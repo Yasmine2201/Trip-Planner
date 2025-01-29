@@ -9,6 +9,13 @@ export type Visit = {
   trip_id: number;
 }
 
+export type VisitParticipation = {
+    visit_participation_id: number;
+    visit: number;
+    user: string;
+    status: string;
+}
+
 export type Location = {
   location_id: number;
   name: string;

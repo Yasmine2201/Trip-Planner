@@ -25,6 +25,11 @@ const links = computed(() => {
     ],
     [
       {
+        label: t('navigation.trips_invitation'),
+        icon: "i-uil-plane",
+        to: "/home/trips/invitations/",
+      },
+      {
         label: t('navigation.my-trips'),
         icon: "material-symbols:trip-outline",
         to: "/home",
