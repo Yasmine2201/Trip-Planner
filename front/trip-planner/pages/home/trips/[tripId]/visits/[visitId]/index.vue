@@ -145,8 +145,8 @@ const savePrices = async (pricesForm: PricesForm) => {
     <div class="pt-6">
       <ExpenseTable
         :tripId="tripId"
-        :expenses="expenses"
         :displayVisit="false"
+        v-model:expenses="expenses"
         >
         <template #caption>
           <div class="flex justify-between items-center mr-2">

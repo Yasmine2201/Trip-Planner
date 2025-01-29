@@ -86,11 +86,11 @@ const deleteAllSelected = async () => {
 
   <ExpenseTable
       :tripId="tripId"
-      :expenses="expenses"
+      v-model:expenses="expenses"
       :selectable="true"
       :display-visit="true"
       :categoryFilter="categoryQuery"
-      v-model="selected"
+      v-model:selected="selected.value"
   >
   </ExpenseTable>
 </template>

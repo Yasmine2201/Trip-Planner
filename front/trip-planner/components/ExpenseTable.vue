@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {type Expense} from "~/types";
 import { CategoryValues } from "~/schemas/expense";
 
 interface Props {
@@ -12,14 +13,15 @@ interface Props {
 const props = defineProps<Props>();
 const { tripId, categoryFilter: categoryQuery = undefined, displayVisit = true, selectable = false } = props;
 
-const { expenses: expenses } = toRefs(props);
+const expenses = defineModel<Expense[]>('expenses');
+const selected = defineModel<Expense[]>('selected');
 
-const {t} = useI18n();
+const { t } = useI18n();
+const { $api } = useNuxtApp();
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 
-const selected = defineModel<Expense[]>() as ModelRef<Expense[]>;
 if (selected.value == undefined && selectable) {
   selected.value = [];
 } else if (!selectable) {
@@ -97,6 +99,29 @@ const deleteExpense = async (expenseId: number) => {
   }
 };
 
+const convertPlannedToReal = async (expense: Expense) => {
+  const sentData = JSON.stringify(
+      {
+        name: expense.name,
+        category: expense.category,
+        planned_amount: expense.planned_amount,
+        actual_amount: expense.planned_amount,
+      }
+  )
+
+  await $api(`/trips/${tripId}/budget/expenses/${expense.expense_id}`, {
+    method: 'PUT',
+    body: sentData
+  });
+
+  expenses.value = expenses.value.map((e) => {
+    if (e.expense_id === expense.expense_id) {
+      e.actual_amount = e.planned_amount;
+    }
+    return e;
+  });
+};
+
 // Category filter
 const selectedCategory = reactive({value: categoryQuery ?? ''});
 
@@ -152,9 +177,17 @@ const filteredExpenses = computed(() => {
     </template>
 
     <template #planned_amount-data="{ row }">
-      <span v-if="row.planned_amount">{{
-          row.planned_amount?.toLocaleString(undefined, {minimumFractionDigits: 2})
-        }} €</span>
+      <div v-if="row.planned_amount" class="flex justify-between">
+        <span>{{ row.planned_amount?.toLocaleString(undefined, {minimumFractionDigits: 2}) }} €</span>
+        <UButton
+            v-if="row.actual_amount == null"
+            color="gray"
+            icon="i-heroicons-arrow-right"
+            size="2xs"
+            square
+            variant="solid"
+            @click="convertPlannedToReal(row)" />
+      </div>
       <span v-else>-</span>
     </template>
 
