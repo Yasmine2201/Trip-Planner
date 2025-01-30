@@ -12,7 +12,7 @@ const isAuthenticated = computed(() => auth.isAuthenticated);
     <div class="flex items-center justify-end gap-4">
       <div class="flex items-center justify-end gap-4" v-if="isAuthenticated">
         <HeaderNotifications />
-        <HeaderUserMenu :user="auth.user"/>
+        <HeaderUserMenu />
         <div class="w-0 h-10 border" />
       </div>
 

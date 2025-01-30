@@ -68,7 +68,7 @@ export const useAuthStore = defineStore('auth', {
           lastname: data.last_name,
           email: data.email,
           birthdate: data.birthdate,
-          avatarImage: data.profile_picture?.url,
+          avatarImage: data.profile_picture,
           description: data.description,
           languages: data.languages
         }

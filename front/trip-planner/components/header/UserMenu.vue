@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type {User} from "~/types";
-
 const {t} = useI18n();
 const authStore = useAuthStore();
 const $router = useRouter();
 
-const { user } = defineProps<{ user: User | null }>();
+const user = computed(() => authStore.user);
 
-console.log("User", user);
 const profileItems = computed(() => [
   [{
     slot: 'name',
@@ -35,12 +32,12 @@ const logout = async () => {
 
 <template>
   <UDropdown :items="profileItems" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }">
-    <UAvatar icon="i-uil-user" size="sm" :src="user?.avatarImage?.url" class="object-scale-down"/>
+    <UAvatar icon="i-uil-user" size="sm" :src="user.avatarImage?.url" class="object-scale-down"/>
 
     <template #name="{ item }">
       <div class="text-left">
-        <p class="text-black dark:text-white font-bold truncate">{{ `${authStore.user?.firstname} ${authStore.user?.lastname?.toUpperCase()}` }}</p>
-        <p class="text-sm text-gray-900 dark:text-gray-100 truncate">{{ authStore.user?.email }}</p>
+        <p class="text-black dark:text-white font-bold truncate">{{ `${user.firstname} ${user.lastname?.toUpperCase()}` }}</p>
+        <p class="text-sm text-gray-900 dark:text-gray-100 truncate">{{ user.email }}</p>
       </div>
     </template>
     <template #item="{ item }">
