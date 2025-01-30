@@ -103,7 +103,9 @@
     "quantity-whole": "Quantites must be whole numbers",
     "alias-not-exists": "Alias does not exist",
     "already-invited": "Already invited to the trip",
-    "page-forbidden": "Forbidden access"
+    "page-forbidden": "Forbidden access",
+    "trip-not-found-description": "You can't access your last trip because you don't have any.",
+    "trip-no-found": "Trip not found"
   },
   "expense": {
     "actual-amount": "Actual Amount",

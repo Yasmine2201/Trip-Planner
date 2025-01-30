@@ -103,7 +103,9 @@
     "quantity-whole": "Les quantités doivent être entières",
     "alias-not-exists": "Ce pseudo n'existe pas",
     "already-invited": "Cette personne a déjà été invitée au voyage",
-    "page-forbidden": "Accès interdit"
+    "page-forbidden": "Accès interdit",
+    "trip-not-found-description": "Vous ne pouvez pas accédez à votre dernier voyage car vous n'en avez aucun.",
+    "trip-no-found": "Voyage non trouvé"
   },
   "expense": {
     "actual-amount": "Montant réel",

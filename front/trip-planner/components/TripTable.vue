@@ -128,8 +128,9 @@ const leaveTrip = async (tripId: number) => {
     </template>
 
     <template #members-data="{ row }">
-      <UAvatarGroup size="sm" :max="3">
-        <UAvatar v-for="member in row.members" icon="i-uil-user" size="sm" :src="member.profile_picture?.url" class="object-scale-down"/>
+      <UAvatarGroup size="sm" :max="3" :ui="{ margin: '-me-2' }" >
+        <UAvatar v-for="member in row.members" icon="i-uil-user" size="sm" :src="member.profile_picture?.url"
+                 class="object-scale-down "/>
       </UAvatarGroup>
     </template>
 
@@ -144,6 +145,7 @@ const leaveTrip = async (tripId: number) => {
             :to="`/home/trips/${row.trip_id}`"
         />
         <UButton
+            :disabled="!row.isOwner"
             icon="i-heroicons-pencil-square"
             size="xs"
             color="primary"

@@ -2,6 +2,7 @@
 import {useI18n} from 'vue-i18n';
 import type {Trip} from '~/types';
 import MapViewer from "~/components/MapViewer.vue";
+import type {AsyncData} from "#app";
 
 definePageMeta({
   title: 'trip_home.trip_details',
@@ -12,9 +13,14 @@ const {t, locale} = useI18n();
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
+const user = useAuthStore().user;
 
 const tripId = ref(route.params.tripId);
-const trip = ref<Trip | null>(null);
+const { data: trip, status, error }: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${tripId.value}`);
+
+if (status.value === 'error' && error.value.statusCode === 404) {
+  router.push('/notfound');
+}
 
 const town = ref('');
 const country = ref('');
@@ -37,13 +43,6 @@ const getLocationDetails = async (trip: Trip) => {
 
 
 onMounted(async () => {
-  const { data, status, error } = await useApiFetch<Trip>(`/trips/${tripId.value}`);
-
-  if (status.value === 'error' && error.value.statusCode === 404) {
-    router.push('/notfound');
-  }
-
-  trip.value = data.value;
   await getLocationDetails(trip.value as Trip)
 });
 
@@ -86,25 +85,27 @@ const formatDate = (date: string | null) => {
     <PageTitle :name="t('trip_home.trip_details')">
       <template #actions>
         <UButton @click="router.push(`/home/`)" icon="i-heroicons-arrow-uturn-left" class="mr-2" :title="t('misc.back')" color="gray" />
-        <UButton
-            :to="`/home/trips/${trip?.trip_id}/edit`"
-            color="primary"
-            icon="i-heroicons-pencil-square"
-            :label="t('misc.edit')"
-            size="md"
-            square
-            variant="solid"
-        />
-        <ConfirmationDropdown @confirm="deleteTrip(trip?.trip_id)">
+        <div class="flex gap-2" v-if="trip.owner_id === user.id">
           <UButton
-              color="red"
-              icon="i-heroicons-trash"
-              :label="t('misc.delete')"
+              :to="`/home/trips/${trip.trip_id}/edit`"
+              color="primary"
+              icon="i-heroicons-pencil-square"
+              :label="t('misc.edit')"
               size="md"
               square
               variant="solid"
           />
-        </ConfirmationDropdown>
+          <ConfirmationDropdown @confirm="deleteTrip(trip.trip_id)">
+            <UButton
+                color="red"
+                icon="i-heroicons-trash"
+                :label="t('misc.delete')"
+                size="md"
+                square
+                variant="solid"
+            />
+          </ConfirmationDropdown>
+        </div>
       </template>
     </PageTitle>
 
@@ -133,7 +134,7 @@ const formatDate = (date: string | null) => {
           {{ t('create_trip.trip_start_date') }}
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
-          {{ formatDate(trip?.start_date) }}
+          {{ formatDate(trip.start_date) }}
         </td>
       </tr>
       <!-- Date de fin -->
@@ -142,7 +143,7 @@ const formatDate = (date: string | null) => {
           {{ t('create_trip.trip_end_date') }}
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
-          {{ formatDate(trip?.end_date) }}
+          {{ formatDate(trip.end_date) }}
         </td>
       </tr>
       <!-- Localisation -->
@@ -152,8 +153,8 @@ const formatDate = (date: string | null) => {
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
           {{ town && country ? town + ', ' : '' }}{{ country }}
-          {{ (town || country) && trip?.latitude && trip?.longitude ? ' ; ' : '' }}
-          {{ trip?.latitude && trip?.longitude ? '(' + trip?.latitude.toFixed(2) + '°, ' + trip?.longitude.toFixed(2) + '°)' : '' }}
+          {{ (town || country) && trip.latitude && trip.longitude ? ' ; ' : '' }}
+          {{ trip.latitude && trip.longitude ? '(' + trip.latitude.toFixed(2) + '°, ' + trip.longitude.toFixed(2) + '°)' : '' }}
         </td>
       </tr>
 
@@ -164,7 +165,7 @@ const formatDate = (date: string | null) => {
         </td>
         <td class="px-6 py-4 text-gray-700 dark:text-gray-300 text-sm">
           <MapViewer
-              v-if="trip?.latitude && trip?.longitude && trip?.radius"
+              v-if="trip.latitude && trip.longitude && trip.radius"
               :lat="trip.latitude"
               :lon="trip.longitude"
           ></MapViewer>

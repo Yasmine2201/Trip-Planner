@@ -28,11 +28,11 @@ const isOwner = (user: PublicUser) => user.user_id === trip.value.owner_id;
     <InvitationForm/>
   </div>
 
-  <ul class="space-y-4 max-h-96 overflow-y-auto">
+  <ul class="space-y-2 h-full overflow-y-auto">
     <UCard v-for="member in members" :key="member.user_id" class="border border-gray-200 dark:border-gray-700">
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-4">
-          <UAvatar :src="member.profile_picture?.url" class="mr-3 object-scale-down" icon="i-uil-user" size="md"/>
+          <UAvatar :src="member.profile_picture?.url" class="mr-3 object-scale-down" icon="i-uil-user" size="lg"/>
           <div>
             <div class="space-x-6 flex items-center"><span class="text-lg text-primary-500">{{ member.first_name }}</span>
               <UBadge v-if="isOwner(member)" color="primary" size="xs" variant="soft">{{ t('share.owner') }}</UBadge>

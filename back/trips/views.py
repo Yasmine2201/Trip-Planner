@@ -93,9 +93,12 @@ class LastTripView(ProtectableAPIView):
         """
         Fetch the last trip associated with a user.
         """
-        trip = TripService.get_last_user_trip(request.user)
-        serializer = TripSerializer(trip)
-        return Response(serializer.data)
+        try:
+            trip = TripService.get_last_user_trip(request.user)
+            serializer = TripSerializer(trip)
+            return Response(serializer.data)
+        except Trip.DoesNotExist:
+            return Response({"error": NOT_FOUND_ERROR.format(Model="Trip")}, status=404)
 
 
 class LeaveTripView(ProtectableAPIView):
