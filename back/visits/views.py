@@ -112,7 +112,7 @@ class VisitView(ProtectableAPIView):
 class VisitParticipationView(ProtectableAPIView):
 
     @staticmethod
-    def get(request: Request, trip_id: int, visit_id: int = None):
+    def get(request: Request, trip_id: int, visit_id: int = None, user_id: int = None): # user_id non appliqué dans get
         """
         Get all visit participations for a visit.
         """
@@ -126,12 +126,15 @@ class VisitParticipationView(ProtectableAPIView):
             return Response({"error": str(e)}, status=403)
 
     @staticmethod
-    def put(request: Request, trip_id: int,  visit_id: int, visit_participation_id: int = None):
+    def put(request: Request, trip_id: int,  visit_id: int, user_id: int = None):
         """
         Update a visit participation for a user.
         """
         try:
-            visit_participation = VisitParticipationService.update_visit_participation(request.user, visit_id, visit_participation_id, request.data)
+            # Vérifie que request.user a bien le user_id
+            if user_id and request.user.user_id != user_id:
+                raise ForbiddenActionError("User cannot update this visit participation because they are not the owner of the visit participation")
+            visit_participation = VisitParticipationService.update_visit_participation(request.user, visit_id, request.data)
             serializer = VisitParticipationSerializer(visit_participation)
             return Response(serializer.data, status=200)
         except ValueError as e:

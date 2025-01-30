@@ -41,7 +41,7 @@ class Visit(models.Model):
 
 
 class VisitParticipation(models.Model):
-    visit_participation_id = models.AutoField(primary_key=True)
+    # visit_participation_id = models.AutoField(primary_key=True)
     visit = models.ForeignKey(Visit, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     class VisitParticipationStatus(models.TextChoices):

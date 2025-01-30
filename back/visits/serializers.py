@@ -130,7 +130,7 @@ class VisitParticipationSerializer(serializers.ModelSerializer):
 class VisitParticipationInputSerializer(serializers.ModelSerializer):
     class Meta:
         model = VisitParticipation
-        fields = ['visit_participation_id', 'visit_id', 'user_id', 'status']
+        fields = ['visit_id', 'user_id', 'status']
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

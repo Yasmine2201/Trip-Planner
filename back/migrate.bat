@@ -1,5 +1,5 @@
 :: cd ../supabase
-REM supabase start
+REM npx supabase start
 
 cd ../back
 

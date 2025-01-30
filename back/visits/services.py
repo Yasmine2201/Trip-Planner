@@ -30,7 +30,7 @@ class VisitService:
 
         visit = Visit.objects.create(**visit_data_object)
 
-        trip_participations = TripService.get_trip_participations(trip.trip_id)
+        trip_participations = TripService.get_sent_trip_participations(trip.trip_id)
 
         for trip_participation in trip_participations:
             if trip_participation.user.user_id != user.user_id:
@@ -109,17 +109,6 @@ class VisitService:
 class VisitParticipationService:
 
     @staticmethod
-    def create_visit_participation(user: User, visit_id: int):
-        """
-        Create a new visit participation for a user.
-        """
-        visit = Visit.objects.get(visit_id=visit_id)
-        if VisitParticipation.objects.filter(visit=visit, user=user).exists():
-            raise ForbiddenActionError("User already has a visit participation for this visit")
-
-        VisitParticipation.objects.create(visit=visit, user=user)
-
-    @staticmethod
     def get_all_visit_participations(user: User, trip_id: int, visit_id: int):
         """
         Get all visit participations for a visit.
@@ -131,7 +120,7 @@ class VisitParticipationService:
         return VisitParticipation.objects.filter(visit__in=visits, user=user)
 
     @staticmethod
-    def get_visit_participation_by_id(user: User, visit_id: int, visit_participation_id: int):
+    def get_visit_participation_by_id(user: User, visit_id: int, visit_participation_id: int = None):
         """
         Get a visit participation by its ID.
         """
@@ -141,28 +130,15 @@ class VisitParticipationService:
         return VisitParticipation.objects.get(visit=visit, user=user)
 
     @staticmethod
-    def update_visit_participation(user: User, visit_id: int, visit_participation_id: int, visit_participation_data: dict):
+    def update_visit_participation(user: User, visit_id: int, visit_participation_data: dict):
         """
         Update a visit participation by its ID.
         """
-        visit_participation = VisitParticipationService.get_visit_participation_by_id(user, visit_id, visit_participation_id)
-
-        if visit_participation_data.get('visit_participation_id') and visit_participation_data['visit_participation_id'] != visit_participation.visit_participation_id:
-            raise ValueError("Trying to update visit_participation_id which is generated automatically")
-
+        visit_participation = VisitParticipationService.get_visit_participation_by_id(user, visit_id)
         visit_participation_serializer = VisitParticipationInputSerializer(visit_participation, data=visit_participation_data)
         visit_participation_serializer.is_valid(raise_exception=True)
         visit_participation_serializer.save()
 
-        return visit_participation
-
-    @staticmethod
-    def delete_visit_participation(user: User, trip_id: int, visit_id: int, visit_participation_id: int):
-        """
-        Delete a visit participation by its ID.
-        """
-        visit_participation = VisitParticipationService.get_visit_participation_by_id(user, visit_id, visit_participation_id)
-        visit_participation.delete()
         return visit_participation
 
 class LocationService:

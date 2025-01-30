@@ -57,7 +57,7 @@ urlpatterns = [
     path('api/trips/<int:trip_id>/visits', VisitView.as_view(), name='visit-view'),
     path('api/trips/<int:trip_id>/visits/<int:visit_id>', VisitView.as_view(), name='visit-view'),
     path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations', VisitParticipationView.as_view(), name='visit-participation-view'),
-    path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations/<int:visit_participation_id>', VisitParticipationView.as_view(), name='visit-participation-view'),
+    path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations/<int:user_id>', VisitParticipationView.as_view(), name='visit-participation-view'),
     path('api/trips/<int:trip_id>/visits/participations/', VisitParticipationView.as_view(), name='visit-participation-view'),
 
 
