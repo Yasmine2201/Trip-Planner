@@ -25,18 +25,19 @@ class VisitService:
         if trip.trip_id != trip_id:
             raise ValueError(f"Mismatch between trip_id in URL and trip_id in request body")
 
-        if not TripService.check_participation(trip, user, is_owner=True):
+        if not TripService.check_participation(trip, user):
             raise ForbiddenActionError(f"User is not part of the trip")
 
         visit = Visit.objects.create(**visit_data_object)
 
-        trip_participations = TripService.get_trip_participations(trip.trip_id)
+        trip_participations = TripService.get_sent_trip_participations(trip.trip_id)
 
         for trip_participation in trip_participations:
             if trip_participation.user.user_id != user.user_id:
                 VisitParticipation.objects.create(visit=visit, user=trip_participation.user)
             else:
-                VisitParticipation.objects.create(visit=visit, user=user, status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
+                VisitParticipation.objects.create(visit=visit, user=user,
+                                                  status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
 
         return visit
 
@@ -45,7 +46,8 @@ class VisitService:
         """
         Check if a user is part of a visit.
         """
-        return VisitParticipation.objects.filter(visit=visit, user=user, status=TripInvitation.TripInvitationStatus.ACCEPTED ).exists()
+        return VisitParticipation.objects.filter(visit=visit, user=user,
+                                                 status=TripInvitation.TripInvitationStatus.ACCEPTED).exists()
 
     @staticmethod
     def get_all_visits(user: User, trip_id: int):
@@ -53,7 +55,8 @@ class VisitService:
         Get all visits for a trip.
         """
         trip = TripService.get_user_trip_by_id(user, trip_id)
-        return Visit.objects.filter(trip = trip, visitparticipation__user=user, visitparticipation__status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
+        return Visit.objects.filter(trip=trip, visitparticipation__user=user,
+                                    visitparticipation__status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
 
     @staticmethod
     def get_visit_by_id(user: User, trip_id: int, visit_id: int):
@@ -102,6 +105,7 @@ class VisitService:
 
         visit.delete()
         return visit
+
 
 class LocationService:
 

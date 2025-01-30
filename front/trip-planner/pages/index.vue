@@ -2,6 +2,8 @@
 definePageMeta({
   title: 'app.name'
 });
+
+useRouter().push(useAuthStore().isAuthenticated ? '/home' : '/login');
 </script>
 
 <template>

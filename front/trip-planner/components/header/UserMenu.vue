@@ -35,7 +35,7 @@ const logout = async () => {
 
 <template>
   <UDropdown :items="profileItems" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }">
-    <UAvatar icon="i-uil-user" size="sm" :src="user?.avatarImage" class="object-scale-down"/>
+    <UAvatar icon="i-uil-user" size="sm" :src="user?.avatarImage?.url" class="object-scale-down"/>
 
     <template #name="{ item }">
       <div class="text-left">

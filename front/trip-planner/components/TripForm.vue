@@ -85,7 +85,9 @@ const onSubmit = async ({ data }: any) => {
     });
     navigateTo('/home');
   } catch (error) {
-    formError.value = 'errors.unknown-error';
+    if (error.status === 403 ) formError.value = 'errors.page-forbidden';
+    else if (error.status === 400) formError.value = 'errors.invalid-form';
+    else formError.value = 'errors.oops';
   }
   submitting.value = false;
 };

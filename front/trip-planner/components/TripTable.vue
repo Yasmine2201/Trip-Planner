@@ -46,6 +46,10 @@ const columns = computed(() => [
     direction: 'desc' as const
   },
   {
+    key: 'members',
+    label: t('trips.members'),
+  },
+  {
     key: 'actions',
   }
 ]);
@@ -123,6 +127,13 @@ const leaveTrip = async (tripId: number) => {
       {{ new Date(row.end_date).toLocaleDateString([locale], { dateStyle: 'full' }) }}
     </template>
 
+    <template #members-data="{ row }">
+      <UAvatarGroup size="sm" :max="3" :ui="{ margin: '-me-2' }" >
+        <UAvatar v-for="member in row.members" icon="i-uil-user" size="sm" :src="member.profile_picture?.url"
+                 class="object-scale-down "/>
+      </UAvatarGroup>
+    </template>
+
     <template #actions-data="{ row }">
       <div class="flex space-x-2">
         <UButton
@@ -134,6 +145,7 @@ const leaveTrip = async (tripId: number) => {
             :to="`/home/trips/${row.trip_id}`"
         />
         <UButton
+            :disabled="!row.isOwner"
             icon="i-heroicons-pencil-square"
             size="xs"
             color="primary"
@@ -141,23 +153,24 @@ const leaveTrip = async (tripId: number) => {
             variant="solid"
             :to="`/home/trips/${row.trip_id}/edit`"
         />
-        <UButton
-            v-if="row.isOwner"
-            icon="i-heroicons-trash"
-            size="xs"
-            color="red"
-            square
-            variant="solid"
-            @click="deleteTrip(row.trip_id)"
-        />
-        <UButton
-          v-if="!row.isOwner"
-          icon="i-heroicons-arrow-right-start-on-rectangle-20-solid"
-          size="xs"
-          color="red"
-          square
-          variant="solid"
-          @click="leaveTrip(row.trip_id)" />
+        <ConfirmationDropdown @confirm="deleteTrip(row.trip_id)" v-if="row.isOwner">
+          <UButton
+              icon="i-heroicons-trash"
+              size="xs"
+              color="red"
+              square
+              variant="solid"
+          />
+        </ConfirmationDropdown>
+        <ConfirmationDropdown @confirm="leaveTrip(row.trip_id)" v-if="!row.isOwner">
+          <UButton
+              icon="i-heroicons-arrow-right-start-on-rectangle-20-solid"
+              size="xs"
+              color="red"
+              square
+              variant="solid"
+          />
+        </ConfirmationDropdown>
       </div>
     </template>
   </UTable>

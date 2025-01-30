@@ -103,7 +103,9 @@
     "quantity-whole": "Quantites must be whole numbers",
     "alias-not-exists": "Alias does not exist",
     "already-invited": "Already invited to the trip",
-    "page-forbidden": "Forbidden access"
+    "page-forbidden": "Forbidden access",
+    "trip-not-found-description": "You can't access your last trip because you don't have any.",
+    "trip-no-found": "Trip not found"
   },
   "expense": {
     "actual-amount": "Actual Amount",
@@ -226,7 +228,10 @@
     "select-value": "Select values",
     "success": "Operation succeeded",
     "add-expense": "Adding expense",
-    "copied": "Copied"
+    "copied": "Copied",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "ask-confirmation": "Please confirm"
   },
   "modify_trip": {
     "title": "Trip edition",
@@ -262,7 +267,8 @@
       "invitation-created": "You have created an invitation for trip",
       "invitation-received": "You have received an invitation for trip '{tripName}' from '{alias}'",
       "invitation-accepted": "'{alias}' has accepted your invitation the your trip '{tripName}'",
-      "invitation-declined": "'{alias}' has declined your invitation for the trip '{tripName}'"
+      "invitation-declined": "'{alias}' has declined your invitation for the trip '{tripName}'",
+      "visit-request": "A visist named {visitName} was created in trip {tripName} from {startDate} to {endDate}. Please inform about your participation."
     },
     "deleted": "Notification deleted",
     "mark-as-read": "Mark as read",
@@ -276,7 +282,8 @@
       "invitation-created": "Invitation created",
       "invitation-received": "Received Invitation",
       "invitation-accepted": "Invitation accepted",
-      "invitation-declined": "Invitation declined"
+      "invitation-declined": "Invitation declined",
+      "visit-request": "New visit"
     },
     "view-all": "View all"
   },
@@ -306,7 +313,8 @@
     "name": "Name",
     "start": "Start date",
     "triplist-title": "My trips",
-    "leave": "Trip exit"
+    "leave": "Trip exit",
+    "members": "Members"
   },
   "visits": {
     "fields": {

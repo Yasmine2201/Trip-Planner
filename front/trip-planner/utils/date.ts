@@ -1,3 +1,9 @@
+export function isValidDate(date: string) {
+  const maybeDate = new Date(date);
+  // @ts-ignore
+  return maybeDate != "Invalid Date" && !isNaN(maybeDate.getTime()) ;
+}
+
 export function getDateString(date: string | Date) {
   return new Date(date).toISOString().split('T')[0];
 }

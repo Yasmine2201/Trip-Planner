@@ -6,10 +6,6 @@ const isAuthenticated = computed(() => auth.isAuthenticated);
 
 const links = computed(() => ([
   [
-    {
-      label: t('navigation.about'),
-      to: '/about'
-    }
   ],
   isAuthenticated.value ? [] : [
     {
