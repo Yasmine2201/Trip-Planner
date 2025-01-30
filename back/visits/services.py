@@ -149,8 +149,6 @@ class VisitParticipationService:
 
         if visit_participation_data.get('visit_participation_id') and visit_participation_data['visit_participation_id'] != visit_participation.visit_participation_id:
             raise ValueError("Trying to update visit_participation_id which is generated automatically")
-        if visit_participation_data['visit_id'] != visit_id:
-            raise ValueError("Mismatch between visit_id in URL and visit_id in request body")
 
         visit_participation_serializer = VisitParticipationInputSerializer(visit_participation, data=visit_participation_data)
         visit_participation_serializer.is_valid(raise_exception=True)

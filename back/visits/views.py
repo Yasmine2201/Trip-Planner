@@ -126,43 +126,12 @@ class VisitParticipationView(ProtectableAPIView):
             return Response({"error": str(e)}, status=403)
 
     @staticmethod
-    def put(request: Request, trip_id: int, visit_id: int, visit_participation_id: int = None):
+    def put(request: Request, trip_id: int,  visit_id: int, visit_participation_id: int = None):
         """
         Update a visit participation for a user.
         """
         try:
-            if VisitService.check_visit_participation(visit=Visit.objects.get(visit_id=visit_id), user=request.user):
-                visit_participation = VisitParticipationService.update_visit_participation(request.user, visit_id, visit_participation_id, request.data)
-            else:
-                visit_participation = VisitParticipationService.create_visit_participation(request.user, visit_id)
-            serializer = VisitParticipationSerializer(visit_participation)
-            return Response(serializer.data, status=200)
-        except ValueError as e:
-            return Response({"error": str(e)}, status=400)
-        except ForbiddenActionError as e:
-            return Response({"error": str(e)}, status=403)
-
-    @staticmethod
-    def post(request: Request, trip_id: int, visit_id: int):
-        """
-        Create a new visit participation for a user.
-        """
-        try:
-            visit_participation = VisitParticipationService.create_visit_participation(request.user, trip_id, visit_id)
-            serializer = VisitParticipationSerializer(visit_participation)
-            return Response(serializer.data, status=200)
-        except ValueError as e:
-            return Response({"error": str(e)}, status=400)
-        except ForbiddenActionError as e:
-            return Response({"error": str(e)}, status=403)
-
-    @staticmethod
-    def delete(request: Request, trip_id: int, visit_id: int, visit_participation_id: int):
-        """
-        Delete a visit participation for a user.
-        """
-        try:
-            visit_participation = VisitParticipationService.delete_visit_participation(request.user, trip_id, visit_id, visit_participation_id)
+            visit_participation = VisitParticipationService.update_visit_participation(request.user, visit_id, visit_participation_id, request.data)
             serializer = VisitParticipationSerializer(visit_participation)
             return Response(serializer.data, status=200)
         except ValueError as e:

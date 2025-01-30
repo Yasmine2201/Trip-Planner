@@ -49,8 +49,8 @@ console.log("rowsWithParticipation:", rowsWithParticipation.value);
 
 const sendParticipationChoice = async (visit: Visit, choice: string) => {
   const visitParticipation = {
-    visit_id: visit.visit_id,
-    user_id: auth.user?.id,
+    // visit_id: visit.visit_id,
+    // user_id: auth.user?.id,
     status: choice
   };
 

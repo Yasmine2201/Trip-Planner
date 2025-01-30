@@ -22,5 +22,5 @@ python manage.py migrate visits
 python manage.py makemigrations budget
 python manage.py migrate budget
 
-python manage.py makemigrations
-python manage.py migrate
+:: python manage.py makemigrations
+:: python manage.py migrate
