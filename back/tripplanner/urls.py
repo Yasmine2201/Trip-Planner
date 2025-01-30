@@ -43,15 +43,15 @@ urlpatterns = [
     path('api/trips/<int:trip_id>/budget/expenses', ExpenseView.as_view(), name='expense-view'),
     path('api/trips/<int:trip_id>/budget/expenses/<int:expense_id>', ExpenseView.as_view(), name='expense-view'),
 
-    # Categories
     path('api/categories', CategoryView.as_view(), name='category-view'),
 
     # Expense sharing
-    path('api/trips/<int:trip_id>/budget/expenses/share', ExpenseShareView.as_view(), name='expense-share-view'),
-    path('api/trips/<int:trip_id>/budget/expenses/share/<int:share_id>', ExpenseShareView.as_view(),
-         name='expense-share-view'),
-    path('api/trips/<int:trip_id>/budget/expenses/share/debts', ExpenseShareView.as_view(), name='expense-share-view'),
-    path('api/trips/<int:trip_id>/budget/expenses/share/refunds', ExpenseShareView.as_view(), name='expense-share-view'),
+
+    # path('api/trips/<int:trip_id>/budget/expenses/share', ExpenseShareView.as_view(), name='expense-share-view'),
+    # path('api/trips/<int:trip_id>/budget/expenses/share/<int:share_id>', ExpenseShareView.as_view(), name='expense-share-view'),
+    # path('api/trips/<int:trip_id>/budget/expenses/share/debts', ExpenseShareView.as_view(), name='expense-share-view'),
+    # path('api/trips/<int:trip_id>/budget/expenses/share/refunds', ExpenseShareView.as_view(), name='expense-share-view'),
+
 
     # Visits
     path('api/trips/<int:trip_id>/visits', VisitView.as_view(), name='visit-view'),
