@@ -1,4 +1,4 @@
-import type {Image} from "~/types/core";
+import type {Image, PublicUser} from "~/types/core";
 
 export type Visit = {
   visit_id: number;
@@ -7,13 +7,12 @@ export type Visit = {
   end_date: string;
   location: Location;
   trip_id: number;
+  participations: VisitParticipation[];
 }
 
 export type VisitParticipation = {
-    visit_participation_id: number;
-    visit: number;
-    user: string;
     status: string;
+    user: PublicUser;
 }
 
 export type Location = {

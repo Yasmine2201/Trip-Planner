@@ -97,9 +97,8 @@ class VisitView(ProtectableAPIView):
         Delete a visit.
         """
         try:
-            visit = VisitService.delete_visit(request.user, trip_id, visit_id)
-            serializer = VisitSerializer(visit)
-            return Response(serializer.data, status=200)
+            VisitService.delete_visit(request.user, trip_id, visit_id)
+            return Response(status=204)
 
         except Visit.DoesNotExist:
             return Response({"error": "Visit not found"}, status=404)
