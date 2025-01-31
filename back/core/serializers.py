@@ -6,7 +6,7 @@ from .models import User, Image
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ['name', 'url']
+        fields = ['image_id','name', 'url']
 
 
 class PublicUserSerializer(serializers.ModelSerializer):
@@ -35,4 +35,4 @@ class UserInputSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['user_id', 'first_name', 'last_name', 'alias', 'birthdate', 'description', 'languages']
+        fields = ['user_id', 'first_name', 'last_name', 'alias', 'birthdate', 'description','profile_picture', 'languages']

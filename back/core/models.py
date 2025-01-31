@@ -4,10 +4,10 @@ from django.db import models
 class Image(models.Model):
     image_id = models.AutoField(primary_key=True)
     url = models.URLField(max_length=200)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} and {self.url}'
 
 
 class User(models.Model):

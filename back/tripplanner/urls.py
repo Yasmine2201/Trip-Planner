@@ -3,7 +3,7 @@ from django.urls import path
 from authentication.views import LoginView, LogoutView, RegisterView
 from budget.views import BudgetView, ExpenseView, CategoryView
 from notifications.views import NotificationView
-from core.views import CurrentUserView, OtherUsersView
+from core.views import CurrentUserView, OtherUsersView, ImageView
 from trips.views import TripView, LastTripView, TripSentInvitation, TripReceivedInvitation, LeaveTripView
 from visits.views import VisitView, LocationView, VisitParticipationView
 
@@ -52,4 +52,7 @@ urlpatterns = [
 
     # Locations
     path('api/locations', LocationView.as_view(), name='location-view'),
+
+    # Images
+    path('api/images', ImageView.as_view(), name='image-view'),
 ]

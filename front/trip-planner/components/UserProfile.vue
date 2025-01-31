@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import type { User } from "~/types";
+import type {User} from "~/types";
+import ProfilePicture from "~/components/ProfilePicture.vue";
 
-const { user } = defineProps<{
+const {user} = defineProps<{
   user: Partial<User> | null;
 }>();
-
-const { t } = useI18n();
+const authStore = useAuthStore();
+const {t} = useI18n();
 
 const age = computed(() => {
   if (!user?.birthdate) return null;
@@ -21,9 +22,11 @@ const age = computed(() => {
   <div class="flex flex-row gap-4 mt-12">
     <div class="flex-col flex-1 basis-1/4">
       <UCard class="h-full">
-        <div>
-          <img v-if="user.avatarImage" :src="user.avatarImage?.url" alt="Profile picture" class="w-64 h-64 rounded-2xl object-cover" />
-          <img v-else src="/public/static/img/empty-avatar.webp" alt="Empty profile picture" class="w-64 aspect-1 rounded-2xl" />
+        <div class="relative inline-block">
+          <!-- Profile Image -->
+          <ProfilePicture :user="user" :canEdit="user==authStore.user">
+
+          </ProfilePicture>
         </div>
 
         <div class="m-4">
@@ -37,7 +40,7 @@ const age = computed(() => {
             <span v-if="age"><span class="font-semibold">{{ t('profile.age') }}:</span> {{ age }} </span>
           </p>
           <p>
-            <LanguageBadges :languages="user.languages ?? undefined" />
+            <LanguageBadges :languages="user.languages ?? undefined"/>
           </p>
         </div>
 
@@ -55,7 +58,8 @@ const age = computed(() => {
               <p class="text-lg font-semibold" v-if="user.email">{{ t('profile.email') }}</p>
               <p class="text-lg" v-if="user.email">{{ user.email }}</p>
               <p class="text-lg font-semibold" v-if="user.birthdate">{{ t('profile.birthdate') }}</p>
-              <p class="text-lg" v-if="user.birthdate">{{ user.birthdate ? new Date(user.birthdate).toLocaleDateString() : t('profile.not-filled') }}</p>
+              <p class="text-lg" v-if="user.birthdate">
+                {{ user.birthdate ? new Date(user.birthdate).toLocaleDateString() : t('profile.not-filled') }}</p>
               <p class="text-lg font-semibold">{{ t('profile.description') }}</p>
               <p class="text-lg overflow-y-auto h-48">{{ user.description ?? t('profile.not-filled') }}</p>
             </div>

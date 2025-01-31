@@ -1,12 +1,14 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from authentication.utils import ProtectableAPIView
-from core.models import User
-from core.serializers import PrivateUserSerializer, PublicUserSerializer
+from core.models import User, Image
+from core.serializers import PrivateUserSerializer, PublicUserSerializer, ImageSerializer
 from core.services import UserService
 from utils import INVALID_BODY_ERROR, NOT_FOUND_ERROR, ForbiddenActionError
+from utils.supabase_client import SupabaseClient
 
 
 # Create your views here.
@@ -60,3 +62,33 @@ class OtherUsersView(ProtectableAPIView):
             return Response(user_serializer.data, 200)
         except User.DoesNotExist:
             return Response({"error": NOT_FOUND_ERROR.format(Model='User')}, 404)
+
+
+#############################################
+class ImageView(APIView):
+    @staticmethod
+    def post(request):
+
+        try:
+            image = request.FILES["image"]
+            image_name = image.name
+
+            supabase = SupabaseClient.get()
+            file_data = image.read()
+
+            if Image.objects.filter(name=image_name).exists():
+                img_obj = Image.objects.get(name=image_name)
+
+            else :
+                print("Uploading image to supabase")
+                supabase.storage.from_("profile_pictures").upload(image_name, file_data,
+                                                                  {"content-type": request.FILES["image"].content_type})
+                image_url = supabase.storage.from_("profile_pictures").get_public_url(image_name)
+                img_obj = Image.objects.create(name=image_name, url=image_url)
+                img_obj.save()
+
+            image_serializer = ImageSerializer(img_obj)
+            return Response(image_serializer.data, status=200)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
