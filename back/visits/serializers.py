@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from core.serializers import ImageSerializer
+from core.serializers import ImageSerializer, PublicUserSerializer
 from trips.models import Trip
-from visits.models import Visit, Location, LocationPrice, LocationPicture
+from visits.models import Visit, Location, LocationPrice, LocationPicture, VisitParticipation
 
 
 # Locations
@@ -117,7 +117,22 @@ class VisitInputSerializer(serializers.ModelSerializer):
 class VisitSerializer(serializers.ModelSerializer):
     location = LocationSerializer()
     trip_id = serializers.IntegerField(source='trip.trip_id')
+    participations = serializers.SerializerMethodField()
 
     class Meta:
         model = Visit
         exclude = ('trip',)
+        extra_fields = ['trip_id', 'participations']
+
+    @staticmethod
+    def get_participations(obj: Visit):
+        participations = VisitParticipation.objects.filter(visit=obj)
+        return VisitParticipationSerializer(participations, many=True).data
+
+
+class VisitParticipationSerializer(serializers.ModelSerializer):
+    user = PublicUserSerializer()
+
+    class Meta:
+        model = VisitParticipation
+        fields = ['status', 'user']

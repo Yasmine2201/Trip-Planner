@@ -12,3 +12,11 @@ export type Trip = {
   owner_id: string;
   members: PublicUser[];
 }
+
+export type TripInvitation = {
+    tripInvitationId: number;
+    trip: Trip;
+    user: PublicUser;
+    status: string;
+    url: string;
+}

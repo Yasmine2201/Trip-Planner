@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-
-import type {Trip, Visit} from '~/types';
+import type {Trip, Visit, VisitParticipation} from '~/types';
 import type {AsyncData} from "#app";
+import type {H3Error} from "h3";
 
 definePageMeta({
   title: 'visits.list.title',
@@ -9,81 +9,83 @@ definePageMeta({
   layout: 'navigation'
 });
 
-const route = useRoute();
 const {t, locale} = useI18n();
-const toast = useToast();
+const route = useRoute();
+const router = useRouter();
+const auth = useAuthStore();
+const notifs = useNotificationsStore();
+const {$api} = useNuxtApp();
 
 const tripId = route.params.tripId as number;
-const {data: trip}: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${tripId}`, {}, true);
 
-// const toast = useToast();
-//
 const sort = ref({
   column: 'start_date',
   direction: 'desc'
-})
+});
 
 const columns = computed(() => [
-  {
-    key: 'name',
-    label: t('visits.fields.name'),
-    sortable: true
-  },
-  {
-    key: 'location.name',
-    label: t('visits.fields.location_name'),
-  },
-  {
-    key: 'start_date',
-    label: t('visits.fields.start_date'),
-    sortable: true,
-    direction: 'desc' as const
-  },
-  {
-    key: 'end_date',
-    label: t('visits.fields.end_date'),
-    sortable: true,
-    direction: 'desc' as const
-  },
-  {
-    key: 'actions',
-  }
+  { key: 'name', label: t('visits.fields.name'), sortable: true },
+  { key: 'location.name', label: t('visits.fields.location_name') },
+  { key: 'start_date', label: t('visits.fields.start_date'), sortable: true },
+  { key: 'end_date', label: t('visits.fields.end_date'), sortable: true },
+  { key: 'participation', label: t('visits.fields.participation') },
+  { key: 'actions' }
 ]);
 
+const {data: trip}: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${tripId}`);
 const {data: rows, status}: AsyncData<Visit[], any> = await useApiFetch<Visit[]>(`/trips/${tripId}/visits`);
-const computedRows = computed(() => rows.value ?? []);
+rows.value = rows.value
+    ?.map(
+        visit => ({
+        ...visit,
+        participations: visit.participations.filter(p => p.user.user_id === auth.user?.id)
+      })
+    ).filter(visit => visit.participations.length > 0)
+    ?? [];
+
+const sendParticipationChoice = async (visit: Visit, choice: string) => {
+
+  const { error }: AsyncData<null, H3Error> = await useApiFetch(`/trips/${tripId}/visits/${visit.visit_id}/participations/${auth.user.id}`, {
+    method: 'PUT',
+    body: JSON.stringify({ status: choice })
+  });
+
+  if (error.value) {
+    notifs.send_notif(t('misc.error'), false, t);
+    return;
+  }
+  rows.value = rows.value.map(v => {
+    if (v.visit_id === visit.visit_id) {
+      v.participations[0].status = choice;
+    }
+    return v;
+  });
+
+  notifs.send_notif(t('misc.update'), true, t);
+};
 
 const deleteVisit = async (visit: Visit) => {
-  const {status} = await useApiFetch(`/trips/${visit.trip_id}/visits/${visit.visit_id}`, {
+  const { status } = await useApiFetch(`/trips/${visit.trip_id}/visits/${visit.visit_id}`, {
     method: 'DELETE'
   });
 
   if (status.value === "success") {
-    rows.value = rows.value.filter((v) => v.visit_id !== visit.visit_id);
-    toast.add({
-      title: t('misc.delete'),
-      description: t('misc.success'),
-      icon: 'i-heroicons-check-badge',
-      color: "green",
-      timeout: 2000,
-    });
+    rows.value = rows.value.filter(v => v.visit_id !== visit.visit_id);
+    notifs.send_notif(t('misc.delete'), true, t);
   } else {
-    toast.add({
-      title: t('misc.deletion'),
-      description: t('misc.error'),
-      icon: 'i-heroicons-x-circle',
-      color: "red",
-      timeout: 2000,
-    });
+    notifs.send_notif(t('misc.deletion_error'), false, t);
   }
-}
+};
+
+const isOwner = computed(() => trip.value.owner_id === auth.user.id);
+const isDeclined = (visit: Visit) => visit.participations[0]?.status === 'declined';
 </script>
 
 <template>
   <PageTitle :name="t('visits.list.title')">
     <template #actions>
       <UButton :title="t('misc.back')" class="mr-2" color="gray"
-               icon="i-heroicons-arrow-uturn-left" @click="router.push(`/home/trips/${tripId}`)"/>
+               icon="i-heroicons-arrow-uturn-left" @click="router.push(`/home/trips/${tripId}`)" />
       <UButton
           :label="t('visits.list.add')"
           :to='`/home/trips/${tripId}/visits/create`'
@@ -100,41 +102,66 @@ const deleteVisit = async (visit: Visit) => {
       :loading="status === 'pending'"
       :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: t('misc.loading') }"
       :progress="{ color: 'primary', animation: 'carousel' }"
-      :rows="computedRows"
+      :rows
       :sort
-
   >
     <template #name-data="{ row }">
-      <NuxtLink :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`" class="font-semibold underline text-left">
+      <NuxtLink :to="`/home/trips/${tripId}/visits/${row.visit_id}`" class="font-semibold underline text-left" v-if="!isDeclined(row) || isOwner" >
         {{ row.name }}
       </NuxtLink>
+      <span class="font-semibold text-left underline cursor-not-allowed" v-else>
+        {{ row.name }}
+      </span>
     </template>
 
     <template #start_date-data="{ row }">
-      {{ new Date(row.start_date).toLocaleString([locale], {dateStyle: 'long', timeStyle: 'short'}) }}
+      {{ new Date(row.start_date).toLocaleString([locale], { dateStyle: 'long', timeStyle: 'short' }) }}
     </template>
 
     <template #end_date-data="{ row }">
-      {{ new Date(row.end_date).toLocaleString([locale], {dateStyle: 'long', timeStyle: 'short'}) }}
+      {{ new Date(row.end_date).toLocaleString([locale], { dateStyle: 'long', timeStyle: 'short' }) }}
+    </template>
+
+    <template #participation-data="{ row }">
+      <div class="flex space-x-2">
+        <UButton
+            icon="i-heroicons:check-circle-16-solid"
+            size="xs"
+            :color="row.participations[0]?.status === 'accepted' ? 'green' : 'gray'"
+            square
+            variant="solid"
+            @click="sendParticipationChoice(row, 'accepted')"
+        />
+        <UButton
+            icon="i-heroicons:no-symbol-16-solid"
+            size="xs"
+            :color="row.participations[0]?.status === 'declined' ? 'red' : 'gray'"
+            square
+            variant="solid"
+            @click="sendParticipationChoice(row, 'declined')"
+        />
+      </div>
     </template>
 
     <template #actions-data="{ row }">
       <div class="flex space-x-2">
         <UButton
-            :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}`"
+            :to="`/home/trips/${tripId}/visits/${row.visit_id}`"
             color="gray"
             icon="i-heroicons-eye"
             size="xs"
             square
             variant="solid"
+            :disabled="isDeclined(row) && !isOwner"
         />
         <UButton
-            :to="`/home/trips/${row.trip_id}/visits/${row.visit_id}/edit`"
+            :to="`/home/trips/${tripId}/visits/${row.visit_id}/edit`"
             color="primary"
             icon="i-heroicons-pencil-square"
             size="xs"
             square
             variant="solid"
+            :disabled="!isOwner"
         />
         <ConfirmationDropdown @confirm="deleteVisit(row)">
           <UButton
@@ -143,6 +170,7 @@ const deleteVisit = async (visit: Visit) => {
               size="xs"
               square
               variant="solid"
+              :disabled="!isOwner"
           />
         </ConfirmationDropdown>
       </div>
@@ -151,5 +179,4 @@ const deleteVisit = async (visit: Visit) => {
 </template>
 
 <style scoped>
-
 </style>

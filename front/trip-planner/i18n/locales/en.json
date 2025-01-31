@@ -58,14 +58,17 @@
     "trip_location": "Location",
     "trip_map": "Map",
     "trip_name": "Trip name",
-    "trip_start_date": "Start date",
-    "trip_name_placeholder": "My trip"
+    "trip_name_placeholder": "My trip",
+    "trip_start_date": "Start date"
   },
   "errors": {
     "actual-amount-positive": "Actual amount must be a positive number",
+    "alias-not-exists": "Alias does not exist",
     "alias-required": "Alias is required.",
     "already-have-account": "Already have an account ? Login here.",
+    "already-invited": "Already invited to the trip",
     "birthdate-invalid": "Invalid birthdate.",
+    "budget-positive": "Budget must be a positive number",
     "category-invalid": "Invalid category",
     "category-required": "Category is required",
     "confirm-password-required": "Please repeat your password.",
@@ -86,6 +89,7 @@
     "last-name-required": "Last name is required.",
     "must-be-number": "Must be a number",
     "name-required": "Name is required.",
+    "name-too-long": "Name too long",
     "oops": "Something went wrong.",
     "page-not-found": "404 - Page not found",
     "password-rejected": "Invalid password",
@@ -97,12 +101,6 @@
     "start-date-before-end-date": "Start date must be before end date",
     "trip-name-required": "Trip name is required",
     "unknown-error": "Please retry later.",
-    "budget-positive": "Budget must be a positive number",
-    "name-too-long": "Name too long",
-    "quantity-positive": "Quantity must be positive",
-    "quantity-whole": "Quantites must be whole numbers",
-    "alias-not-exists": "Alias does not exist",
-    "already-invited": "Already invited to the trip",
     "page-forbidden": "Forbidden access",
     "trip-not-found-description": "You can't access your last trip because you don't have any.",
     "trip-no-found": "Trip not found"
@@ -123,11 +121,10 @@
     },
     "category": "Category",
     "delete-many-tooltip": "Select more than one expense to delete them",
-    "visit-tooltip": "Go see the visit",
     "delete-selected": "Delete expenses",
     "description": "Description",
     "edit-expense": "Edit expense",
-    "visit": "Visit",
+    "expense": "Expense",
     "expense-id": "ID",
     "is-shared": "Shared ?",
     "name": "Name",
@@ -144,8 +141,9 @@
     },
     "planned-amount": "Planned Amount",
     "planned-amount-short": "Planned",
-    "yes": "Shared",
-    "expense": "Expense"
+    "visit": "Visit",
+    "visit-tooltip": "Go see the visit",
+    "yes": "Shared"
   },
   "form_visit": {
     "visit_create_button": "Create visit",
@@ -321,6 +319,7 @@
       "end_date": "End time",
       "location_name": "Location",
       "name": "Name",
+      "participation": "Participation",
       "start_date": "Start time"
     },
     "list": {

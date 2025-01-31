@@ -8,7 +8,7 @@ from trips.models import Trip
 from utils import ForbiddenActionError
 from visits.models import Location, Visit
 from visits.serializers import LocationSerializer, VisitSerializer
-from visits.services import VisitService, LocationService
+from visits.services import VisitService, LocationService, VisitParticipationService
 
 
 # Create your views here.
@@ -54,7 +54,7 @@ class VisitView(ProtectableAPIView):
     @staticmethod
     def __get_all_visits(request: Request, trip_id: int) -> Response:
         try:
-            visits = VisitService.get_all_visits(request.user, trip_id)
+            visits = VisitService.get_all_visits(trip_id)
             if visits is None:
                 return Response({"error": "No visits found"}, status=404)
 
@@ -97,12 +97,30 @@ class VisitView(ProtectableAPIView):
         Delete a visit.
         """
         try:
-            visit = VisitService.delete_visit(request.user, trip_id, visit_id)
-            serializer = VisitSerializer(visit)
-            return Response(serializer.data, status=200)
+            VisitService.delete_visit(request.user, trip_id, visit_id)
+            return Response(status=204)
 
         except Visit.DoesNotExist:
             return Response({"error": "Visit not found"}, status=404)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=400)
+        except ForbiddenActionError as e:
+            return Response({"error": str(e)}, status=403)
+
+
+class VisitParticipationView(ProtectableAPIView):
+
+    @staticmethod
+    def put(request: Request, trip_id: int, visit_id: int, user_id: str):
+        """
+        Update a visit participation for a user.
+        """
+        try:
+            if request.user.user_id != user_id:
+                raise ForbiddenActionError("User cannot update this visit participation because they are not the owner of the visit participation")
+
+            VisitParticipationService.update_visit_participation(request.user, visit_id, request.data)
+            return Response(status=204)
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
         except ForbiddenActionError as e:
