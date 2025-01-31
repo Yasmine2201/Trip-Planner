@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type {Trip, Visit, VisitParticipation} from '~/types';
 import type {AsyncData} from "#app";
+import type {H3Error} from "h3";
 
 definePageMeta({
   title: 'visits.list.title',
@@ -32,48 +33,34 @@ const columns = computed(() => [
 ]);
 
 const {data: rows, status}: AsyncData<Visit[], any> = await useApiFetch<Visit[]>(`/trips/${tripId}/visits`);
-const dataVisitParts = ref<VisitParticipation[]>(await $api(`/trips/${tripId}/visits/participations`, {
-  params: { user_id: auth.user?.id }
-}));
-
-console.log("dataVisitParts:", dataVisitParts.value);
-rows.value = rows.value ?? [];
-
-const rowsWithParticipation = computed(() => {
-  return rows.value.map(visit => {
-    let participation = dataVisitParts.value.find(p => p.visit === visit.visit_id) || null;
-    return { visit, participation };
-  });
-});
-console.log("rowsWithParticipation:", rowsWithParticipation.value);
+rows.value = rows.value
+    ?.map(
+        visit => ({
+        ...visit,
+        participations: visit.participations.filter(p => p.user.user_id === auth.user?.id)
+      })
+    ).filter(visit => visit.participations.length > 0)
+    ?? [];
 
 const sendParticipationChoice = async (visit: Visit, choice: string) => {
-  const visitParticipation = {
-    // visit_id: visit.visit_id,
-    // user_id: auth.user?.id,
-    status: choice
-  };
 
-  const { data, pending, error } = await useApiFetch<VisitParticipation | null>(`/trips/${tripId}/visits/${visit.visit_id}/participations`, {
+  const { error }: AsyncData<null, H3Error> = await useApiFetch(`/trips/${tripId}/visits/${visit.visit_id}/participations/${auth.user.id}`, {
     method: 'PUT',
-    body: JSON.stringify(visitParticipation)
+    body: JSON.stringify({ status: choice })
   });
-  if (!error.value && data.value) {
-    const participationIndex = dataVisitParts.value.findIndex(p => p.visit === visit.visit_id);
 
-    if (participationIndex >= 0) {
-      dataVisitParts.value[participationIndex] = { ...data.value };
-    } else {
-      dataVisitParts.value.push({ ...data.value });
-    }
-
-    // Forcer la mise à jour de la liste
-    dataVisitParts.value = [...dataVisitParts.value];
-
-    notifs.send_notif(t('misc.update'), true, t);
-  } else {
+  if (error.value) {
     notifs.send_notif(t('misc.error'), false, t);
+    return;
   }
+  rows.value = rows.value.map(v => {
+    if (v.visit_id === visit.visit_id) {
+      v.participations[0].status = choice;
+    }
+    return v;
+  });
+
+  notifs.send_notif(t('misc.update'), true, t);
 };
 
 const deleteVisit = async (visit: Visit) => {
@@ -111,21 +98,21 @@ const deleteVisit = async (visit: Visit) => {
       :loading="status === 'pending'"
       :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: t('misc.loading') }"
       :progress="{ color: 'primary', animation: 'carousel' }"
-      :rows="rowsWithParticipation"
+      :rows
       :sort
   >
     <template #name-data="{ row }">
-      <NuxtLink :to="`/home/trips/${row.visit.trip_id}/visits/${row.visit.visit_id}`" class="font-semibold underline text-left">
-        {{ row.visit.name }}
+      <NuxtLink :to="`/home/trips/${tripId}/visits/${row.visit_id}`" class="font-semibold underline text-left">
+        {{ row.name }}
       </NuxtLink>
     </template>
 
     <template #start_date-data="{ row }">
-      {{ new Date(row.visit.start_date).toLocaleString([locale], { dateStyle: 'long', timeStyle: 'short' }) }}
+      {{ new Date(row.start_date).toLocaleString([locale], { dateStyle: 'long', timeStyle: 'short' }) }}
     </template>
 
     <template #end_date-data="{ row }">
-      {{ new Date(row.visit.end_date).toLocaleString([locale], { dateStyle: 'long', timeStyle: 'short' }) }}
+      {{ new Date(row.end_date).toLocaleString([locale], { dateStyle: 'long', timeStyle: 'short' }) }}
     </template>
 
     <template #participation-data="{ row }">
@@ -133,18 +120,18 @@ const deleteVisit = async (visit: Visit) => {
         <UButton
             icon="i-heroicons:check-circle-16-solid"
             size="xs"
-            :color="row.participation?.status === 'accepted' ? 'green' : 'gray'"
+            :color="row.participations[0]?.status === 'accepted' ? 'green' : 'gray'"
             square
             variant="solid"
-            @click="sendParticipationChoice(row.visit, 'accepted')"
+            @click="sendParticipationChoice(row, 'accepted')"
         />
         <UButton
             icon="i-heroicons:no-symbol-16-solid"
             size="xs"
-            :color="row.participation?.status === 'declined' ? 'red' : 'gray'"
+            :color="row.participations[0]?.status === 'declined' ? 'red' : 'gray'"
             square
             variant="solid"
-            @click="sendParticipationChoice(row.visit, 'declined')"
+            @click="sendParticipationChoice(row, 'declined')"
         />
       </div>
     </template>
@@ -152,7 +139,7 @@ const deleteVisit = async (visit: Visit) => {
     <template #actions-data="{ row }">
       <div class="flex space-x-2">
         <UButton
-            :to="`/home/trips/${row.visit.trip_id}/visits/${row.visit.visit_id}`"
+            :to="`/home/trips/${tripId}/visits/${row.visit_id}`"
             color="gray"
             icon="i-heroicons-eye"
             size="xs"
@@ -160,7 +147,7 @@ const deleteVisit = async (visit: Visit) => {
             variant="solid"
         />
         <UButton
-            :to="`/home/trips/${row.visit.trip_id}/visits/${row.visit.visit_id}/edit`"
+            :to="`/home/trips/${tripId}/visits/${row.visit_id}/edit`"
             color="primary"
             icon="i-heroicons-pencil-square"
             size="xs"
@@ -173,7 +160,7 @@ const deleteVisit = async (visit: Visit) => {
             size="xs"
             square
             variant="solid"
-            @click="deleteVisit(row.visit)"
+            @click="deleteVisit(row)"
         />
       </div>
     </template>
