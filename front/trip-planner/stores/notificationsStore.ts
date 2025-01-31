@@ -16,6 +16,7 @@ export const useNotificationsStore = defineStore('notifications', {
         return this.notifications;
       } catch (error) {
         console.error(error);
+        throw error;
       }
     },
 

@@ -1,4 +1,4 @@
-import type { User } from "~/types";
+import type {User} from "~/types";
 
 export const useAuthStore = defineStore('auth', {
   persist: true,
@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', {
       const { $api } = useNuxtApp();
 
       try {
-        const data = await $api('/auth/login', {
+        const data: any = await $api('/auth/login', {
           method: 'POST',
           body: JSON.stringify({ email, password }),
         });
@@ -24,7 +24,7 @@ export const useAuthStore = defineStore('auth', {
           lastname: data.last_name,
           email: data.email,
           birthdate: data.birthdate,
-          avatarImage: data.profile_picture?.url,
+          avatarImage: data.profile_picture,
           description: data.description,
           languages: data.languages
         }
@@ -60,7 +60,7 @@ export const useAuthStore = defineStore('auth', {
       }
 
       try {
-        const data = await $api('/me');
+        const data: any = await $api('/me');
         this.user = {
           id: data.user_id,
           alias: data.alias,
@@ -68,7 +68,7 @@ export const useAuthStore = defineStore('auth', {
           lastname: data.last_name,
           email: data.email,
           birthdate: data.birthdate,
-          avatarImage: data.profile_picture?.url,
+          avatarImage: data.profile_picture,
           description: data.description,
           languages: data.languages
         }

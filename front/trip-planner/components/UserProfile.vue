@@ -22,7 +22,7 @@ const age = computed(() => {
     <div class="flex-col flex-1 basis-1/4">
       <UCard class="h-full">
         <div>
-          <img v-if="user.avatarImage" :src="user.avatarImage" alt="Profile picture" class="w-64 h-64 rounded-2xl object-cover" />
+          <img v-if="user.avatarImage" :src="user.avatarImage?.url" alt="Profile picture" class="w-64 h-64 rounded-2xl object-cover" />
           <img v-else src="/public/static/img/empty-avatar.webp" alt="Empty profile picture" class="w-64 aspect-1 rounded-2xl" />
         </div>
 

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type {Trip} from "~/types";
+import type {VerticalNavigationLink} from "#ui/types";
+import type {AsyncData} from "#app";
+import type {H3Error} from "h3";
 
 const { t } = useI18n();
 const authStore = useAuthStore();
@@ -10,7 +13,7 @@ const selectedTripId = computed(() => route.params.tripId);
 const path = computed(() => route.path);
 
 const links = computed(() => {
-  const baseLinks = [
+  const baseLinks: any[] = [
     [
       {
         label: t('navigation.profile'),
@@ -92,8 +95,17 @@ const logout = async () => {
 };
 
 const navigateToLastTrip = async () => {
-  const tripResponse = await useApiFetch<Trip>(`/trips/last`);
-  const lastTripId = tripResponse.data.value?.trip_id;
+  const { data: trip, status, error }: AsyncData<Trip, H3Error> = await useApiFetch<Trip>(`/trips/last`);
+  const lastTripId = trip.value?.trip_id;
+
+  if (status.value === 'error' && error.value?.statusCode === 404) {
+    useToast().add({
+      title: t('errors.trip-no-found'),
+      description: t('errors.trip-not-found-description'),
+      icon: 'i-heroicons-information-circle',
+      color: 'primary',
+    });
+  }
 
   if (!lastTripId) {
     return;
