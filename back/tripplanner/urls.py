@@ -7,7 +7,6 @@ from core.views import CurrentUserView, OtherUsersView
 from trips.views import TripView, LastTripView, TripSentInvitation, TripReceivedInvitation, LeaveTripView
 from visits.views import VisitView, LocationView, VisitParticipationView
 
-
 urlpatterns = [
     # Authentication
     path('api/auth/login', LoginView.as_view(), name='Login'),
@@ -45,20 +44,10 @@ urlpatterns = [
 
     path('api/categories', CategoryView.as_view(), name='category-view'),
 
-    # Expense sharing
-
-    # path('api/trips/<int:trip_id>/budget/expenses/share', ExpenseShareView.as_view(), name='expense-share-view'),
-    # path('api/trips/<int:trip_id>/budget/expenses/share/<int:share_id>', ExpenseShareView.as_view(), name='expense-share-view'),
-    # path('api/trips/<int:trip_id>/budget/expenses/share/debts', ExpenseShareView.as_view(), name='expense-share-view'),
-    # path('api/trips/<int:trip_id>/budget/expenses/share/refunds', ExpenseShareView.as_view(), name='expense-share-view'),
-
-
     # Visits
     path('api/trips/<int:trip_id>/visits', VisitView.as_view(), name='visit-view'),
     path('api/trips/<int:trip_id>/visits/<int:visit_id>', VisitView.as_view(), name='visit-view'),
-    path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations', VisitParticipationView.as_view(), name='visit-participation-view'),
-    path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations/<int:user_id>', VisitParticipationView.as_view(), name='visit-participation-view'),
-    path('api/trips/<int:trip_id>/visits/participations/', VisitParticipationView.as_view(), name='visit-participation-view'),
+    path('api/trips/<int:trip_id>/visits/<int:visit_id>/participations/<str:user_id>', VisitParticipationView.as_view(), name='visit-participation-view'),
 
 
     # Locations

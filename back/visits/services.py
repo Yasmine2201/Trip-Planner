@@ -2,11 +2,11 @@ from django.db.models import Min, Max, Q
 from rest_framework.exceptions import ValidationError
 
 from core.models import User
-from trips.models import Trip, TripInvitation
+from trips.models import Trip
 from trips.services import TripService
 from utils import ForbiddenActionError, haversine
 from visits.models import Visit, Location, VisitParticipation
-from visits.serializers import VisitInputSerializer, LocationQueryParamsSerializer, VisitParticipationInputSerializer
+from visits.serializers import VisitInputSerializer, LocationQueryParamsSerializer
 
 
 class VisitService:
@@ -36,7 +36,8 @@ class VisitService:
             if trip_participation.user.user_id != user.user_id:
                 VisitParticipation.objects.create(visit=visit, user=trip_participation.user)
             else:
-                VisitParticipation.objects.create(visit=visit, user=user, status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
+                VisitParticipation.objects.create(visit=visit, user=user,
+                                                  status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
 
         return visit
 
@@ -45,18 +46,19 @@ class VisitService:
         """
         Check if a user is part of a visit.
         """
-        visitParticipationFiltered = VisitParticipation.objects.filter(visit=visit, user=user)
+        visit_participation_filtered = VisitParticipation.objects.filter(visit=visit, user=user)
         if accepted_only:
-            visitParticipationFiltered = visitParticipationFiltered.filter(status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
-        return visitParticipationFiltered.exists()
+            visit_participation_filtered = visit_participation_filtered.filter(
+                status=VisitParticipation.VisitParticipationStatus.ACCEPTED)
+        return visit_participation_filtered.exists()
 
     @staticmethod
-    def get_all_visits(trip_id: int): # user: User,
+    def get_all_visits(trip_id: int):
         """
         Get all visits for a trip.
         """
-        trip = Trip.objects.get(trip_id=trip_id) # TripService.get_user_trip_by_id(user, trip_id)
-        return Visit.objects.filter(trip = trip) #, visitparticipation__user=user , visitparticipation__status=VisitParticipation.VisitParticipationStatus.ACCEPTED
+        trip = Trip.objects.get(trip_id=trip_id)
+        return Visit.objects.filter(trip=trip)
 
     @staticmethod
     def get_visit_by_id(user: User, trip_id: int, visit_id: int):
@@ -106,40 +108,31 @@ class VisitService:
         visit.delete()
         return visit
 
+
 class VisitParticipationService:
 
     @staticmethod
-    def get_all_visit_participations(user: User, trip_id: int, visit_id: int):
-        """
-        Get all visit participations for a visit.
-        """
-        if visit_id:
-            visit = Visit.objects.get(visit_id=visit_id)
-            return VisitParticipation.objects.filter(visit=visit)
-        visits = VisitService.get_all_visits(trip_id)
-        return VisitParticipation.objects.filter(visit__in=visits, user=user)
-
-    @staticmethod
-    def get_visit_participation_by_id(user: User, visit_id: int, visit_participation_id: int = None):
+    def get_visit_participation_by_id(user: User, visit_id: int):
         """
         Get a visit participation by its ID.
         """
-        if visit_participation_id:
-            return VisitParticipation.objects.get(visit_participation_id=visit_participation_id)
-        visit = Visit.objects.get(visit_id=visit_id)
-        return VisitParticipation.objects.get(visit=visit, user=user)
+        return VisitParticipation.objects.get(visit_id=visit_id, user=user)
 
     @staticmethod
     def update_visit_participation(user: User, visit_id: int, visit_participation_data: dict):
         """
         Update a visit participation by its ID.
         """
+
+        if 'status' not in visit_participation_data or visit_participation_data['status'] not in VisitParticipation.VisitParticipationStatus.values:
+            raise ValueError("Invalid status value")
+
         visit_participation = VisitParticipationService.get_visit_participation_by_id(user, visit_id)
-        visit_participation_serializer = VisitParticipationInputSerializer(visit_participation, data=visit_participation_data)
-        visit_participation_serializer.is_valid(raise_exception=True)
-        visit_participation_serializer.save()
+        visit_participation.status = visit_participation_data['status']
+        visit_participation.save()
 
         return visit_participation
+
 
 class LocationService:
 

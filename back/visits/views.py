@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from authentication.utils import ProtectableAPIView
 from trips.models import Trip
 from utils import ForbiddenActionError
-from visits.models import Location, Visit, VisitParticipation
-from visits.serializers import LocationSerializer, VisitSerializer, VisitParticipationSerializer
+from visits.models import Location, Visit
+from visits.serializers import LocationSerializer, VisitSerializer
 from visits.services import VisitService, LocationService, VisitParticipationService
 
 
@@ -54,7 +54,7 @@ class VisitView(ProtectableAPIView):
     @staticmethod
     def __get_all_visits(request: Request, trip_id: int) -> Response:
         try:
-            visits = VisitService.get_all_visits(trip_id) # request.user,
+            visits = VisitService.get_all_visits(trip_id)
             if visits is None:
                 return Response({"error": "No visits found"}, status=404)
 
@@ -111,31 +111,16 @@ class VisitView(ProtectableAPIView):
 class VisitParticipationView(ProtectableAPIView):
 
     @staticmethod
-    def get(request: Request, trip_id: int, visit_id: int = None, user_id: int = None): # user_id non appliqué dans get
-        """
-        Get all visit participations for a visit.
-        """
-        try:
-            visit_participations = VisitParticipationService.get_all_visit_participations(request.user, trip_id, visit_id)
-            serializer = VisitParticipationSerializer(visit_participations, many=True)
-            return Response(serializer.data, status=200)
-        except Visit.DoesNotExist:
-            return Response({"error": "Visit not found"}, status=404)
-        except ForbiddenActionError as e:
-            return Response({"error": str(e)}, status=403)
-
-    @staticmethod
-    def put(request: Request, trip_id: int,  visit_id: int, user_id: int = None):
+    def put(request: Request, trip_id: int, visit_id: int, user_id: str):
         """
         Update a visit participation for a user.
         """
         try:
-            # Vérifie que request.user a bien le user_id
-            if user_id and request.user.user_id != user_id:
+            if request.user.user_id != user_id:
                 raise ForbiddenActionError("User cannot update this visit participation because they are not the owner of the visit participation")
-            visit_participation = VisitParticipationService.update_visit_participation(request.user, visit_id, request.data)
-            serializer = VisitParticipationSerializer(visit_participation)
-            return Response(serializer.data, status=200)
+
+            VisitParticipationService.update_visit_participation(request.user, visit_id, request.data)
+            return Response(status=204)
         except ValueError as e:
             return Response({"error": str(e)}, status=400)
         except ForbiddenActionError as e:
