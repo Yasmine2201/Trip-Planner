@@ -32,6 +32,7 @@ const columns = computed(() => [
   { key: 'actions' }
 ]);
 
+const {data: trip}: AsyncData<Trip, any> = await useApiFetch<Trip>(`/trips/${tripId}`);
 const {data: rows, status}: AsyncData<Visit[], any> = await useApiFetch<Visit[]>(`/trips/${tripId}/visits`);
 rows.value = rows.value
     ?.map(
@@ -75,6 +76,9 @@ const deleteVisit = async (visit: Visit) => {
     notifs.send_notif(t('misc.deletion_error'), false, t);
   }
 };
+
+const isOwner = computed(() => trip.value.owner_id === auth.user.id);
+const isDeclined = (visit: Visit) => visit.participations[0]?.status === 'declined';
 </script>
 
 <template>
@@ -102,9 +106,12 @@ const deleteVisit = async (visit: Visit) => {
       :sort
   >
     <template #name-data="{ row }">
-      <NuxtLink :to="`/home/trips/${tripId}/visits/${row.visit_id}`" class="font-semibold underline text-left">
+      <NuxtLink :to="`/home/trips/${tripId}/visits/${row.visit_id}`" class="font-semibold underline text-left" v-if="!isDeclined(row) || isOwner" >
         {{ row.name }}
       </NuxtLink>
+      <span class="font-semibold text-left underline cursor-not-allowed" v-else>
+        {{ row.name }}
+      </span>
     </template>
 
     <template #start_date-data="{ row }">
@@ -145,6 +152,7 @@ const deleteVisit = async (visit: Visit) => {
             size="xs"
             square
             variant="solid"
+            :disabled="isDeclined(row) && !isOwner"
         />
         <UButton
             :to="`/home/trips/${tripId}/visits/${row.visit_id}/edit`"
@@ -153,6 +161,7 @@ const deleteVisit = async (visit: Visit) => {
             size="xs"
             square
             variant="solid"
+            :disabled="!isOwner"
         />
         <ConfirmationDropdown @confirm="deleteVisit(row)">
           <UButton
@@ -161,6 +170,7 @@ const deleteVisit = async (visit: Visit) => {
               size="xs"
               square
               variant="solid"
+              :disabled="!isOwner"
           />
         </ConfirmationDropdown>
       </div>
