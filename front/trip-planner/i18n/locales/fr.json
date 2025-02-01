@@ -36,21 +36,21 @@
     "add-expense": "Ajouter une dépense",
     "debts-and-credits": "Créances et dettes",
     "debts-and-credits-description": "Ici vous trouverez les créances et dettes du voyage",
+    "declare-budget": "Déclarer mon budget",
     "edit-budget": "Modifier le budget",
+    "effective-expenses": "Effectif",
     "expenses": "Dépenses",
     "expenses-description": "Ici vous trouverez les dépenses du voyage",
     "food": "Nourriture",
+    "forecasted-expenses": "Prévisionnel",
     "initial-budget": "Budget initial",
     "manage-expenses": "Gérer mes dépenses",
     "others": "Autres",
     "remaining-budget": "Budget restant",
+    "shopping": "Shopping",
     "title": "Budget",
     "transport": "Transport",
-    "declare-budget": "Déclarer mon budget",
-    "visit": "Visite",
-    "shopping": "Shopping",
-    "forecasted-expenses": "Prévisionnel",
-    "effective-expenses": "Effectif"
+    "visit": "Visite"
   },
   "create_trip": {
     "trip_create_button": "Créer un voyage",
@@ -58,14 +58,17 @@
     "trip_location": "Lieu",
     "trip_map": "Carte",
     "trip_name": "Nom du voyage",
-    "trip_start_date": "Date de début",
-    "trip_name_placeholder": "Mon voyage"
+    "trip_name_placeholder": "Mon voyage",
+    "trip_start_date": "Date de début"
   },
   "errors": {
     "actual-amount-positive": "Le montant réel doit être un nombre positif",
+    "alias-not-exists": "Ce pseudo n'existe pas",
     "alias-required": "Un pseudonyme est requis.",
     "already-have-account": "Déjà un compte ? Connectez-vous ici.",
+    "already-invited": "Cette personne a déjà été invitée au voyage",
     "birthdate-invalid": "Date de naissance invalide",
+    "budget-positive": "Le budget doit être positif",
     "category-invalid": "Catégorie invalide",
     "category-required": "Une catégorie est requise",
     "confirm-password-required": "Veuillez répéter le mot de passe.",
@@ -86,26 +89,23 @@
     "last-name-required": "Votre nom de famille est requis.",
     "must-be-number": "Doit être un nombre",
     "name-required": "Un nom est requis.",
+    "name-too-long": "Nom trop long",
     "oops": "Une erreur est survenue.",
+    "page-forbidden": "Accès interdit",
     "page-not-found": "404 - Page non trouvée",
     "password-rejected": "Mot de passe invalide",
     "password-required": "Un mot de passe est requis.",
     "passwords-must-match": "Les mots de passe doivent être les mêmes.",
     "planned-amount-positive": "Le montant prévu doit être un nombre positif",
+    "quantity-positive": "La quantité doit être positive",
+    "quantity-whole": "Les quantités doivent être entières",
     "radius-required": "Le rayon est requis et doit être un nombre positif",
     "sent-invalid-data": "Les données envoyées sont invalides",
     "start-date-before-end-date": "La date de début doit être avant la date de fin",
     "trip-name-required": "Le nom du voyage est requis",
-    "unknown-error": "Merci de réessayer ultérieurement.",
-    "budget-positive": "Le budget doit être positif",
-    "name-too-long": "Nom trop long",
-    "quantity-positive": "La quantité doit être positive",
-    "quantity-whole": "Les quantités doivent être entières",
-    "alias-not-exists": "Ce pseudo n'existe pas",
-    "already-invited": "Cette personne a déjà été invitée au voyage",
-    "page-forbidden": "Accès interdit",
+    "trip-no-found": "Voyage non trouvé",
     "trip-not-found-description": "Vous ne pouvez pas accédez à votre dernier voyage car vous n'en avez aucun.",
-    "trip-no-found": "Voyage non trouvé"
+    "unknown-error": "Merci de réessayer ultérieurement."
   },
   "expense": {
     "actual-amount": "Montant réel",
@@ -123,11 +123,9 @@
     },
     "category": "Catégorie",
     "delete-many-tooltip": "Sélectionnez plus d'une dépense pour les supprimer",
-    "visit-tooltip": "Aller voir la visite",
     "delete-selected": "Supprimer les dépenses",
     "description": "Description",
     "edit-expense": "Modifier une dépense",
-    "visit": "Visite",
     "expense-id": "ID",
     "is-shared": "Partagée ?",
     "name": "Nom",
@@ -144,6 +142,8 @@
     },
     "planned-amount": "Montant prévu",
     "planned-amount-short": "Prévu",
+    "visit": "Visite",
+    "visit-tooltip": "Aller voir la visite",
     "yes": "Partagé"
   },
   "form_visit": {
@@ -208,11 +208,41 @@
     "vi": "Vietnamien",
     "zh": "Chinois"
   },
+  "locations": {
+    "description": "Description",
+    "labels": {
+      "max-budget": "Prix max.",
+      "min-budget": "Prix min.",
+      "only-prices": "Masquer prix inconnus",
+      "radius": "Rayon"
+    },
+    "popup": {
+      "too-many-locations": "Trop de lieux à afficher. Veuillez zoomer ou filtrer."
+    },
+    "price": {
+      "name": "Nom du tarif",
+      "no-description": "Pas de description fournie",
+      "no-prices": "Pas de tarifs renseignés",
+      "price": "Prix"
+    },
+    "price_range": {
+      "unknown": "Prix inconnus"
+    },
+    "titles": {
+      "select-location": "Lieux à visiter"
+    }
+  },
   "misc": {
+    "add-expense": "Ajout d'une dépense",
     "all": "Tout",
+    "ask-confirmation": "Veuillez confirmer",
     "back": "Retour",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "copied": "Copié",
     "delete": "Supprimer",
     "deletion": "Suppression",
+    "deletion_error": "Suppression échouée",
     "edit": "Modifier",
     "error": "Échec de l'opération",
     "loading": "Chargement...",
@@ -226,11 +256,7 @@
     "select": "Sélectionner",
     "select-value": "Sélectionnez des valeurs",
     "success": "Succès de l'opération",
-    "add-expense": "Ajout d'une dépense",
-    "copied": "Copié",
-    "confirm": "Confirmer",
-    "cancel": "Annuler",
-    "ask-confirmation": "Veuillez confirmer"
+    "update": "Mise à jour"
   },
   "modify_trip": {
     "title": "Modification du voyage",
@@ -244,6 +270,7 @@
     "create_trip": "Créer un voyage",
     "create_visit": "Créer une visite",
     "home": "Accueil",
+    "invitations": "Invitations",
     "last-trip": "Dernier voyage",
     "login": "Se connecter",
     "logout": "Déconnexion",
@@ -255,7 +282,6 @@
     "profile": "Profil",
     "register": "Créer un compte",
     "share-trip": "Partager le voyage",
-    "invitations": "Invitations",
     "visit_details": "Détails de la visite"
   },
   "notifications": {
@@ -263,10 +289,10 @@
       "added-to-trip": "Vous avez été ajouté·e au voyage '{tripName}'",
       "budget-changed": "Le budget du voyage '{tripName}' a été modifié à {budget} €",
       "expenses-exceed-budget": "Les dépenses du voyage {tripName} s'élèvent à {totalExpenses} € et dépassent le budget déclaré de {budget} €",
-      "invitation-created": "Vous avez créé une invitation pour le voyage en cours",
-      "invitation-received": "Vous avez reçu une invitation pour le voyage '{tripName}' de '{alias}'",
       "invitation-accepted": "'alias' a accepté votre invitation pour le voyage '{tripName}'",
+      "invitation-created": "Vous avez créé une invitation pour le voyage en cours",
       "invitation-declined": "'alias' a refusé votre invitation pour le voyage '{tripName}'",
+      "invitation-received": "Vous avez reçu une invitation pour le voyage '{tripName}' de '{alias}'",
       "visit-request": "Une visite nommée {visitName} a été créée dans le voyage {tripName} du {startDate} au {endDate}. Veuillez renseignez votre participation."
     },
     "deleted": "Notification supprimée",
@@ -278,10 +304,10 @@
     "type": {
       "add-to-trip": "Ajouté au voyage",
       "budget": "Budget",
-      "invitation-created": "Invitation créée",
-      "invitation-received": "Invitation reçue",
       "invitation-accepted": "Invitation acceptée",
+      "invitation-created": "Invitation créée",
       "invitation-declined": "Invitation refusée",
+      "invitation-received": "Invitation reçue",
       "visit-request": "Nouvelle visite"
     },
     "view-all": "Voir tout"
@@ -300,22 +326,44 @@
     "not-filled": "Pas renseigné·e",
     "title": "Mon profil"
   },
+  "share": {
+    "accept-invitation": "Accepter l'invitation",
+    "alias": "Pseudo",
+    "decline-invitation": "Refuser l'invitation",
+    "delete-from-trip": "Retirer du voyage",
+    "from": "de",
+    "headline": "Voici les personnes qui participent à votre voyage. Voulez-vous en ajouter d'autres ?",
+    "invitation": "vous invite à rejoindre son voyage",
+    "invite": "Inviter un ami",
+    "link": "Voici le lien d'invitation",
+    "no-invitations": "Pas d'invitations pour le moment",
+    "owner": "Propriétaire",
+    "placeholder": "pseudo2025",
+    "see-profile": "Voir le profil",
+    "to": "à"
+  },
   "trip_home": {
     "budget": "Budget",
+    "share": "Membres",
     "trip_details": "Détails du voyage",
     "trip_location_info": "Vous avez choisi d'aller ici",
-    "visits": "Visites",
-    "share": "Membres"
+    "visits": "Visites"
   },
   "trips": {
     "end": "Date de fin",
+    "leave": "Sortie du voyage",
+    "members": "Membres",
     "name": "Nom",
     "start": "Date de début",
-    "triplist-title": "Mes voyages",
-    "leave": "Sortie du voyage",
-    "members": "Membres"
+    "triplist-title": "Mes voyages"
   },
   "visits": {
+    "display": {
+      "dates": "Visite du {start} à {end}.",
+      "fill-prices": "Ajouter des tarifs",
+      "price-quantity": "Quantité",
+      "total-price": "Prix total"
+    },
     "fields": {
       "end_date": "Horaire de fin",
       "location_name": "Lieu",
@@ -329,52 +377,6 @@
     },
     "title": {
       "finalize": "Finaliser la création"
-    },
-    "display": {
-      "dates": "Visite du {start} à {end}.",
-      "fill-prices": "Ajouter des tarifs",
-      "price-quantity": "Quantité",
-      "total-price": "Prix total"
     }
-  },
-  "locations": {
-    "titles": {
-      "select-location": "Lieux à visiter"
-    },
-    "price_range": {
-      "unknown": "Prix inconnus"
-    },
-    "popup": {
-      "too-many-locations": "Trop de lieux à afficher. Veuillez zoomer ou filtrer."
-    },
-    "labels": {
-      "only-prices": "Masquer prix inconnus",
-      "radius": "Rayon",
-      "min-budget": "Prix min.",
-      "max-budget": "Prix max."
-    },
-    "description": "Description",
-    "price": {
-      "name": "Nom du tarif",
-      "price": "Prix",
-      "no-description": "Pas de description fournie",
-      "no-prices": "Pas de tarifs renseignés"
-    }
-  },
-  "share": {
-    "see-profile": "Voir le profil",
-    "delete-from-trip": "Retirer du voyage",
-    "accept-invitation": "Accepter l'invitation",
-    "decline-invitation": "Refuser l'invitation",
-    "invite": "Inviter un ami",
-    "headline": "Voici les personnes qui participent à votre voyage. Voulez-vous en ajouter d'autres ?",
-    "alias": "Pseudo",
-    "placeholder": "pseudo2025",
-    "link": "Voici le lien d'invitation",
-    "invitation": "vous invite à rejoindre son voyage",
-    "from": "de",
-    "to": "à",
-    "no-invitations": "Pas d'invitations pour le moment",
-    "owner": "Propriétaire"
   }
 }
