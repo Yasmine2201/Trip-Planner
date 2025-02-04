@@ -97,15 +97,15 @@
     "password-required": "Un mot de passe est requis.",
     "passwords-must-match": "Les mots de passe doivent être les mêmes.",
     "planned-amount-positive": "Le montant prévu doit être un nombre positif",
-    "quantity-positive": "La quantité doit être positive",
-    "quantity-whole": "Les quantités doivent être entières",
     "radius-required": "Le rayon est requis et doit être un nombre positif",
     "sent-invalid-data": "Les données envoyées sont invalides",
     "start-date-before-end-date": "La date de début doit être avant la date de fin",
     "trip-name-required": "Le nom du voyage est requis",
     "trip-no-found": "Voyage non trouvé",
     "trip-not-found-description": "Vous ne pouvez pas accédez à votre dernier voyage car vous n'en avez aucun.",
-    "unknown-error": "Merci de réessayer ultérieurement."
+    "unknown-error": "Merci de réessayer ultérieurement.",
+    "quantity-positive": "La quantité doit être positive",
+    "quantity-whole": "Les quantités doivent être entières"
   },
   "expense": {
     "actual-amount": "Montant réel",
@@ -126,6 +126,7 @@
     "delete-selected": "Supprimer les dépenses",
     "description": "Description",
     "edit-expense": "Modifier une dépense",
+    "expense": "Dépense",
     "expense-id": "ID",
     "is-shared": "Partagée ?",
     "name": "Nom",

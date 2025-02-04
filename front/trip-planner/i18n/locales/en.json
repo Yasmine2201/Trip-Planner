@@ -103,7 +103,9 @@
     "trip-name-required": "Trip name is required",
     "trip-no-found": "Trip not found",
     "trip-not-found-description": "You can't access your last trip because you don't have any.",
-    "unknown-error": "Please retry later."
+    "unknown-error": "Please retry later.",
+    "quantity-positive": "Quantity must be positive",
+    "quantity-whole": "Quantities must be whole numbers"
   },
   "expense": {
     "actual-amount": "Actual Amount",
