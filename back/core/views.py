@@ -81,9 +81,9 @@ class ImageView(APIView):
 
             else :
                 print("Uploading image to supabase")
-                supabase.storage.from_("profile_pictures").upload(image_name, file_data,
+                supabase.storage.from_("ProfilePictures").upload(image_name, file_data,
                                                                   {"content-type": request.FILES["image"].content_type})
-                image_url = supabase.storage.from_("profile_pictures").get_public_url(image_name)
+                image_url = supabase.storage.from_("ProfilePictures").get_public_url(image_name)
                 img_obj = Image.objects.create(name=image_name, url=image_url)
                 img_obj.save()
 

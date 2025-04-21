@@ -1,23 +1,26 @@
-# Utiliser une image de base officielle de Node.js
-FROM node:22-alpine
+# Étape 1 : Build Nuxt
+FROM node:22 AS build
 
-# Définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers package.json et package-lock.json
-COPY ../front/trip-planner/package*.json ./
+COPY package*.json ./
+RUN npm install
 
-# Installer les dépendances
-RUN npm ci
-
-# Copier le reste de l'application
-COPY .. .
-
-# Construire l'application pour la production
+COPY trip-planner .
 RUN npm run build
 
-# Exposer le port sur lequel l'application va tourner
+# Étape 2 : Serveur minimal sans npm
+FROM node:22-slim
+
+WORKDIR /app
+
+# Copier uniquement le .output (build Nuxt)
+COPY --from=build /app/.output /app
+
+# Installer les dépendances runtime uniquement si nécessaire
+# (pas utile ici car on va démarrer via node directement)
+
 EXPOSE 3000
 
-# Commande pour démarrer l'application
-CMD ["npm", "run", "serve"]
+# Commande de démarrage directe via Node
+CMD ["node", "server/index.mjs"]
